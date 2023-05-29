@@ -169,6 +169,7 @@ public class PlayerController : MonoBehaviour
     void FireBullet(Vector2 direction)
     {
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+        bullet.GetComponent<BulletController>().Initialize(GetComponent<Collider2D>());
         bullet.GetComponent<Rigidbody2D>().velocity = direction * BulletData.Instance.bulletSpeed;
     }
 }

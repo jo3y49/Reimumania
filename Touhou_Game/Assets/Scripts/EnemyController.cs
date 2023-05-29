@@ -25,16 +25,17 @@ public class EnemyController : MonoBehaviour
     void Shoot()
     {
         // Create a new bullet instance
-        GameObject bulletInstance = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+        GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+        bullet.GetComponent<BulletController>().Initialize(GetComponent<Collider2D>());
 
         // Calculate direction to the player
         Vector3 directionToPlayer = (player.position - transform.position).normalized;
 
         // Adjust the bullet's velocity to shoot towards the player
-        bulletInstance.GetComponent<Rigidbody2D>().velocity = directionToPlayer * BulletData.Instance.bulletSpeed;
+        bullet.GetComponent<Rigidbody2D>().velocity = directionToPlayer * BulletData.Instance.bulletSpeed;
 
         // Adjust the bullet's direction to face the player
         float angle = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg - 90f;
-        bulletInstance.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        bullet.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
 }
