@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     public GameObject bulletPrefab; // Bullet prefab to be fired
     public Transform firePoint; // Point where the bullet should be fired from
     public float directionPersistTime = 0.1f; // Time in seconds the direction should persist
+    public float bulletSpeed = 10f;
+    public float fireRate = 5f;
 
 
     private Vector2 moveDirection;
@@ -65,7 +67,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) && Time.time > nextFireTime)
         {
             FireBullet(aimDirection);
-            nextFireTime = Time.time + 1f/BulletData.Instance.fireRate;
+            nextFireTime = Time.time + 1f/fireRate;
         }
 
         // Apply the movement
@@ -170,6 +172,6 @@ public class PlayerController : MonoBehaviour
     {
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
         bullet.GetComponent<BulletController>().Initialize(GetComponent<Collider2D>());
-        bullet.GetComponent<Rigidbody2D>().velocity = direction * BulletData.Instance.bulletSpeed;
+        bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
     }
 }
