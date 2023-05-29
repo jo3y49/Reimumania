@@ -31,8 +31,8 @@ public class PlayerController : MonoBehaviour
 
     private Direction currentDirection = Direction.Down;
 
-    private bool[] keys = new bool[4]; // 0 - Up, 1 - Down, 2 - Left, 3 - Right
-    private bool[] lastKeys = new bool[4]; // Previous frame's keys state
+    private bool[] currentKeyStates = new bool[4]; // 0 - Up, 1 - Down, 2 - Left, 3 - Right
+    private bool[] previousKeyStates = new bool[4]; // Previous frame's keys state
 
     private float lastKeyReleaseTime;
 
@@ -48,70 +48,19 @@ public class PlayerController : MonoBehaviour
         moveDirection = new Vector2(moveX, moveY).normalized;
 
         // Get input for rotation
-        keys[0] = Input.GetKey(KeyCode.UpArrow);
-        keys[1] = Input.GetKey(KeyCode.DownArrow);
-        keys[2] = Input.GetKey(KeyCode.LeftArrow);
-        keys[3] = Input.GetKey(KeyCode.RightArrow);
+        UpdateKeyStates();
 
-        bool isDiagonal = (keys[0] || keys[1]) && (keys[2] || keys[3]); // Check if movement is diagonal
-        bool wasDiagonal = (currentDirection == Direction.UpRight || currentDirection == Direction.UpLeft || currentDirection == Direction.DownRight || currentDirection == Direction.DownLeft);
+        bool isDiagonal = IsDiagonalMovement();
+        bool wasDiagonal = IsCurrentDirectionDiagonal();
 
-        // If a key has been released and it's still diagonal, record the time
-        if (wasDiagonal && ((lastKeys[0] && !keys[0]) || (lastKeys[1] && !keys[1]) || (lastKeys[2] && !keys[2]) || (lastKeys[3] && !keys[3])))
+        if (wasDiagonal && DidKeyReleaseCauseDiagonal())
         {
             lastKeyReleaseTime = Time.time;
         }
 
-        if (isDiagonal || !wasDiagonal || (!isDiagonal && wasDiagonal && Time.time > lastKeyReleaseTime + directionPersistTime))
+        if (ShouldChangeDirection(isDiagonal, wasDiagonal))
         {
-            if (keys[0])
-            {
-                if (keys[3])
-                {
-                    currentDirection = Direction.UpRight;
-                    aimDirection = new Vector2(1, 1).normalized;
-                }
-                else if (keys[2])
-                {
-                    currentDirection = Direction.UpLeft;
-                    aimDirection = new Vector2(-1, 1).normalized;
-                }
-                else
-                {
-                    currentDirection = Direction.Up;
-                    aimDirection = new Vector2(0, 1);
-                }
-            }
-            else if (keys[1])
-            {
-                if (keys[3])
-                {
-                    currentDirection = Direction.DownRight;
-                    aimDirection = new Vector2(1, -1).normalized;
-                }
-                else if (keys[2])
-                {
-                    currentDirection = Direction.DownLeft;
-                    aimDirection = new Vector2(-1, -1).normalized;
-                }
-                else
-                {
-                    currentDirection = Direction.Down;
-                    aimDirection = new Vector2(0, -1);
-                }
-            }
-            else if (keys[2] && !keys[3])
-            {
-                currentDirection = Direction.Left;
-                aimDirection = new Vector2(-1, 0);
-            }
-            else if (keys[3] && !keys[2])
-            {
-                currentDirection = Direction.Right;
-                aimDirection = new Vector2(1, 0);
-            }
-
-            lastChangeTime = Time.time;
+            ChangeDirection();
         }
 
         // Fire bullet
@@ -129,7 +78,94 @@ public class PlayerController : MonoBehaviour
             transform.position += new Vector3(moveDirection.x, moveDirection.y, 0) * speed * Time.deltaTime;
         }
 
-        lastKeys = (bool[])keys.Clone();
+        previousKeyStates = (bool[])currentKeyStates.Clone();
+    }
+
+    private void UpdateKeyStates()
+    {
+        currentKeyStates[0] = Input.GetKey(KeyCode.UpArrow);
+        currentKeyStates[1] = Input.GetKey(KeyCode.DownArrow);
+        currentKeyStates[2] = Input.GetKey(KeyCode.LeftArrow);
+        currentKeyStates[3] = Input.GetKey(KeyCode.RightArrow);
+    }
+
+    private bool IsDiagonalMovement()
+    {
+        return (currentKeyStates[0] || currentKeyStates[1]) && (currentKeyStates[2] || currentKeyStates[3]);
+    }
+
+    private bool IsCurrentDirectionDiagonal()
+    {
+        return (currentDirection == Direction.UpRight || currentDirection == Direction.UpLeft || currentDirection == Direction.DownRight || currentDirection == Direction.DownLeft);
+    }
+
+    private bool DidKeyReleaseCauseDiagonal()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (previousKeyStates[i] && !currentKeyStates[i])
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private bool ShouldChangeDirection(bool isDiagonal, bool wasDiagonal)
+    {
+        return isDiagonal || !wasDiagonal || (!isDiagonal && wasDiagonal && Time.time > lastKeyReleaseTime + directionPersistTime);
+    }
+
+    private void ChangeDirection()
+    {
+        if (currentKeyStates[0])
+            {
+                if (currentKeyStates[3])
+                {
+                    currentDirection = Direction.UpRight;
+                    aimDirection = new Vector2(1, 1).normalized;
+                }
+                else if (currentKeyStates[2])
+                {
+                    currentDirection = Direction.UpLeft;
+                    aimDirection = new Vector2(-1, 1).normalized;
+                }
+                else
+                {
+                    currentDirection = Direction.Up;
+                    aimDirection = new Vector2(0, 1);
+                }
+            }
+            else if (currentKeyStates[1])
+            {
+                if (currentKeyStates[3])
+                {
+                    currentDirection = Direction.DownRight;
+                    aimDirection = new Vector2(1, -1).normalized;
+                }
+                else if (currentKeyStates[2])
+                {
+                    currentDirection = Direction.DownLeft;
+                    aimDirection = new Vector2(-1, -1).normalized;
+                }
+                else
+                {
+                    currentDirection = Direction.Down;
+                    aimDirection = new Vector2(0, -1);
+                }
+            }
+            else if (currentKeyStates[2] && !currentKeyStates[3])
+            {
+                currentDirection = Direction.Left;
+                aimDirection = new Vector2(-1, 0);
+            }
+            else if (currentKeyStates[3] && !currentKeyStates[2])
+            {
+                currentDirection = Direction.Right;
+                aimDirection = new Vector2(1, 0);
+            }
+
+            lastChangeTime = Time.time;
     }
 
     void FireBullet(Vector2 direction)
