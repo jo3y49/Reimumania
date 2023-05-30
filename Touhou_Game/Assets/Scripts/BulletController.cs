@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BulletController : MonoBehaviour
@@ -25,7 +23,7 @@ public class BulletController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other != parentCollider && !other.gameObject.CompareTag("Projectile")) // Don't destroy if we're still colliding with the parent
+        if (other != parentCollider && !other.gameObject.CompareTag("Projectile") && !other.gameObject.CompareTag("Collectible")) // Don't destroy if we're still colliding with the parent
         {
             Shootable shootable = other.GetComponent<Shootable>();
             if (shootable != null)

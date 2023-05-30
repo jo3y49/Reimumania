@@ -135,10 +135,12 @@ GameObject:
   - component: {fileID: 177263426}
   - component: {fileID: 177263430}
   - component: {fileID: 177263429}
-  - component: {fileID: 177263428}
+  - component: {fileID: 177263433}
+  - component: {fileID: 177263432}
+  - component: {fileID: 177263431}
   m_Layer: 0
   m_Name: Reimu
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -210,25 +212,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &177263428
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 177263425}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02f357dab4f7cfb4e91193c5e6b6004d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 5
-  sprint: 1.8
-  bulletPrefab: {fileID: 8506286823978325421, guid: db1c95a40365d5949906823a2ae8d7b6, type: 3}
-  firePoint: {fileID: 177263427}
-  directionPersistTime: 0.1
-  bulletSpeed: 10
-  fireRate: 5
 --- !u!61 &177263429
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -276,6 +259,53 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &177263431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 177263425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf053e16d4c7c834585c12dfbefb1ad9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 8506286823978325421, guid: db1c95a40365d5949906823a2ae8d7b6, type: 3}
+  firePoint: {fileID: 177263427}
+  directionPersistTime: 0.1
+  bulletSpeed: 10
+  fireRate: 5
+  currentDirection: 1
+--- !u!114 &177263432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 177263425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06900549412fd3043b255d0e623d6ebe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  sprint: 1.8
+--- !u!114 &177263433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 177263425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 677f821327e41be4d9b51e1ee442c03d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lives: 3
+  bombs: 3
+  coins: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

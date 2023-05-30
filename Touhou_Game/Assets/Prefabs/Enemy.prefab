@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 7519766305790422764}
   - component: {fileID: 7519766305790422767}
   - component: {fileID: 7519766305790422766}
-  - component: {fileID: 7519766305790422761}
+  - component: {fileID: 3331722871416812580}
+  - component: {fileID: 3427299230886763827}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -134,7 +135,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &7519766305790422761
+--- !u!114 &3331722871416812580
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,16 +144,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 7519766305790422760}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e45a3c769ac8bdf4eac1f3f9a2042f2d, type: 3}
+  m_Script: {fileID: 11500000, guid: d2d0be60575a1154a8b9f40787c099bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  bulletPrefab: {fileID: 8506286823978325421, guid: db1c95a40365d5949906823a2ae8d7b6, type: 3}
   coinPrefab: {fileID: 1581200726971964122, guid: 98a9cbb9956b12442850fd170024f412, type: 3}
-  shootingRange: 10
-  bulletSpeed: 10
-  fireRate: 5
   health: 10
   minCoins: 5
   maxCoins: 10
   scatterDistance: 1
+--- !u!114 &3427299230886763827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7519766305790422760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86a5b9e3eca878a48ae2aed19812ca9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 8506286823978325421, guid: db1c95a40365d5949906823a2ae8d7b6, type: 3}
+  shootingRange: 10
+  bulletSpeed: 10
+  fireRate: 5

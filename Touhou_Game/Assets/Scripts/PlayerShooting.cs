@@ -1,23 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerShooting : MonoBehaviour
 {
-    public float speed = 5f; // Speed of character movement
-    public float sprint = 1.8f; // Speed multipler for sprint
     public GameObject bulletPrefab; // Bullet prefab to be fired
     public Transform firePoint; // Point where the bullet should be fired from
     public float directionPersistTime = 0.1f; // Time in seconds the direction should persist
     public float bulletSpeed = 10f;
     public float fireRate = 5f;
-
-
-    private Vector2 moveDirection;
-    private Vector2 aimDirection = Vector2.down;
-    private float nextFireTime = 0f;
-
-    private enum Direction
+    public enum Direction
     {
         Up,
         Down,
@@ -29,23 +19,20 @@ public class PlayerController : MonoBehaviour
         DownLeft,
     }
 
-    private Direction currentDirection = Direction.Down;
+    public Direction currentDirection = Direction.Down;
+
+    private Vector2 aimDirection = Vector2.down;
+    private float nextFireTime = 0f;
 
     private bool[] currentKeyStates = new bool[4]; // 0 - Up, 1 - Down, 2 - Left, 3 - Right
     private bool[] previousKeyStates = new bool[4]; // Previous frame's keys state
 
     private float lastKeyReleaseTime;
 
-    private bool wasDiagonal = false; // Keeps track if the last movement was diagonal
-
     private float lastChangeTime;
 
     void Update()
     {
-        // Get input for movement
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveY = Input.GetAxisRaw("Vertical");
-        moveDirection = new Vector2(moveX, moveY).normalized;
 
         // Get input for rotation
         UpdateKeyStates();
@@ -68,14 +55,6 @@ public class PlayerController : MonoBehaviour
         {
             FireBullet(aimDirection);
             nextFireTime = Time.time + 1f/fireRate;
-        }
-
-        // Apply the movement
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            transform.position += new Vector3(moveDirection.x, moveDirection.y, 0) * speed * sprint * Time.deltaTime;
-        } else {
-            transform.position += new Vector3(moveDirection.x, moveDirection.y, 0) * speed * Time.deltaTime;
         }
 
         previousKeyStates = (bool[])currentKeyStates.Clone();
