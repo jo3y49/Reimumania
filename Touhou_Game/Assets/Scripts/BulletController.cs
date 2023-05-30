@@ -6,6 +6,7 @@ public class BulletController : MonoBehaviour
 {
     private Collider2D parentCollider; // The collider of the GameObject that instantiated the bullet
     private Collider2D myCollider; // The bullet's own collider
+    public float bulletDamage = 5f;
 
     // Call this method right after instantiating the bullet to pass the reference to the parent
     public void Initialize(Collider2D parentCollider)
@@ -26,6 +27,10 @@ public class BulletController : MonoBehaviour
     {
         if (other != parentCollider && !other.gameObject.CompareTag("Projectile")) // Don't destroy if we're still colliding with the parent
         {
+            Shootable shootable = other.GetComponent<Shootable>();
+            if (shootable != null)
+                shootable.Shot(bulletDamage);
+                
             Destroy(gameObject);
         }
     }

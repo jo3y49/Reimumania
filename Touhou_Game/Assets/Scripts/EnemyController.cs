@@ -1,12 +1,13 @@
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : MonoBehaviour, Shootable
 {
     public GameObject bulletPrefab; // Assign your bullet prefab in the Inspector
     public Transform player; // Assign your player in the Inspector
     public float shootingRange = 10f; // Assign your desired shooting range in the Inspector
     public float bulletSpeed = 10f;
     public float fireRate = 5;
+    public float health = 10f;
 
     private float nextFireTime = 0f;
 
@@ -40,5 +41,17 @@ public class EnemyController : MonoBehaviour
         // Adjust the bullet's direction to face the player
         float angle = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg - 90f;
         bullet.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+    }
+    public void Shot(float bulletDamage)
+    {
+        if (health > bulletDamage)
+            health -= bulletDamage;
+        else 
+            Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+
     }
 }
