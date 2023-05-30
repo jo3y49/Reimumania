@@ -2,12 +2,17 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour, Shootable
 {
-    public GameObject bulletPrefab; // Assign your bullet prefab in the Inspector
     public Transform player; // Assign your player in the Inspector
+    public GameObject bulletPrefab; // Assign your bullet prefab in the Inspector
+    public GameObject coinPrefab;
     public float shootingRange = 10f; // Assign your desired shooting range in the Inspector
     public float bulletSpeed = 10f;
     public float fireRate = 5;
     public float health = 10f;
+    public int minCoins = 5;
+    public int maxCoins = 10;
+    public float scatterDistance = 1.0f;
+
 
     private float nextFireTime = 0f;
 
@@ -52,6 +57,16 @@ public class EnemyController : MonoBehaviour, Shootable
 
     private void OnDestroy()
     {
+        // Drop coins
+        int numCoins = Random.Range(minCoins, maxCoins + 1);
+        for (int i = 0; i < numCoins; i++)
+        {
+            // Calculate a random position within scatterDistance of the enemy's position
+            Vector3 scatter = new Vector3(Random.Range(-scatterDistance, scatterDistance), Random.Range(-scatterDistance, scatterDistance), 0);
+            Vector3 coinPosition = transform.position + scatter;
 
+            // Instantiate a coin at the calculated position
+            Instantiate(coinPrefab, coinPosition, Quaternion.identity);
+        }
     }
 }

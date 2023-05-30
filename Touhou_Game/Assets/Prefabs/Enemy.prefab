@@ -146,8 +146,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e45a3c769ac8bdf4eac1f3f9a2042f2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 8506286823978325421, guid: db1c95a40365d5949906823a2ae8d7b6, type: 3}
   player: {fileID: 0}
+  bulletPrefab: {fileID: 8506286823978325421, guid: db1c95a40365d5949906823a2ae8d7b6, type: 3}
+  coinPrefab: {fileID: 1581200726971964122, guid: 98a9cbb9956b12442850fd170024f412, type: 3}
   shootingRange: 10
   bulletSpeed: 10
   fireRate: 5
+  health: 10
+  minCoins: 5
+  maxCoins: 10
+  scatterDistance: 1
