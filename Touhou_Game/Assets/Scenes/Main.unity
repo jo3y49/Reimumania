@@ -410,6 +410,8 @@ MonoBehaviour:
   rotationSpeed: 10
   dodgeSpeed: 10
   dodgeTime: 0.1
+  restingOffset: 1
+  restingKey: 114
   distanceFromPlayer: 2
 --- !u!61 &501712658
 BoxCollider2D:
