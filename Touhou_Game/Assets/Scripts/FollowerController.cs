@@ -11,13 +11,15 @@ public class FollowerController : MonoBehaviour, Shootable
     public float dodgeTime = .1f;
     public float restingOffset = 1f; // The height above the player where the follower rests
     public KeyCode restingKey = KeyCode.R; // The key to toggle resting
+    private bool isRestingKeyPressed = false;
+    private Coroutine currentCoroutine;
 
     private enum FollowerState { Following, Transitioning, Resting }
     private FollowerState state = FollowerState.Resting;
 
     public float distanceFromPlayer = 2f;  // Distance from the player
 
-    private bool isDodging = false; // State check variable
+    private bool canDodge = false; // State check variable
     private PlayerShooting playerShooting; // Reference to the PlayerShooting script
 
     private void Start() {
@@ -28,14 +30,22 @@ public class FollowerController : MonoBehaviour, Shootable
     {
         if (Input.GetKeyDown(restingKey))
         {
+            isRestingKeyPressed = true;
+
+            // Stop the current coroutine if one is running
+            if (currentCoroutine != null)
+            {
+                StopCoroutine(currentCoroutine);
+            }
             // Toggle the follower's state when the resting key is pressed
             if (state == FollowerState.Following)
             {
-                StartCoroutine(MoveToRestingPosition());
+                currentCoroutine = StartCoroutine(MoveToRestingPosition());
             }
             else
             {
                 state = FollowerState.Following;
+                canDodge = true;
             }
         }
 
@@ -97,18 +107,22 @@ public class FollowerController : MonoBehaviour, Shootable
 
     public void Shot(float bulletDamage)
     {
-        if (energy > bulletDamage)
-            energy -= bulletDamage;
-        else 
-            energy = 0;
+        if (canDodge)
+        {
+            if (energy > bulletDamage)
+                energy -= bulletDamage;
+            else 
+                energy = 0;
 
-        // Play the shooting animation
-        StartCoroutine(DodgeBullet());
+            // Play the shooting animation
+            StartCoroutine(DodgeBullet());
+        }
     }
 
     IEnumerator MoveToRestingPosition()
     {
         state = FollowerState.Transitioning;
+        canDodge = false;
         Vector3 restingPosition = player.transform.position + new Vector3(0, restingOffset, 0);
         while (Vector3.Distance(transform.position, restingPosition) > 0.01f)
         {
@@ -117,21 +131,19 @@ public class FollowerController : MonoBehaviour, Shootable
             yield return null;
         }
         state = FollowerState.Resting;
+        currentCoroutine = null;
     }
 
     IEnumerator DodgeBullet()
     {
-        // If already dodging, don't start another dodge
-        if (isDodging) yield break;
-
-        isDodging = true;
+        canDodge = false;
 
         // Dodge direction (perpendicular to the direction to player)
         Vector3 dodgeDirection = Vector3.Cross((transform.position - player.transform.position).normalized, Vector3.forward);
 
         // Dodge movement: Move sideways quickly and then slowly return to following the player
         float startTime = Time.time;
-        while(Time.time < startTime + dodgeTime)
+        while(Time.time < startTime + dodgeTime && !isRestingKeyPressed)
         {
             // Move in the dodge direction
             transform.position += dodgeDirection * dodgeSpeed * Time.deltaTime;
@@ -139,6 +151,8 @@ public class FollowerController : MonoBehaviour, Shootable
             yield return null;
         }
 
-        isDodging = false;
+        // Reset resting key pressed flag and only enable dodging if the coroutine wasn't interrupted
+        isRestingKeyPressed = false;
+        if (!isRestingKeyPressed) canDodge = true;
     }
 }
