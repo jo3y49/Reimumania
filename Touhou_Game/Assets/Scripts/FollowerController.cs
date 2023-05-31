@@ -5,12 +5,14 @@ public class FollowerController : MonoBehaviour, Shootable
 {
     public GameObject player; // The player object the follower should follow
     public float speed = 2f; // The speed at which the follower should follow the player
-    public float energy = 10f; 
+    public float energy = 100f; 
+    public float energyTick = 2f;
     public float rotationSpeed = 10f; // Speed at which the object rotates
     public float dodgeSpeed = 5f; // Speed for dodge
     public float dodgeTime = .1f;
     public float restingOffset = 1f; // The height above the player where the follower rests
     public KeyCode restingKey = KeyCode.R; // The key to toggle resting
+    private float maxEnergy;
     private bool isRestingKeyPressed = false;
     private Coroutine currentCoroutine;
 
@@ -24,6 +26,8 @@ public class FollowerController : MonoBehaviour, Shootable
 
     private void Start() {
         playerShooting = player.GetComponent<PlayerShooting>();
+        maxEnergy = energy;
+        StartCoroutine(EnergyTick());
     }
 
     void Update()
@@ -31,19 +35,18 @@ public class FollowerController : MonoBehaviour, Shootable
         if (Input.GetKeyDown(restingKey))
         {
             isRestingKeyPressed = true;
-
-            // Stop the current coroutine if one is running
-            if (currentCoroutine != null)
-            {
-                StopCoroutine(currentCoroutine);
-            }
+            
             // Toggle the follower's state when the resting key is pressed
             if (state == FollowerState.Following)
             {
                 currentCoroutine = StartCoroutine(MoveToRestingPosition());
             }
             else
+            if ((state == FollowerState.Resting || state == FollowerState.Transitioning) && energy >= maxEnergy/2)
             {
+                // Stop the current coroutine if one is running
+                if (currentCoroutine != null)
+                    StopCoroutine(currentCoroutine);
                 state = FollowerState.Following;
                 canDodge = true;
             }
@@ -110,12 +113,14 @@ public class FollowerController : MonoBehaviour, Shootable
         if (canDodge)
         {
             if (energy > bulletDamage)
+            {
                 energy -= bulletDamage;
+                // Play the dodging animation
+                StartCoroutine(DodgeBullet());
+            }
             else 
                 energy = 0;
-
-            // Play the shooting animation
-            StartCoroutine(DodgeBullet());
+                currentCoroutine = StartCoroutine(MoveToRestingPosition());
         }
     }
 
@@ -155,4 +160,29 @@ public class FollowerController : MonoBehaviour, Shootable
         isRestingKeyPressed = false;
         if (!isRestingKeyPressed) canDodge = true;
     }
+    private IEnumerator EnergyTick()
+{
+    while (true)
+    {
+        if (state == FollowerState.Following)
+        {
+            energy--;
+            if (energy <= 0)
+            {
+                currentCoroutine = StartCoroutine(MoveToRestingPosition());
+            }
+        }
+        else if (state == FollowerState.Resting)
+        {
+            if (energy < maxEnergy)
+            {
+                energy++;
+            }
+        }
+        Debug.Log(energy);
+
+        // Wait for 2 seconds
+        yield return new WaitForSeconds(energyTick);
+    }
+}
 }
