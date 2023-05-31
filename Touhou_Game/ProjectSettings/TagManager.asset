@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Projectile
   - Collectible
+  - Follower
   layers:
   - Default
   - TransparentFX

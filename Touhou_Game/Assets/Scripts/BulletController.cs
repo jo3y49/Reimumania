@@ -29,7 +29,8 @@ public class BulletController : MonoBehaviour
             if (shootable != null)
                 shootable.Shot(bulletDamage);
                 
-            Destroy(gameObject);
+            if (!other.gameObject.CompareTag("Follower"))
+                Destroy(gameObject);
         }
     }
 
