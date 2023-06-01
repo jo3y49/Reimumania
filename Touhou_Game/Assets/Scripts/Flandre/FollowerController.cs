@@ -124,7 +124,7 @@ public class FollowerController : MonoBehaviour, Shootable
         }
     }
 
-    IEnumerator MoveToRestingPosition()
+    private IEnumerator MoveToRestingPosition()
     {
         state = FollowerState.Transitioning;
         canDodge = false;
@@ -139,7 +139,7 @@ public class FollowerController : MonoBehaviour, Shootable
         currentCoroutine = null;
     }
 
-    IEnumerator DodgeBullet()
+    private IEnumerator DodgeBullet()
     {
         canDodge = false;
 
@@ -161,26 +161,26 @@ public class FollowerController : MonoBehaviour, Shootable
         if (!isRestingKeyPressed) canDodge = true;
     }
     private IEnumerator EnergyTick()
-{
-    while (true)
     {
-        if (state == FollowerState.Following)
+        while (true)
         {
-            energy--;
-            if (energy <= 0)
+            if (state == FollowerState.Following)
             {
-                currentCoroutine = StartCoroutine(MoveToRestingPosition());
+                energy--;
+                if (energy <= 0)
+                {
+                    currentCoroutine = StartCoroutine(MoveToRestingPosition());
+                }
             }
-        }
-        else if (state == FollowerState.Resting)
-        {
-            if (energy < maxEnergy)
+            else if (state == FollowerState.Resting)
             {
-                energy++;
+                if (energy < maxEnergy)
+                {
+                    energy++;
+                }
             }
-        }
 
-        yield return new WaitForSeconds(energyTick);
+            yield return new WaitForSeconds(energyTick);
+        }
     }
-}
 }

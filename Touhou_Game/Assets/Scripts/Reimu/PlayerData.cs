@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerData : MonoBehaviour
@@ -5,6 +6,7 @@ public class PlayerData : MonoBehaviour
     public int lives = 3;
     public int bombs = 3;
     public int coins = 0;
+    public KeyCode bombButton = KeyCode.Q;
     public KeyCode combatToggle = KeyCode.E;
     
     private PlayerShooting shootScript;
@@ -43,6 +45,11 @@ public class PlayerData : MonoBehaviour
         if (state == State.Combat)
         {
             direction = shootScript.direction;
+            if (Input.GetKeyDown(bombButton) && bombs > 0)
+            {
+                StartCoroutine(Bomb());
+            }
+            
         } else 
         {
             direction = moveScript.direction;
@@ -73,5 +80,13 @@ public class PlayerData : MonoBehaviour
             Destroy(other.gameObject);
             coins++;
         }
+    }
+
+    private IEnumerator Bomb()
+    {
+        bombs--;
+        Debug.Log(bombs);
+
+        yield return null;
     }
 }
