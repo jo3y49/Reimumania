@@ -179,9 +179,7 @@ public class FollowerController : MonoBehaviour, Shootable
                 energy++;
             }
         }
-        Debug.Log(energy);
 
-        // Wait for 2 seconds
         yield return new WaitForSeconds(energyTick);
     }
 }
