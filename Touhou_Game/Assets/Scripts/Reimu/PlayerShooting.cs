@@ -21,6 +21,15 @@ public class PlayerShooting : MonoBehaviour
 
     public Direction currentDirection = Direction.Down;
 
+    private enum Upgrade
+    {
+        L1,
+        L2,
+        L3,
+    }
+
+    [SerializeField] private Upgrade upgrade;
+
     private Vector2 aimDirection = Vector2.down;
     private float nextFireTime = 0f;
 
@@ -149,8 +158,35 @@ public class PlayerShooting : MonoBehaviour
 
     void FireBullet(Vector2 direction)
     {
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
-        bullet.GetComponent<BulletController>().Initialize(GetComponent<Collider2D>());
-        bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
+        GameObject bullet;
+        Vector2 rotatedDirection;
+
+        switch (upgrade)
+        {
+            case Upgrade.L1:
+                bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+                bullet.GetComponent<BulletController>().Initialize(GetComponent<Collider2D>());
+                bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
+                break;
+            case Upgrade.L2:
+                bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+                bullet.GetComponent<BulletController>().Initialize(GetComponent<Collider2D>());
+                bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
+                
+                // Fire bullet at slight left diagonal
+                rotatedDirection = Quaternion.Euler(0, 0, 15) * direction;
+                bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+                bullet.GetComponent<BulletController>().Initialize(GetComponent<Collider2D>());
+                bullet.GetComponent<Rigidbody2D>().velocity = rotatedDirection * bulletSpeed;
+
+                // Fire bullet at slight right diagonal
+                rotatedDirection = Quaternion.Euler(0, 0, -15) * direction;
+                bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+                bullet.GetComponent<BulletController>().Initialize(GetComponent<Collider2D>());
+                bullet.GetComponent<Rigidbody2D>().velocity = rotatedDirection * bulletSpeed;
+                break;
+            case Upgrade.L3:
+                break;
+        }
     }
 }

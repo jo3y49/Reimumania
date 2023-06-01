@@ -277,6 +277,7 @@ MonoBehaviour:
   bulletSpeed: 10
   fireRate: 5
   currentDirection: 1
+  upgrade: 1
 --- !u!114 &177263432
 MonoBehaviour:
   m_ObjectHideFlags: 0
