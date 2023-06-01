@@ -7,19 +7,9 @@ public class PlayerShooting : MonoBehaviour
     public float directionPersistTime = 0.1f; // Time in seconds the direction should persist
     public float bulletSpeed = 10f;
     public float fireRate = 5f;
-    public enum Direction
-    {
-        Up,
-        Down,
-        Left,
-        Right,
-        UpRight,
-        UpLeft,
-        DownRight,
-        DownLeft,
-    }
+    public KeyCode fireButton = KeyCode.Space;
 
-    public Direction currentDirection = Direction.Down;
+    public PlayerData.Direction direction = PlayerData.Direction.Down;
 
     private enum Upgrade
     {
@@ -60,9 +50,9 @@ public class PlayerShooting : MonoBehaviour
         }
 
         // Fire bullet
-        if (Input.GetKey(KeyCode.Space) && Time.time > nextFireTime)
+        if (Input.GetKey(fireButton) && Time.time > nextFireTime)
         {
-            FireBullet(aimDirection);
+            FireBullets(aimDirection);
             nextFireTime = Time.time + 1f/fireRate;
         }
 
@@ -84,7 +74,7 @@ public class PlayerShooting : MonoBehaviour
 
     private bool IsCurrentDirectionDiagonal()
     {
-        return (currentDirection == Direction.UpRight || currentDirection == Direction.UpLeft || currentDirection == Direction.DownRight || currentDirection == Direction.DownLeft);
+        return (direction == PlayerData.Direction.UpRight || direction == PlayerData.Direction.UpLeft || direction == PlayerData.Direction.DownRight || direction == PlayerData.Direction.DownLeft);
     }
 
     private bool DidKeyReleaseCauseDiagonal()
@@ -110,17 +100,17 @@ public class PlayerShooting : MonoBehaviour
             {
                 if (currentKeyStates[3])
                 {
-                    currentDirection = Direction.UpRight;
+                    direction = PlayerData.Direction.UpRight;
                     aimDirection = new Vector2(1, 1).normalized;
                 }
                 else if (currentKeyStates[2])
                 {
-                    currentDirection = Direction.UpLeft;
+                    direction = PlayerData.Direction.UpLeft;
                     aimDirection = new Vector2(-1, 1).normalized;
                 }
                 else
                 {
-                    currentDirection = Direction.Up;
+                    direction = PlayerData.Direction.Up;
                     aimDirection = new Vector2(0, 1);
                 }
             }
@@ -128,65 +118,55 @@ public class PlayerShooting : MonoBehaviour
             {
                 if (currentKeyStates[3])
                 {
-                    currentDirection = Direction.DownRight;
+                    direction = PlayerData.Direction.DownRight;
                     aimDirection = new Vector2(1, -1).normalized;
                 }
                 else if (currentKeyStates[2])
                 {
-                    currentDirection = Direction.DownLeft;
+                    direction = PlayerData.Direction.DownLeft;
                     aimDirection = new Vector2(-1, -1).normalized;
                 }
                 else
                 {
-                    currentDirection = Direction.Down;
+                    direction = PlayerData.Direction.Down;
                     aimDirection = new Vector2(0, -1);
                 }
             }
             else if (currentKeyStates[2] && !currentKeyStates[3])
             {
-                currentDirection = Direction.Left;
+                direction = PlayerData.Direction.Left;
                 aimDirection = new Vector2(-1, 0);
             }
             else if (currentKeyStates[3] && !currentKeyStates[2])
             {
-                currentDirection = Direction.Right;
+                direction = PlayerData.Direction.Right;
                 aimDirection = new Vector2(1, 0);
             }
 
             lastChangeTime = Time.time;
     }
 
-    void FireBullet(Vector2 direction)
+    private void FireBullets(Vector2 direction)
     {
-        GameObject bullet;
-        Vector2 rotatedDirection;
+        FireBullet(direction);
 
         switch (upgrade)
         {
-            case Upgrade.L1:
-                bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
-                bullet.GetComponent<BulletController>().Initialize(GetComponent<Collider2D>());
-                bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
-                break;
             case Upgrade.L2:
-                bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
-                bullet.GetComponent<BulletController>().Initialize(GetComponent<Collider2D>());
-                bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
-                
-                // Fire bullet at slight left diagonal
-                rotatedDirection = Quaternion.Euler(0, 0, 15) * direction;
-                bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
-                bullet.GetComponent<BulletController>().Initialize(GetComponent<Collider2D>());
-                bullet.GetComponent<Rigidbody2D>().velocity = rotatedDirection * bulletSpeed;
-
-                // Fire bullet at slight right diagonal
-                rotatedDirection = Quaternion.Euler(0, 0, -15) * direction;
-                bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
-                bullet.GetComponent<BulletController>().Initialize(GetComponent<Collider2D>());
-                bullet.GetComponent<Rigidbody2D>().velocity = rotatedDirection * bulletSpeed;
+                // Fire bullets at slight left and right diagonals
+                FireBullet(Quaternion.Euler(0, 0, 15) * direction);
+                FireBullet(Quaternion.Euler(0, 0, -15) * direction);
                 break;
             case Upgrade.L3:
+                // Fire bullets in the pattern you desire for L3
                 break;
         }
+    }
+
+    private void FireBullet(Vector2 direction)
+    {
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+        bullet.GetComponent<BulletController>().Initialize(GetComponent<Collider2D>());
+        bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
     }
 }

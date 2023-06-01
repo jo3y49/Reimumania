@@ -22,10 +22,10 @@ public class FollowerController : MonoBehaviour, Shootable
     public float distanceFromPlayer = 2f;  // Distance from the player
 
     private bool canDodge = false; // State check variable
-    private PlayerShooting playerShooting; // Reference to the PlayerShooting script
+    private PlayerData playerData; // Reference to the PlayerShooting script
 
     private void Start() {
-        playerShooting = player.GetComponent<PlayerShooting>();
+        playerData = player.GetComponent<PlayerData>();
         maxEnergy = energy;
         StartCoroutine(EnergyTick());
     }
@@ -59,37 +59,37 @@ public class FollowerController : MonoBehaviour, Shootable
         switch (state)
         {
             case FollowerState.Following:
-                switch (playerShooting.currentDirection)
+                switch (playerData.direction)
                 {
-                    case PlayerShooting.Direction.Up:
+                    case PlayerData.Direction.Up:
                         desiredRotation = Quaternion.Euler(0, 0, 0);
                         desiredPosition += new Vector3(0, -distanceFromPlayer, 0);
                         break;
-                    case PlayerShooting.Direction.Down:
+                    case PlayerData.Direction.Down:
                         desiredRotation = Quaternion.Euler(0, 0, 180);
                         desiredPosition += new Vector3(0, distanceFromPlayer, 0);
                         break;
-                    case PlayerShooting.Direction.Left:
+                    case PlayerData.Direction.Left:
                         desiredRotation = Quaternion.Euler(0, 0, 90);
                         desiredPosition += new Vector3(distanceFromPlayer, 0, 0);
                         break;
-                    case PlayerShooting.Direction.Right:
+                    case PlayerData.Direction.Right:
                         desiredRotation = Quaternion.Euler(0, 0, -90);
                         desiredPosition += new Vector3(-distanceFromPlayer, 0, 0);
                         break;
-                    case PlayerShooting.Direction.UpRight:
+                    case PlayerData.Direction.UpRight:
                         desiredRotation = Quaternion.Euler(0, 0, -45);
                         desiredPosition += new Vector3(-distanceFromPlayer, -distanceFromPlayer, 0);
                         break;
-                    case PlayerShooting.Direction.UpLeft:
+                    case PlayerData.Direction.UpLeft:
                         desiredRotation = Quaternion.Euler(0, 0, 45);
                         desiredPosition += new Vector3(distanceFromPlayer, -distanceFromPlayer, 0);
                         break;
-                    case PlayerShooting.Direction.DownRight:
+                    case PlayerData.Direction.DownRight:
                         desiredRotation = Quaternion.Euler(0, 0, -135);
                         desiredPosition += new Vector3(-distanceFromPlayer, distanceFromPlayer, 0);
                         break;
-                    case PlayerShooting.Direction.DownLeft:
+                    case PlayerData.Direction.DownLeft:
                         desiredRotation = Quaternion.Euler(0, 0, 135);
                         desiredPosition += new Vector3(distanceFromPlayer, distanceFromPlayer, 0);
                         break;
