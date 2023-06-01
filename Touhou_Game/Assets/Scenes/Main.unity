@@ -278,7 +278,7 @@ MonoBehaviour:
   fireRate: 5
   fireButton: 32
   direction: 1
-  upgrade: 1
+  upgrade: 0
 --- !u!114 &177263432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -503,7 +503,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -565,6 +565,25 @@ MonoBehaviour:
   midOrtho: 10
   maxOrtho: 20
   cameraToggle: 9
+--- !u!1 &949163428 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7519766305790422760, guid: 87b8331b435a56d489eda4511f71c7fc, type: 3}
+  m_PrefabInstance: {fileID: 7519766307405930970}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &949163436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949163428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 168b337e5c68d284f979a402c9952d99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  patrolRadius: 5
+  patrolSpeed: 1
 --- !u!1 &1204024155
 GameObject:
   m_ObjectHideFlags: 0
