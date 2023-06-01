@@ -4,7 +4,14 @@ public class CirclePatrol : MonoBehaviour {
     public float patrolRadius = 1f; // The radius of the circular path
     public float patrolSpeed = 1f; // How fast the enemy moves along the path
 
+    public bool clockwise = true;
+
     private float patrolAngle = 0f; // The current angle along the circular path
+
+    private void Start() {
+        if (clockwise)
+            patrolSpeed = -patrolSpeed;
+    }
 
     private void Update() {
         // Move along the circular patrol path

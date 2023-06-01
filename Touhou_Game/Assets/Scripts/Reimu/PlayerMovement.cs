@@ -5,7 +5,7 @@ public class PlayerMovement : MonoBehaviour {
     public float sprint = 1.8f; // Speed multipler for sprint
     public KeyCode sprintButton = KeyCode.LeftShift;
     private Vector2 moveDirection;
-    public PlayerData.Direction direction;
+    public PlayerData.Direction direction = PlayerData.Direction.Down;
 
     private void Update() {
         // Get input for movement
