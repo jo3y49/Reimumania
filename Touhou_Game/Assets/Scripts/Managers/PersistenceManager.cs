@@ -1,18 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class PersistenceManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public static PersistenceManager instance;
+
+    [SerializeField] private List<GameObject> persistentObjects = new List<GameObject>();
+
+    private void Start() {
+        foreach (GameObject obj in persistentObjects)
+        {
+            DontDestroyOnLoad(obj);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-        
+        if (instance == null)
+        {
+            DontDestroyOnLoad(gameObject);
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
     }
 }
