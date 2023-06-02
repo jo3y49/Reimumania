@@ -24,6 +24,15 @@ public class PlayerData : MonoBehaviour
     }
     public Direction direction = Direction.Down;
 
+    public enum Upgrade
+    {
+        L1,
+        L2,
+        L3,
+    }
+
+    public Upgrade upgrade = Upgrade.L1;
+
     public enum State 
     {
         Default,
@@ -31,6 +40,8 @@ public class PlayerData : MonoBehaviour
     }
 
     public State state = State.Default;
+
+    public GameDataManager gameData;
 
     private void Start() {
         shootScript = gameObject.GetComponent<PlayerShooting>();
@@ -79,14 +90,14 @@ public class PlayerData : MonoBehaviour
         {
             Destroy(other.gameObject);
             coins++;
+            gameData.addCoins();
         }
     }
 
     private IEnumerator Bomb()
     {
         bombs--;
-        Debug.Log(bombs);
-
+        
         yield return null;
     }
 }

@@ -11,15 +11,6 @@ public class PlayerShooting : MonoBehaviour
 
     public PlayerData.Direction direction = PlayerData.Direction.Down;
 
-    private enum Upgrade
-    {
-        L1,
-        L2,
-        L3,
-    }
-
-    [SerializeField] private Upgrade upgrade;
-
     private Vector2 aimDirection = Vector2.down;
     private float nextFireTime = 0f;
 
@@ -150,14 +141,14 @@ public class PlayerShooting : MonoBehaviour
     {
         FireBullet(direction);
 
-        switch (upgrade)
+        switch (GetComponent<PlayerData>().upgrade)
         {
-            case Upgrade.L2:
+            case PlayerData.Upgrade.L2:
                 // Fire bullets at slight left and right diagonals
                 FireBullet(Quaternion.Euler(0, 0, 15) * direction);
                 FireBullet(Quaternion.Euler(0, 0, -15) * direction);
                 break;
-            case Upgrade.L3:
+            case PlayerData.Upgrade.L3:
                 // Fire bullets in the pattern you desire for L3
                 break;
         }
