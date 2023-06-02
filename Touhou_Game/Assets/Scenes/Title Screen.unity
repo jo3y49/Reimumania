@@ -250,6 +250,7 @@ GameObject:
   - component: {fileID: 739392785}
   - component: {fileID: 739392784}
   - component: {fileID: 739392787}
+  - component: {fileID: 739392788}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: GameController
@@ -315,6 +316,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startGameButton: {fileID: 2002985569}
   loadGameButton: {fileID: 937377562}
+--- !u!114 &739392788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 739392783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b0120dcfe694194abb8bc5a087d198c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 7519766305790422760, guid: 87b8331b435a56d489eda4511f71c7fc, type: 3}
+  spawnLocation: {x: 0, y: 0}
 --- !u!1 &937377560
 GameObject:
   m_ObjectHideFlags: 0
