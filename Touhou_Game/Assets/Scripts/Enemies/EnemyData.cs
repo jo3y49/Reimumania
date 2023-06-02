@@ -27,10 +27,10 @@ public class EnemyData : MonoBehaviour, Shootable
         if (health > bulletDamage)
             health -= bulletDamage;
         else 
-            Destroy(gameObject);
+            Defeated();
     }
 
-    private void OnDestroy()
+    private void Defeated()
     {
         // Drop coins
         int numCoins = Random.Range(minCoins, maxCoins + 1);
@@ -46,6 +46,7 @@ public class EnemyData : MonoBehaviour, Shootable
             // Start the coroutine to move the coin
             coin.GetComponent<CoinController>().StartCoroutine(coin.GetComponent<CoinController>().MoveToPosition(transform.position + scatter));
 
+            Destroy(gameObject);
         }
     }
 }
