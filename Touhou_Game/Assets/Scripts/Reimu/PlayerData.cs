@@ -41,9 +41,14 @@ public class PlayerData : MonoBehaviour
 
     public State state = State.Default;
 
-    public GameDataManager gameData;
+    private GameDataManager gameData;
 
     private void Start() {
+        
+        GameObject gameManager = GameObject.FindGameObjectWithTag("GameController");
+        gameData = gameManager.GetComponent<GameDataManager>();
+        gameManager.GetComponent<PersistenceManager>().AddPersistentObject(gameObject);
+
         shootScript = gameObject.GetComponent<PlayerShooting>();
         moveScript = gameObject.GetComponent<PlayerMovement>();
 

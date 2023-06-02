@@ -5,14 +5,7 @@ public class PersistenceManager : MonoBehaviour
 {
     public static PersistenceManager instance;
 
-    [SerializeField] private List<GameObject> persistentObjects = new List<GameObject>();
-
-    private void Start() {
-        foreach (GameObject obj in persistentObjects)
-        {
-            DontDestroyOnLoad(obj);
-        }
-    }
+    private List<GameObject> persistentObjects = new List<GameObject>();
 
     private void Awake()
     {
@@ -24,6 +17,23 @@ public class PersistenceManager : MonoBehaviour
         else if (instance != this)
         {
             Destroy(gameObject);
+        }
+    }
+
+    public void AddPersistentObject(GameObject obj)
+    {
+        if (!persistentObjects.Contains(obj))
+        {
+            DontDestroyOnLoad(obj);
+            persistentObjects.Add(obj);
+        }
+    }
+
+    public void RemovePersistentObject(GameObject obj)
+    {
+        if (persistentObjects.Contains(obj))
+        {
+            persistentObjects.Remove(obj);
         }
     }
 }
