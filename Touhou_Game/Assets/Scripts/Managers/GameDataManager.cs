@@ -1,11 +1,14 @@
 using System.Runtime.InteropServices;
 using UnityEngine;
+using System.Collections;
 using TMPro;
+using System;
 
 public class GameDataManager : MonoBehaviour
 {
     public KeyCode saveButton = KeyCode.P;
-    public TextMeshProUGUI coinText;
+    public TextMeshProUGUI coinText, playtimeText;
+    public bool isPaused = false;
 
     private GameData gameData;
 
@@ -76,14 +79,21 @@ public class GameDataManager : MonoBehaviour
     public void setUI()
     {
         coinText.text = "Coins: " + gameData.currentCoins.ToString();
+        playtimeText.text = "Play Time: " + formatTimeToString(gameData.playTime);
+    }
+
+    public void getSavedPlayerData(PlayerData player)
+    {
+        player.coins = gameData.currentCoins;
+        player.upgrade = gameData.spellCardUpgrade;
     }
 
     public void addCoins(int coins = 1)
     {
-        gameData.totalCoins++;
-        gameData.currentCoins++;
-        if (gameData.accumulatedCoins <= gameData.currentCoins)
-            gameData.accumulatedCoins++;
+        gameData.totalCoins += coins;
+        gameData.currentCoins += coins;
+        if (gameData.accumulatedCoins < gameData.currentCoins)
+            gameData.accumulatedCoins = gameData.currentCoins;
         
         coinText.text = "Coins: " + gameData.currentCoins.ToString();
     }
@@ -91,5 +101,39 @@ public class GameDataManager : MonoBehaviour
     public void removeCoins(int coins = 1)
     {
         gameData.currentCoins -= coins;
+
+        coinText.text = "Coins: " + gameData.currentCoins.ToString();
+    }
+
+    public void setUpgrade(PlayerData.Upgrade upgrade)
+    {
+        gameData.spellCardUpgrade = upgrade;
+    }
+
+    public IEnumerator countPlayTime()
+    {
+        float previousTime = Time.time;
+
+        while (true)
+        {
+            if (!isPaused)
+            {
+                float deltaTime = Time.time - previousTime;
+                gameData.playTime += deltaTime;
+            }
+
+            previousTime = Time.time;
+            playtimeText.text = "Play Time: " + formatTimeToString(gameData.playTime);
+
+            yield return null;
+        }
+    }
+    private string formatTimeToString(float time)
+    {
+        int hours = (int)time / 3600;
+        int minutes = ((int)time % 3600) / 60;
+        int seconds = ((int)time % 3600) % 60;
+
+        return hours.ToString("00") + ":" + minutes.ToString("00") + ":" + seconds.ToString("00");
     }
 }

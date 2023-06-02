@@ -52,6 +52,8 @@ public class PlayerData : MonoBehaviour
         shootScript = gameObject.GetComponent<PlayerShooting>();
         moveScript = gameObject.GetComponent<PlayerMovement>();
 
+        gameData.getSavedPlayerData(this);
+
         if (state == State.Combat)
             shootScript.enabled = true;
     }
@@ -69,6 +71,15 @@ public class PlayerData : MonoBehaviour
         } else 
         {
             direction = moveScript.direction;
+        }
+        
+        if (Input.GetKeyDown(KeyCode.L)){
+            if (upgrade == Upgrade.L1)
+                upgrade = Upgrade.L2;
+            else
+                upgrade = Upgrade.L1;
+
+            gameData.setUpgrade(upgrade);
         }
 
         if (Input.GetKeyDown(combatToggle))
