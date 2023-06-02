@@ -9,6 +9,19 @@ public class EnemyData : MonoBehaviour, Shootable
     public int maxCoins = 10;
     public float scatterDistance = 1.0f;
 
+    public enum Direction
+    {
+        Up,
+        Down,
+        Left,
+        Right,
+        UpRight,
+        UpLeft,
+        DownRight,
+        DownLeft,
+    }
+    public Direction direction = Direction.Down;
+
     public void Shot(float bulletDamage)
     {
         if (health > bulletDamage)

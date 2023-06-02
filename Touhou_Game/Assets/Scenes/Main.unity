@@ -134,6 +134,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7519766305790422760, guid: 87b8331b435a56d489eda4511f71c7fc, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7519766305790422765, guid: 87b8331b435a56d489eda4511f71c7fc, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -639,9 +643,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 168b337e5c68d284f979a402c9952d99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolRadius: 5
+  patrolRadius: 2
   patrolSpeed: 1
-  clockwise: 1
+  clockwise: 0
+--- !u!114 &949163437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949163428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfa68cda87237564c88fdcd956469745, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1204024155
 GameObject:
   m_ObjectHideFlags: 0
@@ -827,6 +843,18 @@ MonoBehaviour:
   patrolSpeed: 5
   patrolDistance: 5
   direction: 0
+--- !u!114 &1396137701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1396137693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 379d1b1fbb7fdc34194679e7a66ed949, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1877202224
 GameObject:
   m_ObjectHideFlags: 0
@@ -899,11 +927,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7519766305790422765, guid: 87b8331b435a56d489eda4511f71c7fc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.89
+      value: -8.16
       objectReference: {fileID: 0}
     - target: {fileID: 7519766305790422765, guid: 87b8331b435a56d489eda4511f71c7fc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.03
+      value: -3.62
       objectReference: {fileID: 0}
     - target: {fileID: 7519766305790422765, guid: 87b8331b435a56d489eda4511f71c7fc, type: 3}
       propertyPath: m_LocalPosition.z
