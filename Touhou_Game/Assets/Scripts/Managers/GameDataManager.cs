@@ -7,6 +7,7 @@ using System;
 public class GameDataManager : MonoBehaviour
 {
     public KeyCode saveButton = KeyCode.P;
+    public KeyCode deleteButton = KeyCode.O;
     public TextMeshProUGUI coinText, playtimeText;
     public bool isPaused = false;
 
@@ -24,6 +25,10 @@ public class GameDataManager : MonoBehaviour
     [DllImport("__Internal")]
     private static extern string LoadFromLocalStorage(string key);
 
+    [DllImport("__Internal")]
+    private static extern void RemoveFromLocalStorage(string key);
+
+
     private void Awake()
     {
         gameData = new GameData();
@@ -34,6 +39,9 @@ public class GameDataManager : MonoBehaviour
         if (Input.GetKeyDown(saveButton))
         {
             SaveGame();
+        } else if (Input.GetKeyDown(deleteButton))
+        {
+            DeleteData();
         }
     }
 
@@ -51,7 +59,7 @@ public class GameDataManager : MonoBehaviour
         #endif
     }
 
-    public void LoadGame()
+    public GameData LoadGame()
     {
         string gameDataString;
 
@@ -68,12 +76,24 @@ public class GameDataManager : MonoBehaviour
         }
         else
         {
-            #if UNITY_WEBGL && !UNITY_EDITOR
-            WindowAlert("No saved game data found");
-            #else
-            Debug.Log("No saved game data found");
-            #endif
+            return null;
         }
+
+        return gameData;
+    }
+
+    public void NewGame()
+    {
+        gameData = new GameData();
+    }
+
+    public void DeleteData()
+    {
+        #if UNITY_WEBGL && !UNITY_EDITOR
+        RemoveFromLocalStorage("GameData");
+        #else
+        PlayerPrefs.SetString("GameData", null);
+        #endif
     }
 
     public void setUI()

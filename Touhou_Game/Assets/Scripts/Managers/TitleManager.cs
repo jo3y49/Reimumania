@@ -17,24 +17,28 @@ public class TitleManager : MonoBehaviour
         startGameButton.onClick.AddListener(StartNewGame);
         loadGameButton.onClick.AddListener(LoadGame);
 
-        // Check if save data exists
-        if (!PlayerPrefs.HasKey("GameData"))
+        // Disable the Load Game button by default
+        loadGameButton.interactable = false;
+
+        // Try to load the game data
+        GameData gameData = gameDataManager.LoadGame();
+        
+        // If gameData is not null, then save data exists and Load Game button can be enabled
+        if (gameData != null)
         {
-            // If save data does not exist, disable the Load Game button
-            loadGameButton.interactable = false;
+            loadGameButton.interactable = true;
         }
     }
 
     void StartNewGame()
     {
-        // Load the scene for a new game
-        SceneManager.LoadScene("Main"); // Replace with your game scene name
+        gameDataManager.NewGame();
+
+        LoadGame();
     }
 
     void LoadGame()
     {
-        // Load the scene for the existing game
-        gameDataManager.LoadGame();
 
         SceneManager.LoadScene("Main"); // Replace with your game scene name
     }
