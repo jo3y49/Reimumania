@@ -112,15 +112,19 @@ public class FollowerController : MonoBehaviour, Shootable
     {
         if (canDodge)
         {
+            
+
             if (energy > bulletDamage)
             {
                 energy -= bulletDamage;
                 // Play the dodging animation
                 StartCoroutine(DodgeBullet());
             }
-            else 
+            else
+            {
                 energy = 0;
                 currentCoroutine = StartCoroutine(MoveToRestingPosition());
+            }
         }
     }
 
