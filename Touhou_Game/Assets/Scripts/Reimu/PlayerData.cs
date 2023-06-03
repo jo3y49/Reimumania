@@ -44,7 +44,7 @@ public class PlayerData : MonoBehaviour, Shootable
     }
 
     public State state = State.Default;
-
+    private GameObject hitbox;
     private GameDataManager gameData;
 
     private void Start() {
@@ -56,11 +56,14 @@ public class PlayerData : MonoBehaviour, Shootable
         shootScript = GetComponent<PlayerShooting>();
         moveScript = GetComponent<PlayerMovement>();
         playerRenderer = GetComponent<Renderer>();
+        hitbox = transform.GetChild(0).gameObject;
 
         gameData.getSavedPlayerData(this);
 
-        if (state == State.Combat)
-            shootScript.enabled = true;
+        if (state == State.Combat){
+            ToggleCombatState(State.Default);
+        }
+            
     }
 
     private void Update() {
@@ -82,19 +85,7 @@ public class PlayerData : MonoBehaviour, Shootable
 
             if (Input.GetKeyDown(combatToggle))
             {
-                if (state == State.Combat)
-                {
-                    state = State.Default;
-                    moveScript.direction = shootScript.direction;
-                    
-                    shootScript.enabled = false;
-                } else 
-                {
-                    state = State.Combat;
-                    shootScript.direction = moveScript.direction;
-                    
-                    shootScript.enabled = true;
-                }
+                ToggleCombatState(state);
             }
         }
 
@@ -135,20 +126,36 @@ public class PlayerData : MonoBehaviour, Shootable
         }
     }
 
+    private void ToggleCombatState(State oldState)
+    {
+        if (oldState == State.Combat)
+            {
+                state = State.Default;
+                moveScript.direction = shootScript.direction;
+                hitbox.GetComponent<Renderer>().enabled = false;
+                shootScript.enabled = false;
+
+            } else 
+            {
+                state = State.Combat;
+                shootScript.direction = moveScript.direction;
+                hitbox.GetComponent<Renderer>().enabled = true;
+                shootScript.enabled = true;
+            }
+    }
+
     private IEnumerator Respawn()
     {
-        Renderer hitboxRenderer = transform.GetChild(0).GetComponent<Renderer>();
-
-        isAlive = moveScript.enabled = shootScript.enabled = playerRenderer.enabled = hitboxRenderer.enabled = false;
+        hitbox.SetActive(false);
+        isAlive = moveScript.enabled = shootScript.enabled = playerRenderer.enabled = false;
         
-        lives--;
+        lives -= 1;
 
         yield return new WaitForSeconds(respawnTime);
 
+        hitbox.SetActive(true);
+        isAlive = moveScript.enabled = playerRenderer.enabled = true;
         if (state == State.Combat)
             shootScript.enabled = true;
-
-        isAlive = moveScript.enabled = playerRenderer.enabled = hitboxRenderer.enabled = true;
-        
     }
 }

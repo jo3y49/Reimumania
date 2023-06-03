@@ -38,7 +38,7 @@ public class BulletController : MonoBehaviour
     {
         return other != parentCollider && !other.gameObject.CompareTag("Projectile") &&
             !other.gameObject.CompareTag("Collectible") && !(other.gameObject.CompareTag("Follower") && parentCollider.gameObject.CompareTag("Player")) &&
-            !(other.gameObject.CompareTag("Enemy") && parentCollider.gameObject.CompareTag("Enemy")) && other.gameObject.GetComponent<Renderer>().enabled;
+            !(other.gameObject.CompareTag("Enemy") && parentCollider.gameObject.CompareTag("Enemy")) && other.gameObject.activeSelf;
     }
 
     // Update is called once per frame
