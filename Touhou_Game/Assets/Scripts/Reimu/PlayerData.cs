@@ -137,7 +137,9 @@ public class PlayerData : MonoBehaviour, Shootable
 
     private IEnumerator Respawn()
     {
-        isAlive = moveScript.enabled = shootScript.enabled = playerRenderer.enabled = false;
+        Renderer hitboxRenderer = transform.GetChild(0).GetComponent<Renderer>();
+
+        isAlive = moveScript.enabled = shootScript.enabled = playerRenderer.enabled = hitboxRenderer.enabled = false;
         
         lives--;
 
@@ -146,7 +148,7 @@ public class PlayerData : MonoBehaviour, Shootable
         if (state == State.Combat)
             shootScript.enabled = true;
 
-        isAlive = moveScript.enabled = playerRenderer.enabled = true;
+        isAlive = moveScript.enabled = playerRenderer.enabled = hitboxRenderer.enabled = true;
         
     }
 }
