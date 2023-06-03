@@ -5,7 +5,7 @@ public class ShootAtPlayer : MonoBehaviour, Pattern
     public void Shoot(GameObject bullet, float bulletSpeed)
     {
         // Calculate direction to the player
-        Vector3 shootDirection = (GetComponent<EnemyShooting>().player.position - transform.position).normalized;
+        Vector3 shootDirection = (GetComponent<EnemyShooting>().player.transform.position - transform.position).normalized;
 
         // Adjust the bullet's velocity to shoot towards the player
         bullet.GetComponent<Rigidbody2D>().velocity = shootDirection * bulletSpeed;

@@ -1,16 +1,20 @@
 using System.Collections;
 using UnityEngine;
 
-public class PlayerData : MonoBehaviour
+public class PlayerData : MonoBehaviour, Shootable
 {
     public int lives = 3;
     public int bombs = 3;
     public int coins = 0;
+    public float respawnTime = 2;
     public KeyCode bombButton = KeyCode.Q;
     public KeyCode combatToggle = KeyCode.E;
+
+    public bool isAlive = true;
     
     private PlayerShooting shootScript;
     private PlayerMovement moveScript;
+    private Renderer playerRenderer;
     public enum Direction
     {
         Up,
@@ -49,8 +53,9 @@ public class PlayerData : MonoBehaviour
         gameData = gameManager.GetComponent<GameDataManager>();
         gameManager.GetComponent<PersistenceManager>().AddPersistentObject(gameObject);
 
-        shootScript = gameObject.GetComponent<PlayerShooting>();
-        moveScript = gameObject.GetComponent<PlayerMovement>();
+        shootScript = GetComponent<PlayerShooting>();
+        moveScript = GetComponent<PlayerMovement>();
+        playerRenderer = GetComponent<Renderer>();
 
         gameData.getSavedPlayerData(this);
 
@@ -60,43 +65,47 @@ public class PlayerData : MonoBehaviour
 
     private void Update() {
 
-        if (state == State.Combat)
+        if (isAlive)
         {
-            direction = shootScript.direction;
-            if (Input.GetKeyDown(bombButton) && bombs > 0)
+            if (state == State.Combat)
             {
-                StartCoroutine(Bomb());
+                direction = shootScript.direction;
+                if (Input.GetKeyDown(bombButton) && bombs > 0)
+                {
+                    StartCoroutine(Bomb());
+                }
+                
+            } else 
+            {
+                direction = moveScript.direction;
             }
-            
-        } else 
-        {
-            direction = moveScript.direction;
+
+            if (Input.GetKeyDown(combatToggle))
+            {
+                if (state == State.Combat)
+                {
+                    state = State.Default;
+                    moveScript.direction = shootScript.direction;
+                    
+                    shootScript.enabled = false;
+                } else 
+                {
+                    state = State.Combat;
+                    shootScript.direction = moveScript.direction;
+                    
+                    shootScript.enabled = true;
+                }
+            }
         }
-        
-        if (Input.GetKeyDown(KeyCode.L)){
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
             if (upgrade == Upgrade.L1)
                 upgrade = Upgrade.L2;
             else
                 upgrade = Upgrade.L1;
 
             gameData.setUpgrade(upgrade);
-        }
-
-        if (Input.GetKeyDown(combatToggle))
-        {
-            if (state == State.Combat)
-            {
-                state = State.Default;
-                moveScript.direction = shootScript.direction;
-                
-                shootScript.enabled = false;
-            } else 
-            {
-                state = State.Combat;
-                shootScript.direction = moveScript.direction;
-                
-                shootScript.enabled = true;
-            }
         }
     }
 
@@ -115,5 +124,29 @@ public class PlayerData : MonoBehaviour
         bombs--;
         
         yield return null;
+    }
+
+    public void Shot(float bulletDamage)
+    {
+        if (lives > 0 && isAlive)
+        {
+            StartCoroutine(Respawn());
+            Debug.Log("shot");
+        }
+    }
+
+    private IEnumerator Respawn()
+    {
+        isAlive = moveScript.enabled = shootScript.enabled = playerRenderer.enabled = false;
+        
+        lives--;
+
+        yield return new WaitForSeconds(respawnTime);
+
+        if (state == State.Combat)
+            shootScript.enabled = true;
+
+        isAlive = moveScript.enabled = playerRenderer.enabled = true;
+        
     }
 }
