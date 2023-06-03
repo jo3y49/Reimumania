@@ -23,7 +23,7 @@ public class BulletController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other != parentCollider && !other.gameObject.CompareTag("Projectile") && !other.gameObject.CompareTag("Collectible")) // Don't destroy if we're still colliding with the parent
+        if (CanHit(other))
         {
             Shootable shootable = other.GetComponent<Shootable>();
             if (shootable != null)
@@ -32,6 +32,13 @@ public class BulletController : MonoBehaviour
             if (!other.gameObject.CompareTag("Follower"))
                 Destroy(gameObject);
         }
+    }
+
+    private bool CanHit(Collider2D other) 
+    {
+        return other != parentCollider && !other.gameObject.CompareTag("Projectile") &&
+            !other.gameObject.CompareTag("Collectible") && !(other.gameObject.CompareTag("Follower") && parentCollider.gameObject.CompareTag("Player")) &&
+            !(other.gameObject.CompareTag("Enemy") && parentCollider.gameObject.CompareTag("Enemy"));
     }
 
     // Update is called once per frame

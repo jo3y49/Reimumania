@@ -374,11 +374,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f2d040c34269184e92c4417ccc8c841, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lives: 3
+  lives: 0
   bombs: 3
   coins: 0
+  respawnTime: 2
   bombButton: 113
   combatToggle: 101
+  isAlive: 1
   direction: 1
   upgrade: 1
   state: 1

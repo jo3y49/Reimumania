@@ -113,7 +113,6 @@ public class FollowerController : MonoBehaviour, Shootable
         if (canDodge)
         {
             
-
             if (energy > bulletDamage)
             {
                 energy -= bulletDamage;
