@@ -100,16 +100,6 @@ public class PlayerData : MonoBehaviour, Shootable
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("Collectible"))
-        {
-            Destroy(other.gameObject);
-            coins++;
-            gameData.addCoins();
-        }
-    }
-
     private IEnumerator Bomb()
     {
         bombs--;
@@ -142,6 +132,13 @@ public class PlayerData : MonoBehaviour, Shootable
                 hitbox.GetComponent<Renderer>().enabled = true;
                 shootScript.enabled = true;
             }
+    }
+
+    public void CollectCoin(GameObject coin)
+    {
+        Destroy(coin);
+        coins++;
+        gameData.addCoins();
     }
 
     private IEnumerator Respawn()

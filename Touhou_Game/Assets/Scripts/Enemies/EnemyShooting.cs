@@ -7,7 +7,7 @@ public class EnemyShooting : MonoBehaviour
     public float bulletSpeed = 10f;
     public float fireRate = 5f;
     
-    public GameObject player;
+    private GameObject player;
     private float nextFireTime = 0f;
 
     private Pattern pattern;
@@ -26,7 +26,7 @@ public class EnemyShooting : MonoBehaviour
         // If the player is within shooting range, shoot
         if (distanceToPlayer <= shootingRange && Time.time > nextFireTime && player.GetComponent<PlayerData>().isAlive)
         {
-            pattern.Shoot(MakeBullet(), bulletSpeed);
+            pattern.Shoot(MakeBullet(), player.transform, bulletSpeed);
             nextFireTime = Time.time + 1f / fireRate;
         }
     }

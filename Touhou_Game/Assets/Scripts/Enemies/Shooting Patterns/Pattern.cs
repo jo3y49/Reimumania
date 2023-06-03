@@ -2,5 +2,5 @@ using UnityEngine;
 
 public interface Pattern
 {
-    void Shoot(GameObject bulletPrefab, float bulletSoeed);
+    void Shoot(GameObject bulletPrefab, Transform player, float bulletSoeed);
 }

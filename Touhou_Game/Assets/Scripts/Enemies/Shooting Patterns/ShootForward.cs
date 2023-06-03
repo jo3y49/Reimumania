@@ -1,9 +1,8 @@
 using UnityEngine;
 
 public class ShootForward : MonoBehaviour, Pattern {
-    public void Shoot(GameObject bullet, float bulletSpeed)
+    public void Shoot(GameObject bullet, Transform player, float bulletSpeed)
     {
-        // Calculate direction to the player
         Vector2 aimDirection = new Vector2(0,0);
 
         switch (GetComponent<EnemyData>().direction)
@@ -35,7 +34,6 @@ public class ShootForward : MonoBehaviour, Pattern {
 
         }
 
-        // Adjust the bullet's velocity to shoot towards the player
         bullet.GetComponent<Rigidbody2D>().velocity = aimDirection * bulletSpeed;
     }
 }
