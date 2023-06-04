@@ -32,6 +32,8 @@ public class EnemyData : MonoBehaviour, Shootable
 
     private void Defeated()
     {
+        GameObject.FindGameObjectWithTag("GameController").GetComponent<GameDataManager>().AddKill();
+
         // Drop coins
         int numCoins = Random.Range(minCoins, maxCoins + 1);
         for (int i = 0; i < numCoins; i++)

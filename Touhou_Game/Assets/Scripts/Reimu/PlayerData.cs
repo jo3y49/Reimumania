@@ -58,7 +58,7 @@ public class PlayerData : MonoBehaviour, Shootable
         playerRenderer = GetComponent<Renderer>();
         hitbox = transform.GetChild(0).gameObject;
 
-        gameData.getSavedPlayerData(this);
+        gameData.GetSavedPlayerData(this);
 
         if (state == State.Combat){
             ToggleCombatState(State.Default);
@@ -96,7 +96,7 @@ public class PlayerData : MonoBehaviour, Shootable
             else
                 upgrade = Upgrade.L1;
 
-            gameData.setUpgrade(upgrade);
+            gameData.SetUpgrade(upgrade);
         }
     }
 
@@ -138,7 +138,7 @@ public class PlayerData : MonoBehaviour, Shootable
     {
         Destroy(coin);
         coins++;
-        gameData.addCoins();
+        gameData.AddCoins();
     }
 
     private IEnumerator Respawn()

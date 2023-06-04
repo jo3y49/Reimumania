@@ -19,7 +19,7 @@ public class EnemySpawnManager : MonoBehaviour {
             GameObject enemy = getBaseEnemy(spawnLocation[1]);
             enemy.AddComponent<CirclePatrol>();
             enemy.AddComponent<ShootAtPlayer>();
-            enemy.GetComponent<Renderer>().material.color = Color.green;
+            enemy.GetComponent<Renderer>().material.color = Color.cyan;
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {

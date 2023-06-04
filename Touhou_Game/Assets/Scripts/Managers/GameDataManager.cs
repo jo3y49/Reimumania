@@ -8,7 +8,7 @@ public class GameDataManager : MonoBehaviour
 {
     public KeyCode saveButton = KeyCode.P;
     public KeyCode deleteButton = KeyCode.O;
-    public TextMeshProUGUI coinText, playtimeText;
+    public TextMeshProUGUI coinText, playtimeText, killText;
     public bool isPaused = true;
 
     private GameData gameData;
@@ -96,21 +96,26 @@ public class GameDataManager : MonoBehaviour
         #endif
     }
 
-    public void setUI()
+    public void SetUI(TextMeshProUGUI[] displayVariables)
     {
+        coinText = displayVariables[0];
+        playtimeText = displayVariables[1];
+        killText = displayVariables[2];
+
         coinText.text = "Coins: " + gameData.currentCoins.ToString();
-        playtimeText.text = "Play Time: " + formatTimeToString(gameData.playTime);
+        playtimeText.text = "Play Time: " + FormatTimeToString(gameData.playTime);
+        killText.text = "Kills: " + gameData.kills.ToString();
 
         isPaused = false;
     }
 
-    public void getSavedPlayerData(PlayerData player)
+    public void GetSavedPlayerData(PlayerData player)
     {
         player.coins = gameData.currentCoins;
         player.upgrade = gameData.spellCardUpgrade;
     }
 
-    public void addCoins(int coins = 1)
+    public void AddCoins(int coins = 1)
     {
         gameData.totalCoins += coins;
         gameData.currentCoins += coins;
@@ -120,19 +125,26 @@ public class GameDataManager : MonoBehaviour
         coinText.text = "Coins: " + gameData.currentCoins.ToString();
     }
 
-    public void removeCoins(int coins = 1)
+    public void RemoveCoins(int coins = 1)
     {
         gameData.currentCoins -= coins;
 
         coinText.text = "Coins: " + gameData.currentCoins.ToString();
     }
 
-    public void setUpgrade(PlayerData.Upgrade upgrade)
+    public void SetUpgrade(PlayerData.Upgrade upgrade)
     {
         gameData.spellCardUpgrade = upgrade;
     }
 
-    public IEnumerator countPlayTime()
+    public void AddKill(int kills = 1)
+    {
+        gameData.kills += kills;
+
+        killText.text = "Kills: " + gameData.kills.ToString();
+    }
+
+    public IEnumerator CountPlayTime()
     {
         float previousTime = Time.time;
 
@@ -145,12 +157,12 @@ public class GameDataManager : MonoBehaviour
             }
 
             previousTime = Time.time;
-            playtimeText.text = "Play Time: " + formatTimeToString(gameData.playTime);
+            playtimeText.text = "Play Time: " + FormatTimeToString(gameData.playTime);
 
             yield return null;
         }
     }
-    private string formatTimeToString(float time)
+    private string FormatTimeToString(float time)
     {
         int hours = (int)time / 3600;
         int minutes = ((int)time % 3600) / 60;
