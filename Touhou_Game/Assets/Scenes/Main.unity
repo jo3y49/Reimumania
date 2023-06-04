@@ -525,7 +525,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.12941176, g: 0.73698723, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1296,11 +1296,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7519766305790422765, guid: 87b8331b435a56d489eda4511f71c7fc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 23.19
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 7519766305790422765, guid: 87b8331b435a56d489eda4511f71c7fc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.85
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7519766305790422765, guid: 87b8331b435a56d489eda4511f71c7fc, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2404,7 +2404,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1529135981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2645,7 +2645,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7519766305790422760, guid: 87b8331b435a56d489eda4511f71c7fc, type: 3}
   m_PrefabInstance: {fileID: 1717230822}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1710176105
+--- !u!114 &1710176112
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2654,9 +2654,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 1710176104}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfa68cda87237564c88fdcd956469745, type: 3}
+  m_Script: {fileID: 11500000, guid: 379d1b1fbb7fdc34194679e7a66ed949, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1710176113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1710176104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f8cf865d5cb5db45b9cd7ac74fb6940, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  patrolSpeed: 5
+  patrolDistance: 5
+  direction: 0
 --- !u!1001 &1717230822
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2682,7 +2697,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7519766305790422765, guid: 87b8331b435a56d489eda4511f71c7fc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -2.5
       objectReference: {fileID: 0}
     - target: {fileID: 7519766305790422765, guid: 87b8331b435a56d489eda4511f71c7fc, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2808,11 +2823,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7519766305790422765, guid: 87b8331b435a56d489eda4511f71c7fc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 23.19
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 7519766305790422765, guid: 87b8331b435a56d489eda4511f71c7fc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 21.46
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7519766305790422765, guid: 87b8331b435a56d489eda4511f71c7fc, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2882,8 +2897,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 7519766305790422760, guid: 87b8331b435a56d489eda4511f71c7fc, type: 3}
   spawnLocation:
-  - {x: 0, y: 20}
-  - {x: 0, y: 0}
+  - {x: -2.5, y: 20}
+  - {x: 25, y: 20}
+  - {x: 25, y: 5}
 --- !u!114 &1987970062
 MonoBehaviour:
   m_ObjectHideFlags: 0

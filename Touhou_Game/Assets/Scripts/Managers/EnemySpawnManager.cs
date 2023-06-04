@@ -10,6 +10,8 @@ public class EnemySpawnManager : MonoBehaviour {
             GameObject enemy = getBaseEnemy(spawnLocation[0]);
             enemy.AddComponent<BackAndForthPatrol>();
             enemy.AddComponent<ShootForward>();
+            Renderer renderer = enemy.GetComponent<Renderer>();
+            Debug.Log(renderer);
             enemy.GetComponent<Renderer>().material.color = Color.blue;
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -18,6 +20,13 @@ public class EnemySpawnManager : MonoBehaviour {
             enemy.AddComponent<CirclePatrol>();
             enemy.AddComponent<ShootAtPlayer>();
             enemy.GetComponent<Renderer>().material.color = Color.green;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            GameObject enemy = getBaseEnemy(spawnLocation[2]);
+            enemy.AddComponent<CirclePatrol>();
+            enemy.AddComponent<ShootAtPlayer>();
+            enemy.GetComponent<Renderer>().material.color = Color.red;
         }
     }
 
