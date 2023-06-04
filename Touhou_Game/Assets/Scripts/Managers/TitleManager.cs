@@ -4,8 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class TitleManager : MonoBehaviour
 {
-    public Button startGameButton;
-    public Button loadGameButton;
+    public Button startGameButton, loadGameButton;
 
     private GameDataManager gameDataManager;
 

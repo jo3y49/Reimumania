@@ -34,6 +34,16 @@ public class PersistenceManager : MonoBehaviour
         if (persistentObjects.Contains(obj))
         {
             persistentObjects.Remove(obj);
+            Destroy(obj);
         }
+    }
+
+    public void Reset()
+    {
+        foreach(GameObject obj in persistentObjects) {
+            Destroy(obj);
+        }
+        persistentObjects.Clear();
+        Destroy(gameObject);
     }
 }

@@ -14,6 +14,9 @@ public class CirclePatrol : MonoBehaviour {
     }
 
     private void Update() {
+        if (Time.timeScale == 0f) {
+            return;
+        }
         // Move along the circular patrol path
         patrolAngle += patrolSpeed * Time.deltaTime;
         Vector3 patrolOffset = new Vector3(Mathf.Cos(patrolAngle), Mathf.Sin(patrolAngle), 0) * patrolRadius;

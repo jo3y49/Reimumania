@@ -9,7 +9,7 @@ public class GameDataManager : MonoBehaviour
     public KeyCode saveButton = KeyCode.P;
     public KeyCode deleteButton = KeyCode.O;
     public TextMeshProUGUI coinText, playtimeText;
-    public bool isPaused = false;
+    public bool isPaused = true;
 
     private GameData gameData;
 
@@ -100,6 +100,8 @@ public class GameDataManager : MonoBehaviour
     {
         coinText.text = "Coins: " + gameData.currentCoins.ToString();
         playtimeText.text = "Play Time: " + formatTimeToString(gameData.playTime);
+
+        isPaused = false;
     }
 
     public void getSavedPlayerData(PlayerData player)

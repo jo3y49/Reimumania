@@ -9,6 +9,11 @@ public class PlayerMovement : MonoBehaviour {
 
 
     private void Update() {
+        Movement();
+    }   
+
+    private void Movement()
+    {
         // Get input for movement
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
@@ -108,10 +113,6 @@ public class PlayerMovement : MonoBehaviour {
             RaycastHit2D hit1 = Physics2D.Raycast(ray1Start, moveDirection, rayLength);
             RaycastHit2D hit2 = Physics2D.Raycast(ray2Start, moveDirection, rayLength);
             RaycastHit2D hit3 = Physics2D.Raycast(ray3Start, moveDirection, rayLength);
-            
-            Debug.DrawRay(ray1Start, moveDirection * rayLength, Color.red, 1f);
-            Debug.DrawRay(ray2Start, moveDirection * rayLength, Color.blue, 1f);
-            Debug.DrawRay(ray3Start, moveDirection * rayLength, Color.green, 1f);
 
             if ((hit1.collider != null && hit1.collider.CompareTag("Environment")) ||
                 (hit2.collider != null && hit2.collider.CompareTag("Environment")) ||
@@ -119,21 +120,15 @@ public class PlayerMovement : MonoBehaviour {
             {
                 return;
             }
-        } else {
+        } 
+        else 
+        {
             RaycastHit2D hit1 = Physics2D.Raycast(ray1Start, new Vector2(moveDirection.x, 0), rayLength);
             RaycastHit2D hit2 = Physics2D.Raycast(ray2Start, new Vector2(moveDirection.x, 0), rayLength);
             RaycastHit2D hit3 = Physics2D.Raycast(ray3Start, new Vector2(moveDirection.x, 0), rayLength);
             RaycastHit2D hit4 = Physics2D.Raycast(ray4Start, new Vector2(0, moveDirection.y), rayLength);
             RaycastHit2D hit5 = Physics2D.Raycast(ray5Start, new Vector2(0, moveDirection.y), rayLength);
             RaycastHit2D hit6 = Physics2D.Raycast(ray6Start, new Vector2(0, moveDirection.y), rayLength);
-
-            
-            Debug.DrawRay(ray1Start, new Vector2(moveDirection.x, 0) * rayLength, Color.red, 1f);
-            Debug.DrawRay(ray2Start, new Vector2(moveDirection.x, 0) * rayLength, Color.blue, 1f);
-            Debug.DrawRay(ray3Start, new Vector2(moveDirection.x, 0) * rayLength, Color.green, 1f);
-            Debug.DrawRay(ray4Start, new Vector2(0, moveDirection.y) * rayLength, Color.cyan, 1f);
-            Debug.DrawRay(ray5Start, new Vector2(0, moveDirection.y) * rayLength, Color.magenta, 1f);
-            Debug.DrawRay(ray6Start, new Vector2(0, moveDirection.y) * rayLength, Color.yellow, 1f);
 
             if ((hit1.collider != null && hit1.collider.CompareTag("Environment")) ||
                 (hit2.collider != null && hit2.collider.CompareTag("Environment")) ||
@@ -148,7 +143,7 @@ public class PlayerMovement : MonoBehaviour {
 
         // Otherwise, move the player
         transform.position += new Vector3(moveDirection.x, moveDirection.y, 0) * speedToUse * Time.deltaTime;
-    }   
+    }
 
     private void DetermineDirection(float moveX, float moveY) {
         if (!Mathf.Approximately(moveX, 0) || !Mathf.Approximately(moveY, 0)) // If there is movement

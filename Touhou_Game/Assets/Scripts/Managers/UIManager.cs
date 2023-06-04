@@ -1,19 +1,57 @@
 using UnityEngine;
 using System.Collections;
 using TMPro;
-
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour {
 
     [SerializeField] private TextMeshProUGUI[] displayVariables;
     private GameDataManager gameDataManager;
+    private PersistenceManager persistenceManager;
+    public GameObject pauseUI;
+    private bool isPaused = false;
 
     private void Start() {
         gameDataManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameDataManager>();
+        persistenceManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<PersistenceManager>();
         gameDataManager.coinText = displayVariables[0];
         gameDataManager.playtimeText = displayVariables[1];
 
         gameDataManager.setUI();
         StartCoroutine(gameDataManager.countPlayTime());
+    }
+
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            if (isPaused) {
+                Resume();
+            } else {
+                Pause();
+            }
+        }
+    }
+
+    public void Resume() {
+        pauseUI.SetActive(false);
+        Time.timeScale = 1f; // This makes everything in the game move at normal speed
+        TogglePause(false);
+    }
+
+    void Pause() {
+        pauseUI.SetActive(true);
+        Time.timeScale = 0f; // This makes everything in the game stop moving
+        TogglePause(true);
+    }
+
+    public void LoadMenu() {
+        Time.timeScale = 1f; // You need to make sure that the game isn't still paused when you load another scene
+        persistenceManager.Reset();
+        SceneManager.LoadScene("Title Screen"); // Change "Menu" to the name of your scene
+    }
+
+    private void TogglePause(bool pause)
+    {
+        isPaused = pause;
+        gameDataManager.isPaused = pause;
     }
 }

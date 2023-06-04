@@ -42,10 +42,4 @@ public class BulletController : MonoBehaviour
             (other.gameObject.CompareTag("Hit Box") || other.gameObject.CompareTag("Enemy") ||
             other.gameObject.CompareTag("Environment") || other.gameObject.CompareTag("Follower"));
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        Destroy(gameObject, 2f);
-    }
 }
