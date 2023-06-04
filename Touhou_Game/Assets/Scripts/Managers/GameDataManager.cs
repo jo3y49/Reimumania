@@ -8,8 +8,9 @@ public class GameDataManager : MonoBehaviour
 {
     public KeyCode saveButton = KeyCode.P;
     public KeyCode deleteButton = KeyCode.O;
-    public TextMeshProUGUI coinText, playtimeText, killText;
+    public TextMeshProUGUI coinText, playtimeText, killText, deathText;
     public bool isPaused = true;
+    public int deaths = 0;
 
     private GameData gameData;
 
@@ -36,13 +37,13 @@ public class GameDataManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(saveButton))
-        {
-            SaveGame();
-        } else if (Input.GetKeyDown(deleteButton))
-        {
-            DeleteData();
-        }
+        // if (Input.GetKeyDown(saveButton))
+        // {
+        //     SaveGame();
+        // } else if (Input.GetKeyDown(deleteButton))
+        // {
+        //     DeleteData();
+        // }
     }
 
     public void SaveGame()
@@ -101,10 +102,12 @@ public class GameDataManager : MonoBehaviour
         coinText = displayVariables[0];
         playtimeText = displayVariables[1];
         killText = displayVariables[2];
+        deathText = displayVariables[3];
 
         coinText.text = "Coins: " + gameData.currentCoins.ToString();
         playtimeText.text = "Play Time: " + FormatTimeToString(gameData.playTime);
         killText.text = "Kills: " + gameData.kills.ToString();
+        deathText.text = "Deaths: " + deaths.ToString();
 
         isPaused = false;
     }
@@ -142,6 +145,13 @@ public class GameDataManager : MonoBehaviour
         gameData.kills += kills;
 
         killText.text = "Kills: " + gameData.kills.ToString();
+    }
+
+    public void Death(int death = 1)
+    {
+        deaths += death;
+
+        deathText.text = "Deaths: " + deaths.ToString();
     }
 
     public IEnumerator CountPlayTime()

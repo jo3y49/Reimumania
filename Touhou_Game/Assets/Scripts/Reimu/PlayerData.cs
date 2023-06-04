@@ -68,24 +68,15 @@ public class PlayerData : MonoBehaviour, Shootable
 
     private void Update() {
 
-        if (isAlive)
+        direction = shootScript.direction;
+        
+        if (Input.GetKeyDown(KeyCode.I))
         {
-            if (state == State.Combat)
+            if (lives == 0)
             {
-                direction = shootScript.direction;
-                if (Input.GetKeyDown(bombButton) && bombs > 0)
-                {
-                    StartCoroutine(Bomb());
-                }
-                
-            } else 
-            {
-                direction = moveScript.direction;
-            }
-
-            if (Input.GetKeyDown(combatToggle))
-            {
-                ToggleCombatState(state);
+                lives = 3;
+            } else {
+                lives = 0;
             }
         }
 
@@ -146,7 +137,8 @@ public class PlayerData : MonoBehaviour, Shootable
         hitbox.SetActive(false);
         isAlive = moveScript.enabled = shootScript.enabled = playerRenderer.enabled = false;
         
-        lives -= 1;
+        gameData.Death();
+        // lives -= 1;
 
         yield return new WaitForSeconds(respawnTime);
 
