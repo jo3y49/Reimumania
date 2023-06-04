@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - Collector
   - Environment
+  - Hit Box
   layers:
   - Default
   - TransparentFX

@@ -39,7 +39,7 @@ public class BulletController : MonoBehaviour
         return other != parentCollider && other.gameObject.activeSelf &&
             !(other.gameObject.CompareTag("Follower") && parentCollider.gameObject.CompareTag("Player")) &&
             !(other.gameObject.CompareTag("Enemy") && parentCollider.gameObject.CompareTag("Enemy")) &&
-            (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Enemy") ||
+            (other.gameObject.CompareTag("Hit Box") || other.gameObject.CompareTag("Enemy") ||
             other.gameObject.CompareTag("Environment") || other.gameObject.CompareTag("Follower"));
     }
 
