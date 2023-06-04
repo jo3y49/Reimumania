@@ -134,6 +134,8 @@ public class PlayerShooting : MonoBehaviour
                 aimDirection = new Vector2(1, 0);
             }
 
+            float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg - 90;
+            transform.eulerAngles = new Vector3(0, 0, angle);
             lastChangeTime = Time.time;
     }
 
