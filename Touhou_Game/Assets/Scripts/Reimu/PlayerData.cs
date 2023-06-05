@@ -78,7 +78,7 @@ public class PlayerData : MonoBehaviour, Shootable
                     StartCoroutine(Bomb());
                 }
                 
-            } else 
+            } else
             {
                 direction = moveScript.direction;
             }
@@ -100,19 +100,11 @@ public class PlayerData : MonoBehaviour, Shootable
         }
     }
 
-    private IEnumerator Bomb()
-    {
-        bombs--;
-        
-        yield return null;
-    }
-
     public void Shot(float bulletDamage)
     {
         if (lives > 0 && isAlive)
         {
             StartCoroutine(Respawn());
-            Debug.Log("shot");
         }
     }
 
@@ -121,14 +113,14 @@ public class PlayerData : MonoBehaviour, Shootable
         if (oldState == State.Combat)
             {
                 state = State.Default;
-                moveScript.direction = shootScript.direction;
+                moveScript.direction = direction;
                 hitbox.GetComponent<Renderer>().enabled = false;
                 shootScript.enabled = false;
 
             } else 
             {
                 state = State.Combat;
-                shootScript.direction = moveScript.direction;
+                shootScript.SetDirection(direction);
                 hitbox.GetComponent<Renderer>().enabled = true;
                 shootScript.enabled = true;
             }
@@ -139,6 +131,13 @@ public class PlayerData : MonoBehaviour, Shootable
         Destroy(coin);
         coins++;
         gameData.AddCoins();
+    }
+
+    private IEnumerator Bomb()
+    {
+        bombs--;
+        
+        yield return null;
     }
 
     private IEnumerator Respawn()

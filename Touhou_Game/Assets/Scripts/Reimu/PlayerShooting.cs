@@ -162,4 +162,39 @@ public class PlayerShooting : MonoBehaviour
         bullet.GetComponent<BulletController>().Initialize(transform.GetChild(0).GetComponent<Collider2D>());
         bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
     }
+
+    public void SetDirection(PlayerData.Direction newDirection)
+    {
+        direction = newDirection;
+
+        switch (newDirection)
+        {
+            case PlayerData.Direction.Up:
+                aimDirection = Vector2.up;
+                break;
+            case PlayerData.Direction.Down:
+                aimDirection = Vector2.down;
+                break;
+            case PlayerData.Direction.Left:
+                aimDirection = Vector2.left;
+                break;
+            case PlayerData.Direction.Right:
+                aimDirection = Vector2.right;
+                break;
+            case PlayerData.Direction.UpRight:
+                aimDirection = new Vector2(1, 1).normalized;
+                break;
+            case PlayerData.Direction.UpLeft:
+                aimDirection = new Vector2(-1, 1).normalized;
+                break;
+            case PlayerData.Direction.DownRight:
+                aimDirection = new Vector2(1, -1).normalized;
+                break;
+            case PlayerData.Direction.DownLeft:
+                aimDirection = new Vector2(-1, -1).normalized;
+                break;
+        }
+
+        ChangeDirection();
+    }
 }

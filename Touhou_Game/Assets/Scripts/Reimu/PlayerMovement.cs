@@ -148,20 +148,29 @@ public class PlayerMovement : MonoBehaviour {
     private void DetermineDirection(float moveX, float moveY) {
         if (!Mathf.Approximately(moveX, 0) || !Mathf.Approximately(moveY, 0)) // If there is movement
         {
+            float angle = 0;
             if (Mathf.Abs(moveX) > Mathf.Abs(moveY)) // If horizontal movement is greater than vertical
             {
-                if (moveX > 0) 
+                if (moveX > 0){
                     direction = PlayerData.Direction.Right;
-                else 
+                    angle = 270;
+                }
+                else {
                     direction = PlayerData.Direction.Left;
+                    angle = 90;
+                }
             }
             else // Vertical movement is greater
             {
-                if (moveY > 0)
+                if (moveY > 0){
                     direction = PlayerData.Direction.Up;
-                else 
+                }
+                else {
                     direction = PlayerData.Direction.Down;
+                    angle = 180;
+                }
             }
+            transform.eulerAngles = new Vector3(0, 0, angle);
         }
     }
 }
