@@ -166,6 +166,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 8506286823978325421, guid: db1c95a40365d5949906823a2ae8d7b6, type: 3}
-  shootingRange: 10
+  shootingRange: 15
   bulletSpeed: 10
   fireRate: 5
