@@ -20,7 +20,12 @@ public class CirclePatrol : MonoBehaviour {
         // Move along the circular patrol path
         patrolAngle += patrolSpeed * Time.deltaTime;
         Vector3 patrolOffset = new Vector3(Mathf.Cos(patrolAngle), Mathf.Sin(patrolAngle), 0) * patrolRadius;
-        transform.position += patrolOffset / 500f;
+
+        #if UNITY_WEBGL && !UNITY_EDITOR
+        transform.position += patrolOffset * Time.fixedDeltaTime;
+        #else
+        transform.position += (patrolOffset * Time.fixedDeltaTime) / 10f;
+        #endif
     }
 
 }
