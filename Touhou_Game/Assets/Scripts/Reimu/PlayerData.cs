@@ -7,14 +7,19 @@ public class PlayerData : MonoBehaviour, Shootable
     public int bombs = 3;
     public int coins = 0;
     public float respawnTime = 2;
+    public float invulnerableTime = 2;
+    public float flashSpeed = 5f;   
+    public GameObject bombPrefab;
     public KeyCode bombButton = KeyCode.Q;
     public KeyCode combatToggle = KeyCode.E;
 
-    public bool isAlive = true;
+    private bool isAlive = true;
+    public bool isHittable = true;
     
     private PlayerShooting shootScript;
     private PlayerMovement moveScript;
     private Renderer playerRenderer;
+    private Coroutine invulnerableCoroutine;
     public enum Direction
     {
         Up,
@@ -44,7 +49,7 @@ public class PlayerData : MonoBehaviour, Shootable
     }
 
     public State state = State.Default;
-    private GameObject hitbox;
+    private Renderer hitboxRenderer;
     private GameDataManager gameData;
 
     private void Start() {
@@ -56,7 +61,7 @@ public class PlayerData : MonoBehaviour, Shootable
         shootScript = GetComponent<PlayerShooting>();
         moveScript = GetComponent<PlayerMovement>();
         playerRenderer = GetComponent<Renderer>();
-        hitbox = transform.GetChild(0).gameObject;
+        hitboxRenderer = transform.GetChild(0).gameObject.GetComponent<Renderer>();
 
         gameData.GetSavedPlayerData(this);
 
@@ -75,7 +80,7 @@ public class PlayerData : MonoBehaviour, Shootable
                 direction = shootScript.direction;
                 if (Input.GetKeyDown(bombButton) && bombs > 0)
                 {
-                    StartCoroutine(Bomb());
+                    Bomb();
                 }
                 
             } else
@@ -102,7 +107,7 @@ public class PlayerData : MonoBehaviour, Shootable
 
     public void Shot(float bulletDamage)
     {
-        if (lives > 0 && isAlive)
+        if (lives > 0 && isHittable)
         {
             StartCoroutine(Respawn());
         }
@@ -114,14 +119,14 @@ public class PlayerData : MonoBehaviour, Shootable
             {
                 state = State.Default;
                 moveScript.direction = direction;
-                hitbox.GetComponent<Renderer>().enabled = false;
+                hitboxRenderer.enabled = false;
                 shootScript.enabled = false;
 
             } else 
             {
                 state = State.Combat;
                 shootScript.SetDirection(direction);
-                hitbox.GetComponent<Renderer>().enabled = true;
+                hitboxRenderer.enabled = true;
                 shootScript.enabled = true;
             }
     }
@@ -133,25 +138,47 @@ public class PlayerData : MonoBehaviour, Shootable
         gameData.AddCoins();
     }
 
-    private IEnumerator Bomb()
+    private void Bomb()
     {
         bombs--;
-        
-        yield return null;
+        isHittable = false;
+        if (invulnerableCoroutine != null)
+            StopCoroutine(invulnerableCoroutine);
+        invulnerableCoroutine = StartCoroutine(Invulnerable());
     }
 
     private IEnumerator Respawn()
     {
-        hitbox.SetActive(false);
-        isAlive = moveScript.enabled = shootScript.enabled = playerRenderer.enabled = false;
+        hitboxRenderer.gameObject.SetActive(false);
+        isAlive = isHittable = moveScript.enabled = shootScript.enabled = playerRenderer.enabled = false;
         
         lives -= 1;
 
         yield return new WaitForSeconds(respawnTime);
 
-        hitbox.SetActive(true);
+        hitboxRenderer.gameObject.SetActive(true);
         isAlive = moveScript.enabled = playerRenderer.enabled = true;
         if (state == State.Combat)
             shootScript.enabled = true;
+
+        StartCoroutine(Invulnerable());
+    }
+    private IEnumerator Invulnerable()
+    {
+        float startTime = Time.time;
+        Material material = playerRenderer.material;
+        Color originalColor = material.color;
+
+        while (Time.time < startTime + invulnerableTime)
+        {
+            // interpolate between the original color and the flash color based on a sine wave
+            float t = Mathf.Sin(Time.time * flashSpeed) * 0.5f + 0.5f;
+            material.color = new Color(originalColor.r, originalColor.g, originalColor.b, Mathf.Lerp(0, 1, t));
+
+            yield return null;
+        }
+
+        material.color = originalColor;
+        isHittable = true;
     }
 }

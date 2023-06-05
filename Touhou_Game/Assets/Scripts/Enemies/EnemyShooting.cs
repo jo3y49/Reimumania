@@ -24,7 +24,7 @@ public class EnemyShooting : MonoBehaviour
         float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 
         // If the player is within shooting range, shoot
-        if (distanceToPlayer <= shootingRange && Time.time > nextFireTime && player.GetComponent<PlayerData>().isAlive)
+        if (distanceToPlayer <= shootingRange && Time.time > nextFireTime && player.GetComponent<PlayerData>().isHittable)
         {
             pattern.Shoot(MakeBullet(), player.transform, bulletSpeed);
             nextFireTime = Time.time + 1f / fireRate;
