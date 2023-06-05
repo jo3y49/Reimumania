@@ -7,6 +7,14 @@ public class PlayerMovement : MonoBehaviour {
     private Vector2 moveDirection;
     public PlayerData.Direction direction = PlayerData.Direction.Down;
 
+    private BoxCollider2D boxCollider; // Cache the box collider reference
+
+
+
+    private void Awake() {
+        // Retrieve the box collider
+        boxCollider = GetComponent<BoxCollider2D>();
+    }
 
     private void Update() {
         Movement();
@@ -31,9 +39,6 @@ public class PlayerMovement : MonoBehaviour {
         Vector3 moveDirection3D = new Vector3(moveDirection.x, moveDirection.y, 0);
 
         float rayLength = speedToUse * Time.deltaTime;
-
-        // Retrieve the box collider
-        BoxCollider2D boxCollider = GetComponent<BoxCollider2D>();
 
         // Calculate the offset for the rays
         Vector2 extents = boxCollider.bounds.extents;

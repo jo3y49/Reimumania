@@ -738,9 +738,12 @@ MonoBehaviour:
   bombs: 3
   coins: 0
   respawnTime: 2
+  invulnerableTime: 2
+  flashSpeed: 5
+  bombPrefab: {fileID: 7691319330123292403, guid: f8d6f28c101f14041a5db4ec52de53cf, type: 3}
   bombButton: 113
   combatToggle: 101
-  isAlive: 1
+  isHittable: 1
   direction: 1
   upgrade: 0
   state: 0
@@ -3133,6 +3136,7 @@ MonoBehaviour:
   - {x: -2.5, y: 20}
   - {x: 25, y: 20}
   - {x: 25, y: 5}
+  - {x: 25, y: 5}
 --- !u!114 &1987970062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3161,9 +3165,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   saveButton: 112
   deleteButton: 111
-  coinText: {fileID: 0}
-  playtimeText: {fileID: 0}
-  killText: {fileID: 0}
+  coinText: {fileID: 822267815}
+  playtimeText: {fileID: 535618994}
+  killText: {fileID: 39799937}
   isPaused: 0
 --- !u!114 &1987970064
 MonoBehaviour:

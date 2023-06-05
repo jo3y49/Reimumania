@@ -8,7 +8,6 @@ public class EnemyData : MonoBehaviour, Shootable
     public int minCoins = 5;
     public int maxCoins = 10;
     public float scatterDistance = 1.0f;
-
     public enum Direction
     {
         Up,
@@ -24,10 +23,12 @@ public class EnemyData : MonoBehaviour, Shootable
 
     public void Shot(float bulletDamage)
     {
-        if (health > bulletDamage)
-            health -= bulletDamage;
-        else 
+        health -= bulletDamage;
+
+        if (health <= 0)
+        {
             Defeated();
+        }
     }
 
     private void Defeated()
@@ -40,15 +41,14 @@ public class EnemyData : MonoBehaviour, Shootable
         {
             
             // Instantiate a coin
-            GameObject coin = Instantiate(coinPrefab, transform.position, Quaternion.identity);
-            
+            GameObject coin = Instantiate(coinPrefab, transform.position, Quaternion.identity);            
+            CoinController coinController = coin.GetComponent<CoinController>();
             // Calculate a random position within scatterDistance of the enemy's position
             Vector3 scatter = new Vector3(Random.Range(-scatterDistance, scatterDistance), Random.Range(-scatterDistance, scatterDistance), 0);
 
             // Start the coroutine to move the coin
-            coin.GetComponent<CoinController>().StartCoroutine(coin.GetComponent<CoinController>().MoveToPosition(transform.position + scatter));
-
-            Destroy(gameObject);
+            coinController.StartCoroutine(coinController.MoveToPosition(transform.position + scatter));
         }
+        Destroy(gameObject);
     }
 }
