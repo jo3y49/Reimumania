@@ -1,6 +1,3 @@
-using UnityEngine;
-using System.Runtime.Serialization.Formatters.Binary;
-
 [System.Serializable]
 public class GameData
 {

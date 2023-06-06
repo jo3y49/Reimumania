@@ -741,12 +741,14 @@ MonoBehaviour:
   invulnerableTime: 2
   flashSpeed: 5
   bombPrefab: {fileID: 7691319330123292403, guid: f8d6f28c101f14041a5db4ec52de53cf, type: 3}
+  bombDistance: {x: 2, y: 0}
   bombButton: 113
+  bombRotationSpeed: 1
   combatToggle: 101
   isHittable: 1
   direction: 1
   upgrade: 0
-  state: 0
+  state: 1
 --- !u!61 &177263434
 BoxCollider2D:
   m_ObjectHideFlags: 0

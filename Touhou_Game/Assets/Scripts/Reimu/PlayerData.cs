@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerData : MonoBehaviour, Shootable
@@ -10,7 +11,9 @@ public class PlayerData : MonoBehaviour, Shootable
     public float invulnerableTime = 2;
     public float flashSpeed = 5f;   
     public GameObject bombPrefab;
+    public Vector2 bombDistance = new Vector2(2,0);
     public KeyCode bombButton = KeyCode.Q;
+    public float bombRotationSpeed = 1;
     public KeyCode combatToggle = KeyCode.E;
 
     private bool isAlive = true;
@@ -142,9 +145,12 @@ public class PlayerData : MonoBehaviour, Shootable
     {
         bombs--;
         isHittable = false;
+
         if (invulnerableCoroutine != null)
             StopCoroutine(invulnerableCoroutine);
         invulnerableCoroutine = StartCoroutine(Invulnerable());
+
+        StartCoroutine(BombTargeting());
     }
 
     private IEnumerator Respawn()
@@ -180,5 +186,72 @@ public class PlayerData : MonoBehaviour, Shootable
 
         material.color = originalColor;
         isHittable = true;
+    }
+
+    private IEnumerator BombTargeting()
+    {
+        float startTime = Time.time;
+
+        Vector3 rightBombPosition = transform.position + transform.right * bombDistance.x + new Vector3(0, bombDistance.y, 0);
+        Vector3 leftBombPosition = transform.position - transform.right * bombDistance.x + new Vector3(0, bombDistance.y, 0);
+
+        GameObject bomb1 = Instantiate(bombPrefab, rightBombPosition, Quaternion.identity);
+        GameObject bomb2 = Instantiate(bombPrefab, leftBombPosition, Quaternion.identity);
+
+        while (Time.time < startTime + invulnerableTime)
+        {
+            bomb1.transform.position = transform.position + transform.right * bombDistance.x + new Vector3(0, bombDistance.y, 0);
+            bomb2.transform.position = transform.position - transform.right * bombDistance.x + new Vector3(0, bombDistance.y, 0);
+
+            bomb1.transform.RotateAround(bomb1.transform.position, new Vector3(0,0,1), bombRotationSpeed);
+            bomb2.transform.RotateAround(bomb2.transform.position, new Vector3(0,0,1), bombRotationSpeed);
+
+            yield return null;
+        }
+        List<GameObject> gos = new List<GameObject>();
+
+        gos.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
+
+        if (gos != null){
+            GameObject closest1, closest2;
+
+            closest1 = FindClosestEnemy(bomb1.transform.position, gos);
+            Debug.Log(closest1);
+            gos.Remove(closest1);
+
+            if (gos.Count > 0)
+            {
+                closest2 = FindClosestEnemy(bomb2.transform.position, gos);
+            } else {
+                closest2 = closest1;
+            }
+        
+            bomb1.GetComponent<BombController>().Target(closest1);
+            bomb2.GetComponent<BombController>().Target(closest2);
+
+        } else {
+            Destroy(bomb1);
+            Destroy(bomb2);
+        }
+    }
+
+    private GameObject FindClosestEnemy(Vector3 bombPosition, List<GameObject> gos)
+    {
+        GameObject closest = null;
+        float distance = Mathf.Infinity;
+
+        foreach (GameObject go in gos)
+        {
+            Vector3 diff = go.transform.position - bombPosition;
+            float curDistance = diff.sqrMagnitude;
+
+            if (curDistance < distance)
+            {
+                closest = go;
+                distance = curDistance;
+            }
+        }
+
+        return closest;
     }
 }
