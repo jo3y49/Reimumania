@@ -8,10 +8,11 @@ public class GameDataManager : MonoBehaviour
 {
     public KeyCode saveButton = KeyCode.P;
     public KeyCode deleteButton = KeyCode.O;
-    public TextMeshProUGUI coinText, playtimeText, killText;
+    public TextMeshProUGUI coinText, playtimeText, killText, bombText;
     public bool isPaused = true;
 
     private GameData gameData;
+    private PlayerData player;
 
     [DllImport("__Internal")]
     private static extern void SyncFiles();
@@ -101,10 +102,12 @@ public class GameDataManager : MonoBehaviour
         coinText = displayVariables[0];
         playtimeText = displayVariables[1];
         killText = displayVariables[2];
+        bombText = displayVariables[3];
 
         coinText.text = "Coins: " + gameData.currentCoins.ToString();
         playtimeText.text = "Play Time: " + FormatTimeToString(gameData.playTime);
         killText.text = "Kills: " + gameData.kills.ToString();
+        bombText.text = "Bombs: " + player.bombs.ToString();
 
         isPaused = false;
     }
@@ -113,6 +116,7 @@ public class GameDataManager : MonoBehaviour
     {
         player.coins = gameData.currentCoins;
         player.upgrade = gameData.spellCardUpgrade;
+        this.player = player;
     }
 
     public void AddCoins(int coins = 1)
@@ -142,6 +146,11 @@ public class GameDataManager : MonoBehaviour
         gameData.kills += kills;
 
         killText.text = "Kills: " + gameData.kills.ToString();
+    }
+
+    public void SetBombs(int bombs)
+    {
+        bombText.text = "Bombs: " + player.bombs.ToString();
     }
 
     public IEnumerator CountPlayTime()

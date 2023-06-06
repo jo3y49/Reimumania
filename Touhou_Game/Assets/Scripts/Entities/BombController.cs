@@ -9,6 +9,10 @@ public class BombController : MonoBehaviour {
     {
         StartCoroutine(SeekEnemy(enemy.transform));
     }
+    public void Target(Vector3 direction)
+    {
+        StartCoroutine(ShootStraight(direction));
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -29,6 +33,11 @@ public class BombController : MonoBehaviour {
             yield return null;
         }
 
+        StartCoroutine(ShootStraight(direction));
+        
+    }
+    private IEnumerator ShootStraight(Vector3 direction)
+    {
         float timeSpentMovingWithoutTarget = 0f;
         while(timeSpentMovingWithoutTarget < 5f)
         {

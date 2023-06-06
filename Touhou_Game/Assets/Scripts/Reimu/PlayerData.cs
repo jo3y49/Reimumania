@@ -144,6 +144,7 @@ public class PlayerData : MonoBehaviour, Shootable
     private void Bomb()
     {
         bombs--;
+        gameData.SetBombs(bombs);
         isHittable = false;
 
         if (invulnerableCoroutine != null)
@@ -212,7 +213,7 @@ public class PlayerData : MonoBehaviour, Shootable
 
         gos.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
 
-        if (gos != null){
+        if (gos.Count > 0){
             GameObject closest1, closest2;
 
             closest1 = FindClosestEnemy(bomb1.transform.position, gos);
@@ -230,8 +231,8 @@ public class PlayerData : MonoBehaviour, Shootable
             bomb2.GetComponent<BombController>().Target(closest2);
 
         } else {
-            Destroy(bomb1);
-            Destroy(bomb2);
+            bomb1.GetComponent<BombController>().Target(transform.up);
+            bomb2.GetComponent<BombController>().Target(transform.up);
         }
     }
 
