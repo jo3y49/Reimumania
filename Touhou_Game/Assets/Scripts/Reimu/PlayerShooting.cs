@@ -9,7 +9,7 @@ public class PlayerShooting : MonoBehaviour
     public float fireRate = 5f;
     public KeyCode fireButton = KeyCode.Space;
 
-    public PlayerData.Direction direction = PlayerData.Direction.Down;
+    public PlayerData.Direction direction = PlayerData.Direction.Up;
 
     private Vector2 aimDirection = Vector2.down;
     private float nextFireTime = 0f;

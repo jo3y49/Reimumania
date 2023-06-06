@@ -12,6 +12,7 @@ public class PlayerData : MonoBehaviour, Shootable
     public float flashSpeed = 5f;   
     public GameObject bombPrefab;
     public Vector2 bombDistance = new Vector2(2,0);
+    public float bombRange = 10f;
     public KeyCode bombButton = KeyCode.Q;
     public float bombRotationSpeed = 1;
     public KeyCode combatToggle = KeyCode.E;
@@ -34,7 +35,7 @@ public class PlayerData : MonoBehaviour, Shootable
         DownRight,
         DownLeft,
     }
-    public Direction direction = Direction.Down;
+    public Direction direction = Direction.Up;
 
     public enum Upgrade
     {
@@ -211,7 +212,14 @@ public class PlayerData : MonoBehaviour, Shootable
 
         List<GameObject> gos = new List<GameObject>();
 
-        gos.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
+        foreach(GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            float distance = Vector3.Distance(transform.position, enemy.transform.position);
+            if (distance <= bombRange)
+            {
+                gos.Add(enemy);
+            }
+        }
 
         if (gos.Count > 0){
             GameObject closest1, closest2;

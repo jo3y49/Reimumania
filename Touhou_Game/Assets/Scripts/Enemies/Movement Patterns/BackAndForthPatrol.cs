@@ -14,7 +14,7 @@ public class BackAndForthPatrol : MonoBehaviour {
 
     public Direction direction = Direction.Horizontal;
 
-    private float currentPatrolDistance; // How far the enemy has currently patrolled
+    public float currentPatrolDistance = 0; // How far the enemy has currently patrolled
     private int directionFactor = 1; // Whether the enemy is currently moving forwards (1) or backwards (-1)
 
     private void Update() {
