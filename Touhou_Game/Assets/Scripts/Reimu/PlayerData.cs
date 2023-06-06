@@ -81,7 +81,7 @@ public class PlayerData : MonoBehaviour, Shootable
             if (state == State.Combat)
             {
                 direction = shootScript.direction;
-                if (Input.GetKeyDown(bombButton) && bombs > 0)
+                if (Input.GetKeyDown(bombButton) && bombs > 0 && invulnerableCoroutine == null)
                 {
                     Bomb();
                 }
@@ -147,8 +147,6 @@ public class PlayerData : MonoBehaviour, Shootable
         gameData.SetBombs(bombs);
         isHittable = false;
 
-        if (invulnerableCoroutine != null)
-            StopCoroutine(invulnerableCoroutine);
         invulnerableCoroutine = StartCoroutine(Invulnerable());
 
         StartCoroutine(BombTargeting());
@@ -187,6 +185,7 @@ public class PlayerData : MonoBehaviour, Shootable
 
         material.color = originalColor;
         isHittable = true;
+        invulnerableCoroutine = null;
     }
 
     private IEnumerator BombTargeting()
@@ -209,6 +208,7 @@ public class PlayerData : MonoBehaviour, Shootable
 
             yield return null;
         }
+
         List<GameObject> gos = new List<GameObject>();
 
         gos.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
@@ -217,7 +217,6 @@ public class PlayerData : MonoBehaviour, Shootable
             GameObject closest1, closest2;
 
             closest1 = FindClosestEnemy(bomb1.transform.position, gos);
-            Debug.Log(closest1);
             gos.Remove(closest1);
 
             if (gos.Count > 0)
