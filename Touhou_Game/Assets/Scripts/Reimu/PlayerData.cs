@@ -14,7 +14,6 @@ public class PlayerData : MonoBehaviour, Shootable
     public Vector2 bombDistance = new Vector2(2,0);
     public float bombRange = 10f;
     public KeyCode bombButton = KeyCode.Q;
-    public float bombRotationSpeed = 1;
     public KeyCode combatToggle = KeyCode.E;
 
     private bool isAlive = true;
@@ -141,6 +140,12 @@ public class PlayerData : MonoBehaviour, Shootable
         coins++;
         gameData.AddCoins();
     }
+    public void CollectBomb(GameObject bomb)
+    {
+        Destroy(bomb);
+        bombs++;
+        gameData.SetBombs(bombs);
+    }
 
     private void Bomb()
     {
@@ -150,7 +155,7 @@ public class PlayerData : MonoBehaviour, Shootable
 
         invulnerableCoroutine = StartCoroutine(Invulnerable());
 
-        StartCoroutine(BombTargeting());
+        StartCoroutine(BombSpawning());
     }
 
     private IEnumerator Respawn()
@@ -159,6 +164,7 @@ public class PlayerData : MonoBehaviour, Shootable
         isAlive = isHittable = moveScript.enabled = shootScript.enabled = playerRenderer.enabled = false;
         
         lives -= 1;
+        gameData.setLives(lives);
 
         yield return new WaitForSeconds(respawnTime);
 
@@ -189,7 +195,7 @@ public class PlayerData : MonoBehaviour, Shootable
         invulnerableCoroutine = null;
     }
 
-    private IEnumerator BombTargeting()
+    private IEnumerator BombSpawning()
     {
         float startTime = Time.time;
 
@@ -199,30 +205,38 @@ public class PlayerData : MonoBehaviour, Shootable
         GameObject bomb1 = Instantiate(bombPrefab, rightBombPosition, Quaternion.identity);
         GameObject bomb2 = Instantiate(bombPrefab, leftBombPosition, Quaternion.identity);
 
-        while (Time.time < startTime + invulnerableTime)
+        BombController bombController1 = bomb1.GetComponent<BombController>();
+        BombController bombController2 = bomb2.GetComponent<BombController>();
+
+        StartCoroutine(bombController1.StartRotation());
+        StartCoroutine(bombController2.StartRotation());
+
+        while (Time.time < startTime + invulnerableTime * .75f)
         {
             bomb1.transform.position = transform.position + transform.right * bombDistance.x + new Vector3(0, bombDistance.y, 0);
             bomb2.transform.position = transform.position - transform.right * bombDistance.x + new Vector3(0, bombDistance.y, 0);
 
-            bomb1.transform.RotateAround(bomb1.transform.position, new Vector3(0,0,1), bombRotationSpeed);
-            bomb2.transform.RotateAround(bomb2.transform.position, new Vector3(0,0,1), bombRotationSpeed);
-
             yield return null;
         }
 
-        List<GameObject> gos = new List<GameObject>();
+        BombTargeting(bomb1, bomb2, bombController1, bombController2);
+    }
+
+    private void BombTargeting(GameObject bomb1, GameObject bomb2, BombController bombController1, BombController bombController2)
+    {
+        List<Transform> gos = new List<Transform>();
 
         foreach(GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
         {
             float distance = Vector3.Distance(transform.position, enemy.transform.position);
             if (distance <= bombRange)
             {
-                gos.Add(enemy);
+                gos.Add(enemy.transform);
             }
         }
 
         if (gos.Count > 0){
-            GameObject closest1, closest2;
+            Transform closest1, closest2;
 
             closest1 = FindClosestEnemy(bomb1.transform.position, gos);
             gos.Remove(closest1);
@@ -234,23 +248,23 @@ public class PlayerData : MonoBehaviour, Shootable
                 closest2 = closest1;
             }
         
-            bomb1.GetComponent<BombController>().Target(closest1);
-            bomb2.GetComponent<BombController>().Target(closest2);
+            bombController1.Target(closest1);
+            bombController2.Target(closest2);
 
         } else {
-            bomb1.GetComponent<BombController>().Target(transform.up);
-            bomb2.GetComponent<BombController>().Target(transform.up);
+            bombController1.Target(transform.up);
+            bombController2.Target(transform.up);
         }
     }
 
-    private GameObject FindClosestEnemy(Vector3 bombPosition, List<GameObject> gos)
+    private Transform FindClosestEnemy(Vector3 bombPosition, List<Transform> gos)
     {
-        GameObject closest = null;
+        Transform closest = null;
         float distance = Mathf.Infinity;
 
-        foreach (GameObject go in gos)
+        foreach (Transform go in gos)
         {
-            Vector3 diff = go.transform.position - bombPosition;
+            Vector3 diff = go.position - bombPosition;
             float curDistance = diff.sqrMagnitude;
 
             if (curDistance < distance)

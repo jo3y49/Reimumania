@@ -4,6 +4,7 @@ using UnityEngine;
 public class CoinController : MonoBehaviour
 {
     public float duration = .5f;
+    private bool isBlocked = false;
 
     public IEnumerator MoveToPosition(Vector3 newPosition)
     {
@@ -17,7 +18,7 @@ public class CoinController : MonoBehaviour
         float elapsedTime = Time.time - startTime;
         
         // Move the object until the duration has been reached
-        while (elapsedTime < duration)
+        while (elapsedTime < duration && !isBlocked)
         {
             transform.position = Vector3.Lerp(initialPosition, newPosition, elapsedTime / duration);
             
@@ -28,5 +29,13 @@ public class CoinController : MonoBehaviour
 
         // Ensure the object is exactly at the new position
         transform.position = newPosition;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Environment"))
+        {
+            isBlocked = true;
+        }
     }
 }

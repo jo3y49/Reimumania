@@ -2,13 +2,12 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 using System.Collections;
 using TMPro;
-using System;
 
 public class GameDataManager : MonoBehaviour
 {
     public KeyCode saveButton = KeyCode.P;
     public KeyCode deleteButton = KeyCode.O;
-    public TextMeshProUGUI coinText, playtimeText, killText, bombText;
+    public TextMeshProUGUI livesText, bombText, coinText, killText, playtimeText;
     public bool isPaused = true;
 
     private GameData gameData;
@@ -99,16 +98,18 @@ public class GameDataManager : MonoBehaviour
 
     public void SetUI(TextMeshProUGUI[] displayVariables)
     {
-        coinText = displayVariables[0];
-        playtimeText = displayVariables[1];
-        killText = displayVariables[2];
-        bombText = displayVariables[3];
+        livesText = displayVariables[0];
+        bombText = displayVariables[1];
+        coinText = displayVariables[2];
+        killText = displayVariables[3];
+        playtimeText = displayVariables[4];
 
-        coinText.text = "Coins: " + gameData.currentCoins.ToString();
-        playtimeText.text = "Play Time: " + FormatTimeToString(gameData.playTime);
-        killText.text = "Kills: " + gameData.kills.ToString();
+        livesText.text = "Lives: " + player.lives.ToString();
         bombText.text = "Bombs: " + player.bombs.ToString();
-
+        coinText.text = "Coins: " + gameData.currentCoins.ToString();
+        killText.text = "Kills: " + gameData.kills.ToString();
+        playtimeText.text = "Play Time: " + FormatTimeToString(gameData.playTime);
+        
         isPaused = false;
     }
 
@@ -146,6 +147,11 @@ public class GameDataManager : MonoBehaviour
         gameData.kills += kills;
 
         killText.text = "Kills: " + gameData.kills.ToString();
+    }
+
+    public void setLives(int lives)
+    {
+        livesText.text = "Lives: " + player.lives.ToString();
     }
 
     public void SetBombs(int bombs)

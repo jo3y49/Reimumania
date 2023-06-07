@@ -6,9 +6,10 @@ public class CirclePatrol : MonoBehaviour {
 
     public bool clockwise = true;
 
-    private float patrolAngle = 0f; // The current angle along the circular path
+    private Vector3 startPosition;
 
     private void Start() {
+        startPosition = transform.position;
         if (clockwise)
             patrolSpeed = -patrolSpeed;
     }
@@ -17,15 +18,10 @@ public class CirclePatrol : MonoBehaviour {
         if (Time.timeScale == 0f) {
             return;
         }
-        // Move along the circular patrol path
-        patrolAngle += patrolSpeed * Time.deltaTime;
-        Vector3 patrolOffset = new Vector3(Mathf.Cos(patrolAngle), Mathf.Sin(patrolAngle), 0) * patrolRadius;
-
-        #if UNITY_WEBGL && !UNITY_EDITOR
-        transform.position += patrolOffset * Time.fixedDeltaTime;
-        #else
-        transform.position += (patrolOffset * Time.fixedDeltaTime) / 10f;
-        #endif
+        float angle = Time.time * patrolSpeed;
+        float x = Mathf.Cos(angle) * patrolRadius;
+        float y = Mathf.Sin(angle) * patrolRadius;
+        transform.position = startPosition + new Vector3(x, y, 0);
     }
 
 }

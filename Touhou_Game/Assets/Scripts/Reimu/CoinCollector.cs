@@ -9,9 +9,13 @@ public class CoinCollector : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Collectible"))
+        if (other.gameObject.CompareTag("Coin"))
         {
             playerData.CollectCoin(other.gameObject);
+        }
+        if (other.gameObject.CompareTag("Bomb"))
+        {
+            playerData.CollectBomb(other.gameObject);
         }
     }
 }
