@@ -164,7 +164,7 @@ public class PlayerData : MonoBehaviour, Shootable
         isAlive = isHittable = moveScript.enabled = shootScript.enabled = playerRenderer.enabled = false;
         
         lives -= 1;
-        gameData.setLives(lives);
+        gameData.SetLives(lives);
 
         yield return new WaitForSeconds(respawnTime);
 

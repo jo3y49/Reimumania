@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class FollowerController : MonoBehaviour, Shootable
 {
-    public GameObject player; // The player object the follower should follow
+    private GameObject player; // The player object the follower should follow
     public float speed = 2f; // The speed at which the follower should follow the player
     public float energy = 100f; 
     public float energyTick = 2f;
@@ -25,6 +25,7 @@ public class FollowerController : MonoBehaviour, Shootable
     private PlayerData playerData; // Reference to the PlayerShooting script
 
     private void Start() {
+        player = GameObject.FindGameObjectWithTag("Player");
         playerData = player.GetComponent<PlayerData>();
         maxEnergy = energy;
         StartCoroutine(EnergyTick());

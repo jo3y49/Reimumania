@@ -98,6 +98,8 @@ public class GameDataManager : MonoBehaviour
 
     public void SetUI(TextMeshProUGUI[] displayVariables)
     {
+        player = FindAnyObjectByType<PlayerData>();
+
         livesText = displayVariables[0];
         bombText = displayVariables[1];
         coinText = displayVariables[2];
@@ -117,7 +119,6 @@ public class GameDataManager : MonoBehaviour
     {
         player.coins = gameData.currentCoins;
         player.upgrade = gameData.spellCardUpgrade;
-        this.player = player;
     }
 
     public void AddCoins(int coins = 1)
@@ -149,7 +150,7 @@ public class GameDataManager : MonoBehaviour
         killText.text = "Kills: " + gameData.kills.ToString();
     }
 
-    public void setLives(int lives)
+    public void SetLives(int lives)
     {
         livesText.text = "Lives: " + player.lives.ToString();
     }

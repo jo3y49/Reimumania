@@ -11,8 +11,9 @@ public class UIManager : MonoBehaviour {
     private bool isPaused = false;
 
     private void Start() {
-        gameDataManager = GameObject.FindObjectOfType<GameDataManager>();
-        persistenceManager = GameObject.FindObjectOfType<PersistenceManager>();
+        GameObject gameManager = GameObject.FindGameObjectWithTag("GameController");
+        gameDataManager = gameManager.GetComponent<GameDataManager>();
+        persistenceManager = gameManager.GetComponent<PersistenceManager>();
 
         gameDataManager.SetUI(displayVariables);
         StartCoroutine(gameDataManager.CountPlayTime());
