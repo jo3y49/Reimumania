@@ -5,12 +5,13 @@ TagManager:
   serializedVersion: 2
   tags:
   - Projectile
-  - Collectible
   - Follower
   - Enemy
   - Collector
   - Environment
   - Hit Box
+  - Coin
+  - Bomb
   layers:
   - Default
   - TransparentFX
