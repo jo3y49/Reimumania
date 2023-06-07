@@ -13,15 +13,18 @@ public class EnemyShooting : MonoBehaviour
     private PlayerData playerData;
     private Pattern pattern;
 
-    void Start()
-    {
-        player = GameObject.FindGameObjectWithTag("Player");
+    private void Awake() {
         pattern = GetComponent<Pattern>();
         enemyCollider = GetComponent<Collider2D>();
+    }
+
+    private void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
         playerData = player.GetComponent<PlayerData>();
     }
 
-    void Update()
+    private void Update()
     {
         // Calculate the distance to the player
         float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);

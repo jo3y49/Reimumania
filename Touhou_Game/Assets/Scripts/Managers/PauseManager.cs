@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PauseManager : MonoBehaviour {
+    public KeyCode pauseKey = KeyCode.P;
     public Button saveButton, homeButton, quitButton;
     private GameDataManager gameDataManager;
     private PersistenceManager persistenceManager;
@@ -24,7 +25,7 @@ public class PauseManager : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.Escape)) {
+        if (Input.GetKeyDown(pauseKey)) {
             if (isPaused) {
                 Resume();
             } else {

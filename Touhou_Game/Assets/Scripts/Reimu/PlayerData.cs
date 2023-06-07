@@ -55,16 +55,18 @@ public class PlayerData : MonoBehaviour, Shootable
     private Renderer hitboxRenderer;
     private GameDataManager gameData;
 
+    private void Awake() {
+        shootScript = GetComponent<PlayerShooting>();
+        moveScript = GetComponent<PlayerMovement>();
+        playerRenderer = GetComponent<Renderer>();
+        hitboxRenderer = transform.GetChild(0).gameObject.GetComponent<Renderer>();
+    }
+
     private void Start() {
         
         GameObject gameManager = GameObject.FindGameObjectWithTag("GameController");
         gameData = gameManager.GetComponent<GameDataManager>();
         gameManager.GetComponent<PersistenceManager>().AddPersistentObject(gameObject);
-
-        shootScript = GetComponent<PlayerShooting>();
-        moveScript = GetComponent<PlayerMovement>();
-        playerRenderer = GetComponent<Renderer>();
-        hitboxRenderer = transform.GetChild(0).gameObject.GetComponent<Renderer>();
 
         gameData.GetSavedPlayerData(this);
 

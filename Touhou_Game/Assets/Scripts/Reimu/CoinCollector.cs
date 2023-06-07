@@ -3,7 +3,7 @@ using UnityEngine;
 public class CoinCollector : MonoBehaviour {
     private PlayerData playerData;
 
-    private void Start() {
+    private void Awake() {
         playerData = GetComponentInParent<PlayerData>();
     }
 

@@ -5,8 +5,6 @@ using TMPro;
 
 public class GameDataManager : MonoBehaviour
 {
-    public KeyCode saveButton = KeyCode.P;
-    public KeyCode deleteButton = KeyCode.O;
     public TextMeshProUGUI livesText, bombText, coinText, killText, playtimeText;
     public bool isPaused = true;
 
@@ -32,17 +30,6 @@ public class GameDataManager : MonoBehaviour
     private void Awake()
     {
         gameData = new GameData();
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(saveButton))
-        {
-            SaveGame();
-        } else if (Input.GetKeyDown(deleteButton))
-        {
-            DeleteData();
-        }
     }
 
     public void SaveGame()

@@ -13,7 +13,7 @@ public class BulletController : MonoBehaviour
         myCollider = GetComponent<Collider2D>();
     }
 
-    void Start()
+    private void Start()
     {
         if (parentCollider != null && myCollider != null)
         {

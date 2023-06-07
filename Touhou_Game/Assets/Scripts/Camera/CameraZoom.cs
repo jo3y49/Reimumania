@@ -11,20 +11,25 @@ public class CameraZoom : MonoBehaviour
     {
         if (Input.GetKeyDown(cameraToggle))
         {
-            float orthoSize = Camera.main.orthographicSize;
-
-            if (Camera.main.orthographicSize == minOrtho)
-            {
-                orthoSize = midOrtho;
-            } else if (Camera.main.orthographicSize == midOrtho)
-            {
-                orthoSize = maxOrtho;
-            } else 
-            {
-                orthoSize = minOrtho;
-            }
-
-            Camera.main.orthographicSize = Mathf.Clamp(orthoSize, minOrtho, maxOrtho);
+            SwitchCamera();
         }
+    }
+
+    private void SwitchCamera()
+    {
+        float orthoSize = Camera.main.orthographicSize;
+
+        if (Camera.main.orthographicSize == minOrtho)
+        {
+            orthoSize = midOrtho;
+        } else if (Camera.main.orthographicSize == midOrtho)
+        {
+            orthoSize = maxOrtho;
+        } else 
+        {
+            orthoSize = minOrtho;
+        }
+
+        Camera.main.orthographicSize = Mathf.Clamp(orthoSize, minOrtho, maxOrtho);
     }
 }
