@@ -11,14 +11,14 @@ public class UIManager : MonoBehaviour {
     private bool isPaused = false;
 
     private void Start() {
-        gameDataManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameDataManager>();
-        persistenceManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<PersistenceManager>();
+        gameDataManager = GameObject.FindObjectOfType<GameDataManager>();
+        persistenceManager = GameObject.FindObjectOfType<PersistenceManager>();
 
         gameDataManager.SetUI(displayVariables);
         StartCoroutine(gameDataManager.CountPlayTime());
     }
 
-    void Update() {
+    private void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             if (isPaused) {
                 Resume();
@@ -43,7 +43,7 @@ public class UIManager : MonoBehaviour {
     public void LoadMenu() {
         Time.timeScale = 1f; // You need to make sure that the game isn't still paused when you load another scene
         persistenceManager.Reset();
-        SceneManager.LoadScene("Title Screen"); // Change "Menu" to the name of your scene
+        SceneManager.LoadScene("TitleScreen");
     }
 
     private void TogglePause(bool pause)

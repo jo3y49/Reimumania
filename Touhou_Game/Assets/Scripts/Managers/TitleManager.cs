@@ -10,7 +10,7 @@ public class TitleManager : MonoBehaviour
 
     void Start()
     {
-        gameDataManager = GetComponent<GameDataManager>();
+        gameDataManager = GameObject.FindObjectOfType<GameDataManager>();
 
         // Add click listeners to the buttons
         startGameButton.onClick.AddListener(StartNewGame);
@@ -29,16 +29,16 @@ public class TitleManager : MonoBehaviour
         }
     }
 
-    void StartNewGame()
+    private void StartNewGame()
     {
         gameDataManager.NewGame();
 
         LoadGame();
     }
 
-    void LoadGame()
+    private void LoadGame()
     {
 
-        SceneManager.LoadScene("Main"); // Replace with your game scene name
+        SceneManager.LoadScene("Shrine");
     }
 }

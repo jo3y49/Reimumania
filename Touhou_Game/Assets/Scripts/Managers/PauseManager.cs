@@ -7,7 +7,7 @@ public class PauseManager : MonoBehaviour {
     public UIManager ui;
 
     private void Start() {
-        gameDataManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameDataManager>();
+        gameDataManager = GameObject.FindObjectOfType<GameDataManager>();
 
         saveButton.onClick.AddListener(gameDataManager.SaveGame);
         quitButton.onClick.AddListener(ui.LoadMenu);

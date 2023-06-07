@@ -44,6 +44,5 @@ public class PersistenceManager : MonoBehaviour
             Destroy(obj);
         }
         persistentObjects.Clear();
-        Destroy(gameObject);
     }
 }
