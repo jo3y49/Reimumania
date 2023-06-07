@@ -265,7 +265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lives: 3
-  bombs: 0
+  bombs: 3
   coins: 0
   respawnTime: 2
   invulnerableTime: 2

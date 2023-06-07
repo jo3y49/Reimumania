@@ -29,7 +29,7 @@ public class BombController : MonoBehaviour {
     {
         while (rotating)
         {
-            transform.RotateAround(transform.position, new Vector3(0,0,1), rotationSpeed);
+            transform.RotateAround(transform.position, new Vector3(0,0,1), rotationSpeed * Time.deltaTime * 100f);
             yield return null;
         }
     }

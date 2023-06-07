@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class TitleManager : MonoBehaviour
 {
-    public Button startGameButton, loadGameButton;
+    public Button startGameButton, loadGameButton, wipeDataButton;
 
     private GameDataManager gameDataManager;
 
@@ -15,9 +15,11 @@ public class TitleManager : MonoBehaviour
         // Add click listeners to the buttons
         startGameButton.onClick.AddListener(StartNewGame);
         loadGameButton.onClick.AddListener(LoadGame);
+        wipeDataButton.onClick.AddListener(WipeData);
 
         // Disable the Load Game button by default
         loadGameButton.interactable = false;
+        wipeDataButton.interactable = false;
 
         // Try to load the game data
         GameData gameData = gameDataManager.LoadGame();
@@ -26,7 +28,21 @@ public class TitleManager : MonoBehaviour
         if (gameData != null)
         {
             loadGameButton.interactable = true;
+            wipeDataButton.interactable = true;
         }
+    }
+
+    private void WipeData()
+    {
+        gameDataManager.DeleteData();
+        loadGameButton.interactable = false;
+        wipeDataButton.interactable = false;
+    }
+
+    private void LoadGame()
+    {
+
+        SceneManager.LoadScene("Shrine");
     }
 
     private void StartNewGame()
@@ -34,11 +50,5 @@ public class TitleManager : MonoBehaviour
         gameDataManager.NewGame();
 
         LoadGame();
-    }
-
-    private void LoadGame()
-    {
-
-        SceneManager.LoadScene("Shrine");
     }
 }
