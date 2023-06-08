@@ -11,6 +11,7 @@ public class FollowerController : MonoBehaviour
     public float dodgeSpeed = 5f; // Speed for dodge
     public float dodgeTime = .1f;
     public float dodgeStaminaDrain = 5f;
+    public float distanceFromPlayer = 2f;  // Distance from the player
     public float restingOffset = 1f; // The height above the player where the follower rests
     public KeyCode restingKey = KeyCode.R; // The key to toggle resting
     private float maxEnergy;
@@ -18,8 +19,6 @@ public class FollowerController : MonoBehaviour
 
     private enum FollowerState { Following, Transitioning, Resting }
     [SerializeField] private FollowerState state = FollowerState.Resting;
-
-    public float distanceFromPlayer = 2f;  // Distance from the player
 
     private PlayerData playerData; // Reference to the PlayerShooting script
 
@@ -30,7 +29,7 @@ public class FollowerController : MonoBehaviour
         StartCoroutine(EnergyTick());
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(restingKey) && currentCoroutine == null)
         {            
@@ -47,6 +46,11 @@ public class FollowerController : MonoBehaviour
             }
         }
 
+        FollowPlayer();
+    }
+
+    private void FollowPlayer()
+    {
         // Determine the desired rotation based on the player's direction
         Quaternion desiredRotation = Quaternion.identity;
         Vector3 desiredPosition = player.transform.position;
@@ -104,8 +108,6 @@ public class FollowerController : MonoBehaviour
                 transform.position = desiredPosition + new Vector3(0, restingOffset, 0);
                 break;
         }
-
-        
     }
 
     public void Dodge(Transform bullet)
