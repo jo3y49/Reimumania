@@ -1,7 +1,7 @@
 using UnityEngine;
 
-public class EnemySpawnManager : MonoBehaviour {
-    public GameObject enemyPrefab;
+public class SpawnManager : MonoBehaviour {
+    public GameObject enemyPrefab, bombPrefab;
     public Vector2[] spawnLocation;
 
     private void Update() {
@@ -33,6 +33,10 @@ public class EnemySpawnManager : MonoBehaviour {
             enemy.AddComponent<BackAndForthPatrol>();
             enemy.AddComponent<ShootAtPlayer>();
             enemy.GetComponent<Renderer>().material.color = Color.black;
+        }
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            Instantiate(bombPrefab, spawnLocation[3], Quaternion.identity);
         }
     }
 

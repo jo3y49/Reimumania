@@ -395,6 +395,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 287074383259990851, guid: f466f2b673389544387abe9f9c3207c0, type: 3}
+      propertyPath: bombs
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 287074383259990857, guid: f466f2b673389544387abe9f9c3207c0, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -475,11 +479,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 7519766305790422760, guid: 87b8331b435a56d489eda4511f71c7fc, type: 3}
+  bombPrefab: {fileID: 5404418154501847782, guid: d41fe8235d5ebc147ba60edb7d1f6242, type: 3}
   spawnLocation:
   - {x: -2.5, y: 20}
   - {x: 25, y: 20}
   - {x: 25, y: 5}
-  - {x: 25, y: 5}
+  - {x: -5, y: 0}
 --- !u!4 &441054023
 Transform:
   m_ObjectHideFlags: 0
