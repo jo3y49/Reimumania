@@ -1347,9 +1347,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 564163425370700621, guid: ef4a90597d04cdd4ea956c72e2ca67e0, type: 3}
+      propertyPath: state
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 564163425370700625, guid: ef4a90597d04cdd4ea956c72e2ca67e0, type: 3}
       propertyPath: m_Name
       value: Flandre
+      objectReference: {fileID: 0}
+    - target: {fileID: 564163425370700625, guid: ef4a90597d04cdd4ea956c72e2ca67e0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef4a90597d04cdd4ea956c72e2ca67e0, type: 3}

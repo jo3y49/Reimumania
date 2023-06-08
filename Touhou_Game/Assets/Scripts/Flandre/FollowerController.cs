@@ -17,7 +17,7 @@ public class FollowerController : MonoBehaviour, Shootable
     private Coroutine currentCoroutine;
 
     private enum FollowerState { Following, Transitioning, Resting }
-    private FollowerState state = FollowerState.Resting;
+    [SerializeField] private FollowerState state = FollowerState.Resting;
 
     public float distanceFromPlayer = 2f;  // Distance from the player
 
@@ -98,8 +98,13 @@ public class FollowerController : MonoBehaviour, Shootable
 
                 // Interpolate the follower's rotation towards the desired rotation
                 transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, Time.deltaTime * rotationSpeed);
-                Vector3 direction = (desiredPosition - transform.position).normalized;
-                transform.position += direction * speed * Time.deltaTime;
+                float distanceToDesiredPosition = Vector3.Distance(transform.position, desiredPosition);
+
+                if (distanceToDesiredPosition > .01f)
+                {
+                    Vector3 direction = (desiredPosition - transform.position).normalized;
+                    transform.position += direction * speed * Time.deltaTime;
+                }
                 break;
             case FollowerState.Resting:
                 transform.position = desiredPosition + new Vector3(0, restingOffset, 0);
