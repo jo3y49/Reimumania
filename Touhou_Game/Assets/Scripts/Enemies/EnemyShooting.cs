@@ -14,12 +14,12 @@ public class EnemyShooting : MonoBehaviour
     private Pattern pattern;
 
     private void Awake() {
-        pattern = GetComponent<Pattern>();
         enemyCollider = GetComponent<Collider2D>();
     }
 
     private void Start()
     {
+        pattern = GetComponent<Pattern>();
         player = GameObject.FindGameObjectWithTag("Player");
         playerData = player.GetComponent<PlayerData>();
     }

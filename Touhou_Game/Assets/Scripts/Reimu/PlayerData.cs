@@ -112,9 +112,14 @@ public class PlayerData : MonoBehaviour, Shootable
 
     public void Shot(float bulletDamage)
     {
-        if (lives > 0 && isHittable)
+        if (isHittable)
         {
-            StartCoroutine(Respawn());
+            if (lives > 0)
+            {
+                StartCoroutine(Respawn());
+            } else {
+                gameData.GameOver();
+            }
         }
     }
 

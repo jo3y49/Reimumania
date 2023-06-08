@@ -2,6 +2,7 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 using System.Collections;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameDataManager : MonoBehaviour
 {
@@ -33,6 +34,7 @@ public class GameDataManager : MonoBehaviour
     private void Awake()
     {
         gameData = new GameData();
+
     }
 
     public void SaveGame()
@@ -105,11 +107,23 @@ public class GameDataManager : MonoBehaviour
         isPaused = false;
     }
 
-    public void SaveLastLocation(string lastScene, Vector2 lastLocation)
+    public void PortalToShrine(string lastScene, Vector2 lastLocation)
     {
         gameData.lastScene = lastScene;
         gameData.lastLocation[0] = lastLocation.x;
         gameData.lastLocation[1] = lastLocation.y;
+        ReturnToMenu();
+    }
+
+    public void GameOver()
+    {
+        ReturnToMenu();
+    }
+
+    private void ReturnToMenu()
+    {
+        GetComponent<PersistenceManager>().Reset();
+        SceneManager.LoadScene("Shrine");
     }
 
     public void GetSavedPlayerData(PlayerData player)

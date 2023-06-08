@@ -13,7 +13,7 @@ public class PortalManager : MonoBehaviour {
     }
     public void Teleport(Vector2 location)
     {
-        gameDataManager.SaveLastLocation(currentScene, location);
+        gameDataManager.PortalToShrine(currentScene, location);
         persistenceManager.Reset();
         SceneManager.LoadScene("Shrine");
     }
