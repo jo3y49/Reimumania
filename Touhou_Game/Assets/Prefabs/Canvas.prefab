@@ -1201,6 +1201,7 @@ GameObject:
   - component: {fileID: 3750851482429293246}
   - component: {fileID: 3750851482429293218}
   - component: {fileID: 3750851482429293217}
+  - component: {fileID: 8854267575434536955}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1321,11 +1322,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11b7c52248cad834ab11647adacbcaf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pauseKey: 112
   saveButton: {fileID: 485157574183384915}
   homeButton: {fileID: 8829642486194076143}
   quitButton: {fileID: 4391633558885023706}
   ui: {fileID: 3750851482429293218}
   pauseUI: {fileID: 8408911218195451835}
+--- !u!114 &8854267575434536955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3750851482429293247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 821a39003ce110c439fd4c5532740946, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentScene: 
 --- !u!1 &6004624103573532074
 GameObject:
   m_ObjectHideFlags: 0

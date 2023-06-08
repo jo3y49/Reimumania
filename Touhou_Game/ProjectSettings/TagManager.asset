@@ -12,6 +12,7 @@ TagManager:
   - Hit Box
   - Coin
   - Bomb
+  - Portal
   layers:
   - Default
   - TransparentFX

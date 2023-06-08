@@ -10,6 +10,9 @@ public class GameDataManager : MonoBehaviour
 
     private GameData gameData;
     private PlayerData player;
+    public string lastScene = "";
+    
+    public Vector3 lastLocation = Vector3.zero;
 
     [DllImport("__Internal")]
     private static extern void SyncFiles();
@@ -100,6 +103,13 @@ public class GameDataManager : MonoBehaviour
         playtimeText.text = "Play Time: " + FormatTimeToString(gameData.playTime);
         
         isPaused = false;
+    }
+
+    public void SaveLastLocation(string lastScene, Vector2 lastLocation)
+    {
+        gameData.lastScene = lastScene;
+        gameData.lastLocation[0] = lastLocation.x;
+        gameData.lastLocation[1] = lastLocation.y;
     }
 
     public void GetSavedPlayerData(PlayerData player)

@@ -44,8 +44,7 @@ public class PauseManager : MonoBehaviour {
         TogglePause(true);
     }
 
-    private void Home()
-    {
+    private void Home() {
         Time.timeScale = 1f; // You need to make sure that the game isn't still paused when you load another scene
         persistenceManager.Reset();
         SceneManager.LoadScene("Shrine");

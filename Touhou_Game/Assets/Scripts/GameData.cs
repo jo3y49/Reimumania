@@ -1,6 +1,8 @@
 [System.Serializable]
 public class GameData
 {
+    public string lastScene = "MainArea";
+    public float[] lastLocation = {0,0};
     public int currentCoins = 0;
     public PlayerData.Upgrade spellCardUpgrade = PlayerData.Upgrade.L1;
     public float playTime = 0;
