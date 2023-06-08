@@ -25,12 +25,16 @@ public class BulletController : MonoBehaviour
     {
         if (CanHit(other))
         {
-            Shootable shootable = other.GetComponent<Shootable>();
-            if (shootable != null)
-                shootable.Shot(bulletDamage);
-                
-            if (!other.gameObject.CompareTag("Follower"))
+            if (other.gameObject.CompareTag("Follower"))
+            {
+                other.gameObject.GetComponent<FollowerController>().Dodge(transform);
+            } else 
+            {
+                Shootable shootable = other.GetComponent<Shootable>();
+                if (shootable != null)
+                    shootable.Shot(bulletDamage);
                 Destroy(gameObject);
+            }
         }
     }
 
