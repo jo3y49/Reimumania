@@ -93,10 +93,10 @@ public class PlayerData : MonoBehaviour, Shootable
                 direction = moveScript.direction;
             }
 
-            if (Input.GetKeyDown(combatToggle))
-            {
-                ToggleCombatState(state);
-            }
+            // if (Input.GetKeyDown(combatToggle))
+            // {
+            //     ToggleCombatState(state);
+            // }
         }
 
         if (Input.GetKeyDown(KeyCode.L))
