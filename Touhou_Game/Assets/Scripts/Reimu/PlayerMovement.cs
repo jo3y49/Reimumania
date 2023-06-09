@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour {
         boxCollider = GetComponent<BoxCollider2D>();
     }
 
-    private void Update() {
+    private void FixedUpdate() {
         Movement();
     }   
 

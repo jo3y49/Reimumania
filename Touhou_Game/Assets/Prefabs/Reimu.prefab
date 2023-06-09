@@ -310,7 +310,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 8506286823978325421, guid: db1c95a40365d5949906823a2ae8d7b6, type: 3}
   firePoint: {fileID: 287074383259990857}
   directionPersistTime: 0.1
-  bulletSpeed: 10
+  bulletSpeed: 11
   fireRate: 5
   fireButton: 32
   direction: 0
