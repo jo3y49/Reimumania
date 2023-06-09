@@ -574,7 +574,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Press 1-4 to spawn enemies
+  m_text: 'Press 1-6 to spawn enemies
 
     Press B to spawn a bomb pickup'
   m_isRightToLeft: 0
