@@ -5,21 +5,23 @@ public class FollowerController : MonoBehaviour
 {
     private GameObject player; // The player object the follower should follow
     public float speed = 2f; // The speed at which the follower should follow the player
-    public float energy = 100f; 
-    public float energyTick = 2f;
+    public int energy = 100; 
+    public int energyTick = 2;
     public float rotationSpeed = 10f; // Speed at which the object rotates
     public float dodgeSpeed = 5f; // Speed for dodge
     public float dodgeTime = .1f;
-    public float dodgeStaminaDrain = 5f;
+    public int dodgeStaminaDrain = 5;
     public Vector2 distanceFromPlayer = new Vector2(1,1);  // Distance from the player
     public float restingOffset = 1f; // The height above the player where the follower rests
     public KeyCode restingKey = KeyCode.R; // The key to toggle resting
-    private float maxEnergy;
+    private int maxEnergy;
     private Coroutine dodgingCoroutine;
     private Vector3 currentPosition;
 
-    private enum FollowerState { Following, Transitioning, Resting }
-    [SerializeField] private FollowerState state = FollowerState.Resting;
+    private enum FollowState { Following, Transitioning, Resting }
+    private enum ActionState { Attack, Defend }
+    [SerializeField] private FollowState Followstate = FollowState.Resting;
+    [SerializeField] private ActionState actionState = ActionState.Defend;
 
     private PlayerData playerData; // Reference to the PlayerShooting script
 
@@ -36,15 +38,15 @@ public class FollowerController : MonoBehaviour
         if (Input.GetKeyDown(restingKey) && dodgingCoroutine == null)
         {            
             // Toggle the follower's state when the resting key is pressed
-            if (state == FollowerState.Following)
+            if (Followstate == FollowState.Following)
             {
                 MoveToRestingPosition();
             }
             else
-            if ((state == FollowerState.Resting || state == FollowerState.Transitioning) && energy >= maxEnergy/2)
+            if ((Followstate == FollowState.Resting || Followstate == FollowState.Transitioning) && energy >= maxEnergy/2)
             {
                 // Stop the current coroutine if one is running
-                state = FollowerState.Following;
+                Followstate = FollowState.Following;
             }
         }
     }
@@ -58,9 +60,9 @@ public class FollowerController : MonoBehaviour
         // Determine the desired rotation based on the player's direction
         Quaternion desiredRotation = Quaternion.identity;
 
-        switch (state)
+        switch (Followstate)
         {
-            case FollowerState.Following:
+            case FollowState.Following:
                 switch (playerData.direction)
                 {
                     case PlayerData.Direction.Up:
@@ -106,7 +108,7 @@ public class FollowerController : MonoBehaviour
                     transform.position = desiredPosition;
                 }
                 break;
-            case FollowerState.Transitioning:
+            case FollowState.Transitioning:
                 Vector3 restingPosition = player.transform.position + new Vector3(0, restingOffset, 0);
                 if (Vector3.Distance(transform.position, restingPosition) > 0.12f)
                 {
@@ -114,10 +116,10 @@ public class FollowerController : MonoBehaviour
                     transform.position += direction * speed * Time.deltaTime;
                     restingPosition = player.transform.position + new Vector3(0, restingOffset, 0);
                 } else {
-                    state = FollowerState.Resting;
+                    Followstate = FollowState.Resting;
                 }
                 break;
-            case FollowerState.Resting:
+            case FollowState.Resting:
                 transform.position = player.transform.position + new Vector3(0, restingOffset, 0);
                 break;
         }
@@ -125,7 +127,7 @@ public class FollowerController : MonoBehaviour
 
     public void Dodge(Transform bullet)
     {
-        if (dodgingCoroutine == null && state == FollowerState.Following)
+        if (dodgingCoroutine == null && Followstate == FollowState.Following)
         {
             dodgingCoroutine = StartCoroutine(DodgeBullet(bullet));
         }
@@ -133,7 +135,7 @@ public class FollowerController : MonoBehaviour
 
     private void MoveToRestingPosition()
     {
-        state = FollowerState.Transitioning;
+        Followstate = FollowState.Transitioning;
         transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
@@ -168,7 +170,7 @@ public class FollowerController : MonoBehaviour
         {
             if (dodgingCoroutine == null)
             {
-                if (state == FollowerState.Following)
+                if (Followstate == FollowState.Following)
                 {
                     energy -= 1;
                     if (energy <= 0)
@@ -176,7 +178,7 @@ public class FollowerController : MonoBehaviour
                         MoveToRestingPosition();
                     }
                 }
-                else if (state == FollowerState.Resting)
+                else if (Followstate == FollowState.Resting)
                 {
                     if (energy < maxEnergy)
                     {

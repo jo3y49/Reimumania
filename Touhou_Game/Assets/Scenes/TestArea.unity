@@ -388,6 +388,23 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6009065849309027002, guid: 931d6a483e27f864d9aaaaaf63196d9f, type: 3}
   m_PrefabInstance: {fileID: 1232871397}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &289329349 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 287074383427147592, guid: f466f2b673389544387abe9f9c3207c0, type: 3}
+  m_PrefabInstance: {fileID: 392851650}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &289329353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289329349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20acbe0bf3a705b45b2878f9e0b09792, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &392851650
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -451,7 +468,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Reimu
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 287074383427147599, guid: f466f2b673389544387abe9f9c3207c0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f466f2b673389544387abe9f9c3207c0, type: 3}
 --- !u!1 &407395531
 GameObject:

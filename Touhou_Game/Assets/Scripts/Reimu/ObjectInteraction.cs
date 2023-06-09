@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CoinCollector : MonoBehaviour {
+public class ObjectInteraction : MonoBehaviour {
     private PlayerData playerData;
 
     private void Awake() {
