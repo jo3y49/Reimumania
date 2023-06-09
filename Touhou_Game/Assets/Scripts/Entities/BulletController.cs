@@ -41,7 +41,7 @@ public class BulletController : MonoBehaviour
     private bool CanHit(Collider2D other) 
     {
         return other != parentCollider && other.gameObject.activeSelf &&
-            !(other.gameObject.CompareTag("Follower") && parentCollider.gameObject.CompareTag("Player")) &&
+            !(other.gameObject.CompareTag("Follower") && parentCollider.gameObject.CompareTag("Hit Box")) &&
             !(other.gameObject.CompareTag("Enemy") && parentCollider.gameObject.CompareTag("Enemy")) &&
             (other.gameObject.CompareTag("Hit Box") || other.gameObject.CompareTag("Enemy") ||
             other.gameObject.CompareTag("Environment") || other.gameObject.CompareTag("Follower"));
