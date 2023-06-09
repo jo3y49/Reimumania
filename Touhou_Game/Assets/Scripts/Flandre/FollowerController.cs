@@ -11,11 +11,12 @@ public class FollowerController : MonoBehaviour
     public float dodgeSpeed = 5f; // Speed for dodge
     public float dodgeTime = .1f;
     public float dodgeStaminaDrain = 5f;
-    public float distanceFromPlayer = 2f;  // Distance from the player
+    public Vector2 distanceFromPlayer = new Vector2(1,1);  // Distance from the player
     public float restingOffset = 1f; // The height above the player where the follower rests
     public KeyCode restingKey = KeyCode.R; // The key to toggle resting
     private float maxEnergy;
     private Coroutine currentCoroutine;
+    private Vector3 currentPosition;
 
     private enum FollowerState { Following, Transitioning, Resting }
     [SerializeField] private FollowerState state = FollowerState.Resting;
@@ -23,6 +24,7 @@ public class FollowerController : MonoBehaviour
     private PlayerData playerData; // Reference to the PlayerShooting script
 
     private void Start() {
+        currentPosition = new Vector3(-distanceFromPlayer.x,distanceFromPlayer.y,0);
         player = GameObject.FindGameObjectWithTag("Player");
         playerData = player.GetComponent<PlayerData>();
         maxEnergy = energy;
@@ -53,7 +55,6 @@ public class FollowerController : MonoBehaviour
     {
         // Determine the desired rotation based on the player's direction
         Quaternion desiredRotation = Quaternion.identity;
-        Vector3 desiredPosition = player.transform.position;
 
         switch (state)
         {
@@ -62,37 +63,34 @@ public class FollowerController : MonoBehaviour
                 {
                     case PlayerData.Direction.Up:
                         desiredRotation = Quaternion.Euler(0, 0, 0);
-                        desiredPosition += new Vector3(0, -distanceFromPlayer, 0);
                         break;
                     case PlayerData.Direction.Down:
                         desiredRotation = Quaternion.Euler(0, 0, 180);
-                        desiredPosition += new Vector3(0, distanceFromPlayer, 0);
                         break;
                     case PlayerData.Direction.Left:
                         desiredRotation = Quaternion.Euler(0, 0, 90);
-                        desiredPosition += new Vector3(distanceFromPlayer, 0, 0);
+                        currentPosition = new Vector3(distanceFromPlayer.x, distanceFromPlayer.y, 0);
                         break;
                     case PlayerData.Direction.Right:
                         desiredRotation = Quaternion.Euler(0, 0, -90);
-                        desiredPosition += new Vector3(-distanceFromPlayer, 0, 0);
+                        currentPosition = new Vector3(-distanceFromPlayer.x, distanceFromPlayer.y, 0);
                         break;
                     case PlayerData.Direction.UpRight:
                         desiredRotation = Quaternion.Euler(0, 0, -45);
-                        desiredPosition += new Vector3(-distanceFromPlayer, -distanceFromPlayer, 0);
+                        currentPosition = new Vector3(-distanceFromPlayer.x, distanceFromPlayer.y, 0);
                         break;
                     case PlayerData.Direction.UpLeft:
                         desiredRotation = Quaternion.Euler(0, 0, 45);
-                        desiredPosition += new Vector3(distanceFromPlayer, -distanceFromPlayer, 0);
+                        currentPosition = new Vector3(distanceFromPlayer.x, distanceFromPlayer.y, 0);
                         break;
                     case PlayerData.Direction.DownRight:
                         desiredRotation = Quaternion.Euler(0, 0, -135);
-                        desiredPosition += new Vector3(-distanceFromPlayer, distanceFromPlayer, 0);
                         break;
                     case PlayerData.Direction.DownLeft:
                         desiredRotation = Quaternion.Euler(0, 0, 135);
-                        desiredPosition += new Vector3(distanceFromPlayer, distanceFromPlayer, 0);
                         break;
                 }
+                Vector3 desiredPosition = player.transform.position + currentPosition;
 
                 // Interpolate the follower's rotation towards the desired rotation
                 transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, Time.deltaTime * rotationSpeed);
@@ -105,7 +103,7 @@ public class FollowerController : MonoBehaviour
                 }
                 break;
             case FollowerState.Resting:
-                transform.position = desiredPosition + new Vector3(0, restingOffset, 0);
+                transform.position = player.transform.position + new Vector3(0, restingOffset, 0);
                 break;
         }
     }

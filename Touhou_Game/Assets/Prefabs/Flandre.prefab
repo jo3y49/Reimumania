@@ -104,10 +104,11 @@ MonoBehaviour:
   rotationSpeed: 10
   dodgeSpeed: 10
   dodgeTime: 0.1
+  dodgeStaminaDrain: 5
+  distanceFromPlayer: {x: 1, y: 1}
   restingOffset: 1
   restingKey: 114
   state: 2
-  distanceFromPlayer: 1
 --- !u!61 &564163425370700622
 BoxCollider2D:
   m_ObjectHideFlags: 0
