@@ -3,6 +3,11 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour {
     public GameObject enemyPrefab, bombPrefab;
     public Vector2[] spawnLocation;
+    private GameObject player;
+
+    private void Start() {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -34,9 +39,29 @@ public class SpawnManager : MonoBehaviour {
             enemy.AddComponent<ShootAtPlayer>();
             enemy.GetComponent<Renderer>().material.color = Color.black;
         }
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            GameObject enemy = getBaseEnemy(spawnLocation[4]);
+            enemy.AddComponent<BackAndForthPatrol>();
+            BackAndForthPatrol patrol = enemy.GetComponent<BackAndForthPatrol>();
+            patrol.patrolDistance = 15;
+            patrol.patrolSpeed = 10f;
+            enemy.AddComponent<ShootAtPlayer>();
+            enemy.GetComponent<Renderer>().material.color = Color.magenta;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            GameObject enemy = getBaseEnemy(spawnLocation[5]);
+            enemy.AddComponent<BackAndForthPatrol>();
+            BackAndForthPatrol patrol = enemy.GetComponent<BackAndForthPatrol>();
+            patrol.patrolDistance = 15;
+            patrol.patrolSpeed = 10f;
+            enemy.AddComponent<ShootAtPlayer>();
+            enemy.GetComponent<Renderer>().material.color = Color.magenta;
+        }
         if (Input.GetKeyDown(KeyCode.B))
         {
-            Instantiate(bombPrefab, spawnLocation[3], Quaternion.identity);
+            Instantiate(bombPrefab, spawnLocation[3] + (Vector2)player.transform.position, Quaternion.identity);
         }
     }
 

@@ -488,7 +488,9 @@ MonoBehaviour:
   - {x: -2.5, y: 20}
   - {x: 25, y: 20}
   - {x: 25, y: 5}
-  - {x: -5, y: 0}
+  - {x: 0, y: -2}
+  - {x: 15, y: 25}
+  - {x: 15, y: 0}
 --- !u!4 &441054023
 Transform:
   m_ObjectHideFlags: 0
@@ -574,7 +576,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Press 1-4 to spawn enemies
 
-    Press 5 to spawn a bomb pickup'
+    Press B to spawn a bomb pickup'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1126,6 +1128,10 @@ PrefabInstance:
     - target: {fileID: 3750851482429293247, guid: 087fa541f9a83004a9545dcfec4f283a, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 3750851482429293247, guid: 087fa541f9a83004a9545dcfec4f283a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 087fa541f9a83004a9545dcfec4f283a, type: 3}
