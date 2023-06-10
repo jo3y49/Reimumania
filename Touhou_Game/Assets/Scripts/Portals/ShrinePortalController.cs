@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PortalController : MonoBehaviour {
+public class ShrinePortalController : MonoBehaviour {
     public float distanceFromPortal = 1f;
     public PlayerData.Direction direction = PlayerData.Direction.Left;
     private Vector2 spawnLocation = Vector2.zero;

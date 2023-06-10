@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 39162738249940981}
   - component: {fileID: 810157110606726826}
   - component: {fileID: 4438458029728647322}
-  - component: {fileID: 460030018089306409}
+  - component: {fileID: 5986109396951104114}
   m_Layer: 0
-  m_Name: Portal
+  m_Name: Shrine Portal
   m_TagString: Portal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -112,7 +112,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &460030018089306409
+--- !u!114 &5986109396951104114
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8853943624048201290}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1b38b15ab387344aa4ac2d74fac460f, type: 3}
+  m_Script: {fileID: 11500000, guid: b21804ed1b7ba3b4a94982d41fa99925, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   distanceFromPortal: 1
