@@ -388,23 +388,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6009065849309027002, guid: 931d6a483e27f864d9aaaaaf63196d9f, type: 3}
   m_PrefabInstance: {fileID: 1232871397}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &289329349 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 287074383427147592, guid: f466f2b673389544387abe9f9c3207c0, type: 3}
-  m_PrefabInstance: {fileID: 392851650}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &289329353
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 289329349}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20acbe0bf3a705b45b2878f9e0b09792, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &392851650
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1542,11 +1525,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 564163425370700621, guid: ef4a90597d04cdd4ea956c72e2ca67e0, type: 3}
       propertyPath: actionState
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 564163425370700621, guid: ef4a90597d04cdd4ea956c72e2ca67e0, type: 3}
       propertyPath: followState
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 564163425370700625, guid: ef4a90597d04cdd4ea956c72e2ca67e0, type: 3}
       propertyPath: m_Name
@@ -1554,6 +1537,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 564163425370700625, guid: ef4a90597d04cdd4ea956c72e2ca67e0, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1276204303518129119, guid: ef4a90597d04cdd4ea956c72e2ca67e0, type: 3}
+      propertyPath: searchTime
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1276204303518129119, guid: ef4a90597d04cdd4ea956c72e2ca67e0, type: 3}
+      propertyPath: attackRange
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1276204303518129119, guid: ef4a90597d04cdd4ea956c72e2ca67e0, type: 3}
+      propertyPath: attackCooldown
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7023881440019708732, guid: ef4a90597d04cdd4ea956c72e2ca67e0, type: 3}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

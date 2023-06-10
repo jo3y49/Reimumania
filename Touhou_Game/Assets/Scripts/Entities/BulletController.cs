@@ -33,7 +33,6 @@ public class BulletController : MonoBehaviour
             } 
             else if (other.gameObject.CompareTag("Collector")  && !parentCollider.gameObject.CompareTag("Hit Box"))
             {
-                isReflecting = true;
                 ProtectPlayer?.Invoke(gameObject);
             }
         }
@@ -50,6 +49,7 @@ public class BulletController : MonoBehaviour
 
     public void Reflect(Collider2D newParentColilider)
     {
+        isReflecting = true;
         parentCollider = newParentColilider;
         GetComponent<Rigidbody2D>().velocity *= -1;
         isReflecting = false;

@@ -15,6 +15,7 @@ public class FollowerController : MonoBehaviour
     public float restingOffset = 1f; // The height above the player where the follower rests
     public KeyCode restingKey = KeyCode.Z; // The key to toggle resting
     public KeyCode modeKey = KeyCode.R;
+    private bool isActing = false;
     private int maxEnergy;
     private Coroutine dodgingCoroutine;
     private Vector3 currentPosition;
@@ -25,16 +26,22 @@ public class FollowerController : MonoBehaviour
     [SerializeField] private ActionState actionState = ActionState.Defend;
     private ActionState previousActionState;
     private ActionState previousMountState = ActionState.Tired;
+    private FollowerAction followerAttack, followerDefense;
 
     private PlayerData playerData; // Reference to the PlayerShooting script
+
+    private void Awake() {
+        followerAttack = GetComponent<FollowerAttack>();
+        followerDefense = GetComponent<FollowerDefense>();
+    }
 
     private void Start() {
         currentPosition = new Vector3(-distanceFromPlayer.x,distanceFromPlayer.y,0);
         player = GameObject.FindGameObjectWithTag("Player");
         playerData = player.GetComponent<PlayerData>();
         maxEnergy = energy;
-        if (actionState == ActionState.Attack)
-            previousActionState = actionState;
+        if (actionState == ActionState.Attack || actionState == ActionState.Defend)
+            ActivateAction(actionState);
         else 
             previousActionState = ActionState.Defend;
         StartCoroutine(EnergyTick());
@@ -42,7 +49,7 @@ public class FollowerController : MonoBehaviour
 
     private void Update()
     {
-        if (dodgingCoroutine == null)
+        if (dodgingCoroutine == null && !isActing)
         {
             if (Input.GetKeyDown(restingKey))
             {
@@ -55,21 +62,21 @@ public class FollowerController : MonoBehaviour
                 {
                     // Stop the current coroutine if one is running
                     followState = FollowState.Following;
-                    actionState = previousActionState;
+                    ActivateAction(previousActionState);
                 }
             } 
             else if (Input.GetKeyDown(modeKey))
             {
                 if (followState == FollowState.Following)
                 {
-                    previousActionState = actionState;
                     if (actionState == ActionState.Defend)
                     {
-                        actionState = ActionState.Attack;
+                        ActivateAction(ActionState.Attack);
+                        
                     }
                     else if (actionState == ActionState.Attack)
                     {
-                        actionState = ActionState.Defend;
+                        ActivateAction(ActionState.Defend);
                     }
                 }
                 else if (followState == FollowState.Resting)
@@ -94,7 +101,8 @@ public class FollowerController : MonoBehaviour
     }
 
     private void FixedUpdate() {
-        FollowPlayer();
+        if (!isActing)
+            FollowPlayer();
     }
 
     private void FollowPlayer()
@@ -182,6 +190,8 @@ public class FollowerController : MonoBehaviour
     {
         followState = FollowState.Transitioning;
         actionState = ActionState.Tired;
+        followerAttack.Deactivate();
+        followerAttack.Deactivate();
         transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
@@ -228,14 +238,21 @@ public class FollowerController : MonoBehaviour
 
     private void EnergyDecrease(int energyChange = 1)
     {
-        energy -= energyChange;
-        if (energy < 25)
-            actionState = ActionState.Tired;
-
-        if (energy <= 0)
+        if (!isActing)
         {
-            energy = 0;
-            MoveToRestingPosition();
+            energy -= energyChange;
+            if (energy < 25)
+            {
+                actionState = ActionState.Tired;
+                followerAttack.Deactivate();
+                followerDefense.Deactivate();
+            }
+
+            if (energy <= 0)
+            {
+                energy = 0;
+                MoveToRestingPosition();
+            }
         }
     }
 
@@ -245,5 +262,39 @@ public class FollowerController : MonoBehaviour
         {
             energy += energyChange;
         }
+    }
+
+    private void ActivateAction(ActionState actionState)
+    {
+        switch (actionState)
+        {
+            case ActionState.Attack:
+            followerDefense.Deactivate();
+            followerAttack.Activate();
+            break;
+            case ActionState.Defend:
+            followerAttack.Deactivate();
+            followerDefense.Activate();
+            break;
+        }
+
+        this.actionState = actionState;
+        previousActionState = actionState;
+        
+    }
+
+    public void SetIsActing()
+    {
+        isActing = true;
+    }
+
+    public void SetNotActing()
+    {
+        isActing = false;
+    }
+
+    public float DistanceFromFollower()
+    {
+        return Vector3.Distance(transform.position, player.transform.position);
     }
 }

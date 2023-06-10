@@ -10,9 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 564163425370700620}
   - component: {fileID: 564163425370700627}
-  - component: {fileID: 564163425370700621}
   - component: {fileID: 564163425370700622}
+  - component: {fileID: 564163425370700621}
   - component: {fileID: 7023881440019708732}
+  - component: {fileID: 1276204303518129119}
+  - component: {fileID: 6946621085006573258}
   m_Layer: 0
   m_Name: Flandre
   m_TagString: Follower
@@ -87,32 +89,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &564163425370700621
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 564163425370700625}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e68db26f499ed714a95430b60595e620, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  speed: 6
-  energy: 100
-  energyTick: 1
-  rotationSpeed: 10
-  dodgeSpeed: 10
-  dodgeTime: 0.1
-  dodgeStaminaDrain: 5
-  distanceFromPlayer: {x: 1, y: 1}
-  restingOffset: 1
-  restingKey: 122
-  modeKey: 114
-  followState: 2
-  actionState: 1
 --- !u!61 &564163425370700622
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -139,6 +115,32 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &564163425370700621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 564163425370700625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e68db26f499ed714a95430b60595e620, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  speed: 6
+  energy: 100
+  energyTick: 1
+  rotationSpeed: 10
+  dodgeSpeed: 10
+  dodgeTime: 0.1
+  dodgeStaminaDrain: 5
+  distanceFromPlayer: {x: 1, y: 1}
+  restingOffset: 1
+  restingKey: 122
+  modeKey: 114
+  followState: 2
+  actionState: 1
 --- !u!114 &7023881440019708732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,3 +154,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followerController: {fileID: 564163425370700621}
+--- !u!114 &1276204303518129119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 564163425370700625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58eab3afafe19f144b92045a0680a20e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  followerController: {fileID: 564163425370700621}
+  searchTime: 3
+  attackSpeed: 2
+  attackRange: 5
+  attackCooldown: 5
+  distanceToRestart: 2
+--- !u!114 &6946621085006573258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 564163425370700625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9250525389665164db007cb6a05187bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
