@@ -10,44 +10,69 @@ public class FollowerAttack : MonoBehaviour, FollowerAction {
     public float attackCooldown = 5f;
     public float distanceToRestart = 2f;
     public int energyDrain = 20;
+    private bool cancel = false;
     private List<GameObject> enemies;
-    private Coroutine currentCoroutine;
+    private Coroutine huntCoroutine, lockOnCoroutine, attackCoroutine;
 
     private void Awake() {
         followerController = GetComponent<FollowerController>();
     }
 
     public void Activate() {
-        currentCoroutine = StartCoroutine(Hunt());
+        if (huntCoroutine != null) 
+        {
+            StopCoroutine(huntCoroutine);
+        }
+        cancel = false;
+        huntCoroutine = StartCoroutine(Hunt());
+        
     }
 
     public void Deactivate() {
-        if (currentCoroutine != null)
+
+        cancel = true;
+
+        if (huntCoroutine != null) 
         {
-            StopCoroutine(currentCoroutine);
-            currentCoroutine = null;
+            StopCoroutine(huntCoroutine);
+            huntCoroutine = null;
+        }
+        if (lockOnCoroutine != null) 
+        {
+            StopCoroutine(lockOnCoroutine);
+            lockOnCoroutine = null;
+        }
+        if (attackCoroutine != null) 
+        {
+            StopCoroutine(attackCoroutine);
+            attackCoroutine = null;
         }
     }
-
     private IEnumerator Hunt()
     {
         while (true)
         {
+            Debug.Log("hunting");
+            yield return new WaitForSeconds(attackCooldown);
+
             if (FindEnemies())
             {
-                StopCoroutine(currentCoroutine);
-                currentCoroutine = StartCoroutine(LockOn());
+                yield return StartCoroutine(LockOn());
             }
-
-            yield return new WaitForSeconds(attackCooldown);
         }
     }
 
     private IEnumerator LockOn()
     {
+        Debug.Log("lockon");
         float timeSearched = 0;
         while (timeSearched < searchTime)
         {
+            if (cancel)
+            {
+                cancel = false;
+                yield break;
+            }
             timeSearched += Time.deltaTime;
             yield return null;
         }
@@ -55,16 +80,16 @@ public class FollowerAttack : MonoBehaviour, FollowerAction {
         if (FindEnemies())
         {
             followerController.SetIsActing();
-            StopCoroutine(currentCoroutine);
-            currentCoroutine = StartCoroutine(Attack());
+            yield return StartCoroutine(Attack());
         } else {
-            StopCoroutine(currentCoroutine);
-            currentCoroutine = StartCoroutine(Hunt());
+            yield return StartCoroutine(Hunt());
         }
     }
 
     private IEnumerator Attack()
     {
+        Debug.Log("attack");
+        
         GameObject enemy = FindTarget();
 
         Vector3 direction = Vector3.zero;
@@ -88,20 +113,27 @@ public class FollowerAttack : MonoBehaviour, FollowerAction {
 
         followerController.SetNotActing();
 
-        StopCoroutine(currentCoroutine);
-        currentCoroutine = StartCoroutine(WaitForActivation());
-
         followerController.energy -= energyDrain;
+
+        StartCoroutine(WaitForActivation());
+
+        yield break;
     }
 
     public IEnumerator WaitForActivation()
     {
         while (distanceToRestart < followerController.DistanceFromFollower())
         {
+            if (cancel)
+            {
+                cancel = false;
+                yield break;
+            }
+
             yield return new WaitForSeconds(1f);
         }
 
-        Activate();
+        yield break;
     }
 
     private bool FindEnemies()

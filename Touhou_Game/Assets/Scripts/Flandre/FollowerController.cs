@@ -8,6 +8,7 @@ public class FollowerController : MonoBehaviour
     public int energy = 100; 
     public int energyTick = 2;
     public int energyRegain = 20;
+    public int energyForAction = 25;
     public float rotationSpeed = 10f; // Speed at which the object rotates
     public float dodgeSpeed = 5f; // Speed for dodge
     public float dodgeTime = .1f;
@@ -89,7 +90,7 @@ public class FollowerController : MonoBehaviour
                     }
                     else if (actionState == ActionState.Tired)
                     {
-                        if (energy >= 25)
+                        if (energy >= energyForAction)
                         {
                             previousMountState = actionState;
                             actionState = ActionState.Mounted;
@@ -169,7 +170,7 @@ public class FollowerController : MonoBehaviour
                     restingPosition = player.transform.position + new Vector3(0, restingOffset, 0);
                 } else {
                     followState = FollowState.Resting;
-                    if (energy >= 25)
+                    if (energy >= energyForAction)
                         actionState = previousMountState;
                     }
                 break;
@@ -242,7 +243,7 @@ public class FollowerController : MonoBehaviour
         if (!isActing)
         {
             energy -= energyChange;
-            if (energy < 25)
+            if (energy <= energyForAction)
             {
                 actionState = ActionState.Tired;
                 followerAttack.Deactivate();
@@ -310,5 +311,9 @@ public class FollowerController : MonoBehaviour
     private void EnergyRecover()
     {
         energy += energyRegain;
+        if (followState == FollowState.Following && energy > energyForAction)
+        {
+            ActivateAction(previousActionState);
+        }
     }
 }
