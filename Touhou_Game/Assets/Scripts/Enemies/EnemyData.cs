@@ -3,11 +3,13 @@ using UnityEngine;
 
 public class EnemyData : MonoBehaviour, Shootable
 {
-    public GameObject coinPrefab;
+    public GameObject coinPrefab, bombPrefab, energyPrefab;
     public float health = 10f;
+    public int dropDivisor = 10;
     public int minCoins = 5;
     public int maxCoins = 10;
     public float scatterDistance = 1.0f;
+    public bool rareDrops = true;
     public enum Direction
     {
         Up,
@@ -49,6 +51,19 @@ public class EnemyData : MonoBehaviour, Shootable
             // Start the coroutine to move the coin
             coinController.StartCoroutine(coinController.MoveToPosition(transform.position + scatter));
         }
+
+        if (rareDrops)
+        {
+            int seed = Random.Range(0, dropDivisor + 1);
+            if (seed == 0)
+            {
+                Instantiate(bombPrefab, transform.position, Quaternion.identity);
+            } else if (seed == dropDivisor)
+            {
+                Instantiate(energyPrefab, transform.position, Quaternion.identity);
+            }
+        }
+
         Destroy(gameObject);
     }
 }
