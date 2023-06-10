@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class FollowerController : MonoBehaviour
 {
-    private GameObject player; // The player object the follower should follow
+    public GameObject player; // The player object the follower should follow
     public float speed = 2f; // The speed at which the follower should follow the player
     public int energy = 100; 
     public int energyTick = 2;
@@ -13,15 +13,18 @@ public class FollowerController : MonoBehaviour
     public int dodgeStaminaDrain = 5;
     public Vector2 distanceFromPlayer = new Vector2(1,1);  // Distance from the player
     public float restingOffset = 1f; // The height above the player where the follower rests
-    public KeyCode restingKey = KeyCode.R; // The key to toggle resting
+    public KeyCode restingKey = KeyCode.Z; // The key to toggle resting
+    public KeyCode modeKey = KeyCode.R;
     private int maxEnergy;
     private Coroutine dodgingCoroutine;
     private Vector3 currentPosition;
 
     private enum FollowState { Following, Transitioning, Resting }
-    private enum ActionState { Attack, Defend }
-    [SerializeField] private FollowState Followstate = FollowState.Resting;
+    private enum ActionState { Attack, Defend, Mounted, Tired }
+    [SerializeField] private FollowState followState = FollowState.Resting;
     [SerializeField] private ActionState actionState = ActionState.Defend;
+    private ActionState previousActionState;
+    private ActionState previousMountState = ActionState.Tired;
 
     private PlayerData playerData; // Reference to the PlayerShooting script
 
@@ -30,25 +33,64 @@ public class FollowerController : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         playerData = player.GetComponent<PlayerData>();
         maxEnergy = energy;
+        if (actionState == ActionState.Attack)
+            previousActionState = actionState;
+        else 
+            previousActionState = ActionState.Defend;
         StartCoroutine(EnergyTick());
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(restingKey) && dodgingCoroutine == null)
-        {            
-            // Toggle the follower's state when the resting key is pressed
-            if (Followstate == FollowState.Following)
+        if (dodgingCoroutine == null)
+        {
+            if (Input.GetKeyDown(restingKey))
             {
-                MoveToRestingPosition();
-            }
-            else
-            if ((Followstate == FollowState.Resting || Followstate == FollowState.Transitioning) && energy >= maxEnergy/2)
+                // Toggle the follower's state when the resting key is pressed
+                if (followState == FollowState.Following)
+                {
+                    MoveToRestingPosition();
+                }
+                else if ((followState == FollowState.Resting || followState == FollowState.Transitioning) && energy >= maxEnergy/2)
+                {
+                    // Stop the current coroutine if one is running
+                    followState = FollowState.Following;
+                    actionState = previousActionState;
+                }
+            } 
+            else if (Input.GetKeyDown(modeKey))
             {
-                // Stop the current coroutine if one is running
-                Followstate = FollowState.Following;
+                if (followState == FollowState.Following)
+                {
+                    previousActionState = actionState;
+                    if (actionState == ActionState.Defend)
+                    {
+                        actionState = ActionState.Attack;
+                    }
+                    else if (actionState == ActionState.Attack)
+                    {
+                        actionState = ActionState.Defend;
+                    }
+                }
+                else if (followState == FollowState.Resting)
+                {
+                    if (actionState == ActionState.Mounted)
+                    {
+                        previousMountState = actionState;
+                        actionState = ActionState.Tired;
+                    }
+                    else if (actionState == ActionState.Tired)
+                    {
+                        if (energy >= 25)
+                        {
+                            previousMountState = actionState;
+                            actionState = ActionState.Mounted;
+                        }
+                    }
+                }
             }
-        }
+        }           
+            
     }
 
     private void FixedUpdate() {
@@ -60,7 +102,7 @@ public class FollowerController : MonoBehaviour
         // Determine the desired rotation based on the player's direction
         Quaternion desiredRotation = Quaternion.identity;
 
-        switch (Followstate)
+        switch (followState)
         {
             case FollowState.Following:
                 switch (playerData.direction)
@@ -110,14 +152,17 @@ public class FollowerController : MonoBehaviour
                 break;
             case FollowState.Transitioning:
                 Vector3 restingPosition = player.transform.position + new Vector3(0, restingOffset, 0);
+
                 if (Vector3.Distance(transform.position, restingPosition) > 0.12f)
                 {
                     Vector3 direction = (restingPosition - transform.position).normalized;
                     transform.position += direction * speed * Time.deltaTime;
                     restingPosition = player.transform.position + new Vector3(0, restingOffset, 0);
                 } else {
-                    Followstate = FollowState.Resting;
-                }
+                    followState = FollowState.Resting;
+                    if (energy >= 25)
+                        actionState = previousMountState;
+                    }
                 break;
             case FollowState.Resting:
                 transform.position = player.transform.position + new Vector3(0, restingOffset, 0);
@@ -127,7 +172,7 @@ public class FollowerController : MonoBehaviour
 
     public void Dodge(Transform bullet)
     {
-        if (dodgingCoroutine == null && Followstate == FollowState.Following)
+        if (dodgingCoroutine == null && followState == FollowState.Following)
         {
             dodgingCoroutine = StartCoroutine(DodgeBullet(bullet));
         }
@@ -135,7 +180,8 @@ public class FollowerController : MonoBehaviour
 
     private void MoveToRestingPosition()
     {
-        Followstate = FollowState.Transitioning;
+        followState = FollowState.Transitioning;
+        actionState = ActionState.Tired;
         transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
@@ -158,11 +204,7 @@ public class FollowerController : MonoBehaviour
 
         dodgingCoroutine = null;
 
-        if (energy <= 0)
-        {
-            energy = 0;
-            MoveToRestingPosition();
-        }
+        EnergyDecrease(0);
     }
     private IEnumerator EnergyTick()
     {
@@ -170,24 +212,38 @@ public class FollowerController : MonoBehaviour
         {
             if (dodgingCoroutine == null)
             {
-                if (Followstate == FollowState.Following)
+                if (followState == FollowState.Following)
                 {
-                    energy -= 1;
-                    if (energy <= 0)
-                    {
-                        MoveToRestingPosition();
-                    }
+                    EnergyDecrease();
                 }
-                else if (Followstate == FollowState.Resting)
+                else if (followState == FollowState.Resting)
                 {
-                    if (energy < maxEnergy)
-                    {
-                        energy += 1;
-                    }
+                    EnergyIncrease();
                 }
             }
 
             yield return new WaitForSeconds(energyTick);
+        }
+    }
+
+    private void EnergyDecrease(int energyChange = 1)
+    {
+        energy -= energyChange;
+        if (energy < 25)
+            actionState = ActionState.Tired;
+
+        if (energy <= 0)
+        {
+            energy = 0;
+            MoveToRestingPosition();
+        }
+    }
+
+    private void EnergyIncrease(int energyChange = 1)
+    {
+        if (energy < maxEnergy)
+        {
+            energy += energyChange;
         }
     }
 }

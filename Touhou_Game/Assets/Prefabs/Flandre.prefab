@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e68db26f499ed714a95430b60595e620, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   speed: 6
   energy: 100
   energyTick: 1
@@ -108,8 +109,9 @@ MonoBehaviour:
   dodgeStaminaDrain: 5
   distanceFromPlayer: {x: 1, y: 1}
   restingOffset: 1
-  restingKey: 114
-  Followstate: 2
+  restingKey: 122
+  modeKey: 114
+  followState: 2
   actionState: 1
 --- !u!61 &564163425370700622
 BoxCollider2D:
@@ -149,3 +151,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6df43632777be884ab62839a0be9975d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  followerController: {fileID: 564163425370700621}

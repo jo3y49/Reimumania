@@ -1540,6 +1540,14 @@ PrefabInstance:
       propertyPath: state
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 564163425370700621, guid: ef4a90597d04cdd4ea956c72e2ca67e0, type: 3}
+      propertyPath: actionState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 564163425370700621, guid: ef4a90597d04cdd4ea956c72e2ca67e0, type: 3}
+      propertyPath: followState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 564163425370700625, guid: ef4a90597d04cdd4ea956c72e2ca67e0, type: 3}
       propertyPath: m_Name
       value: Flandre

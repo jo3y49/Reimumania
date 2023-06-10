@@ -5,6 +5,7 @@ public class BulletController : MonoBehaviour
 {
     private Collider2D parentCollider; // The collider of the GameObject that instantiated the bullet
     private Collider2D myCollider; // The bullet's own collider
+    private bool isReflecting = false;
     public float bulletDamage = 5f;
     public static Action<GameObject> ProtectPlayer;
 
@@ -15,30 +16,26 @@ public class BulletController : MonoBehaviour
         myCollider = GetComponent<Collider2D>();
     }
 
-    private void Start()
-    {
-        if (parentCollider != null && myCollider != null)
-        {
-            Physics2D.IgnoreCollision(parentCollider, myCollider);
-        }
-    }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (CanHit(other))
+        if (!isReflecting)
         {
-            Shootable shootable = other.GetComponent<Shootable>();
-            if (shootable != null)
-                shootable.Shot(bulletDamage);
-            Destroy(gameObject);
-        } 
-        else if (other.gameObject.CompareTag("Follower"))
-        {
-            other.gameObject.GetComponent<FollowerController>().Dodge(transform);
-        } 
-        else if (other.gameObject.CompareTag("Collector")  && !parentCollider.gameObject.CompareTag("Hit Box"))
-        {
-            ProtectPlayer?.Invoke(gameObject);
+            if (CanHit(other))
+            {
+                Shootable shootable = other.GetComponent<Shootable>();
+                if (shootable != null)
+                    shootable.Shot(bulletDamage);
+                Destroy(gameObject);
+            } 
+            else if (other.gameObject.CompareTag("Follower"))
+            {
+                other.gameObject.GetComponent<FollowerController>().Dodge(transform);
+            } 
+            else if (other.gameObject.CompareTag("Collector")  && !parentCollider.gameObject.CompareTag("Hit Box"))
+            {
+                isReflecting = true;
+                ProtectPlayer?.Invoke(gameObject);
+            }
         }
     }
 
@@ -49,5 +46,12 @@ public class BulletController : MonoBehaviour
             !(other.gameObject.CompareTag("Enemy") && parentCollider.gameObject.CompareTag("Enemy")) &&
             (other.gameObject.CompareTag("Hit Box") || other.gameObject.CompareTag("Enemy") ||
             other.gameObject.CompareTag("Environment"));
+    }
+
+    public void Reflect(Collider2D newParentColilider)
+    {
+        parentCollider = newParentColilider;
+        GetComponent<Rigidbody2D>().velocity *= -1;
+        isReflecting = false;
     }
 }
