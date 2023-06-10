@@ -8,7 +8,7 @@ public class FollowerAttack : MonoBehaviour, FollowerAction {
     public float attackSpeed = 2f;
     public float attackRange = 5f;
     public float attackCooldown = 5f;
-    public float distanceToRestart = 2f;
+    public float distanceToRestart = 1f;
     public int energyDrain = 20;
     private bool cancel = false;
     private List<GameObject> enemies;
@@ -94,7 +94,7 @@ public class FollowerAttack : MonoBehaviour, FollowerAction {
 
         Vector3 direction = Vector3.zero;
 
-        while (enemy != null && Vector3.Distance(transform.position, enemy.transform.position) > 0.1f)
+        while (enemy != null && Vector3.Distance(transform.position, enemy.transform.position) > 0.4f)
         {
             direction = (enemy.transform.position - transform.position).normalized;
             transform.position += direction * attackSpeed * Time.deltaTime;
@@ -115,25 +115,7 @@ public class FollowerAttack : MonoBehaviour, FollowerAction {
 
         followerController.energy -= energyDrain;
 
-        StartCoroutine(WaitForActivation());
-
-        yield break;
-    }
-
-    public IEnumerator WaitForActivation()
-    {
-        while (distanceToRestart < followerController.DistanceFromFollower())
-        {
-            if (cancel)
-            {
-                cancel = false;
-                yield break;
-            }
-
-            yield return new WaitForSeconds(1f);
-        }
-
-        yield break;
+        Activate();
     }
 
     private bool FindEnemies()
