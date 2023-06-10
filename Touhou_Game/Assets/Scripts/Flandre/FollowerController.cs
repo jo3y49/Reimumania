@@ -24,17 +24,18 @@ public class FollowerController : MonoBehaviour
 
     private enum FollowState { Following, Transitioning, Resting }
     private enum ActionState { Attack, Defend, Mounted, Tired }
-    [SerializeField] private FollowState followState = FollowState.Resting;
+    private FollowState followState;
     [SerializeField] private ActionState actionState = ActionState.Defend;
     private ActionState previousActionState;
-    private ActionState previousMountState = ActionState.Tired;
-    private FollowerAction followerAttack, followerDefense;
+    private ActionState previousMountState;
+    private FollowerAction followerAttack, followerDefense, followerAssist;
 
     private PlayerData playerData; // Reference to the PlayerShooting script
 
     private void Awake() {
         followerAttack = GetComponent<FollowerAttack>();
         followerDefense = GetComponent<FollowerDefense>();
+        followerAssist = GetComponent<FollowerAssist>();
     }
 
     private void Start() {
@@ -42,11 +43,27 @@ public class FollowerController : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         playerData = player.GetComponent<PlayerData>();
         maxEnergy = energy;
-        if (actionState == ActionState.Attack || actionState == ActionState.Defend)
-            ActivateAction(actionState);
-        else 
-            previousActionState = ActionState.Defend;
+        InitializeStates();
         StartCoroutine(EnergyTick());
+    }
+
+    private void InitializeStates()
+    {
+        switch (actionState)
+        {
+            case ActionState.Attack:
+            case ActionState.Defend:
+                previousMountState = ActionState.Tired;
+                ActivateAction(actionState);
+                followState = FollowState.Following;
+            break;
+            case ActionState.Mounted:
+            case ActionState.Tired:
+                previousActionState = ActionState.Defend;
+                ActivateMount(actionState);
+                followState = FollowState.Resting;
+            break;
+        }
     }
 
     private void Update()
@@ -62,7 +79,6 @@ public class FollowerController : MonoBehaviour
                 }
                 else if ((followState == FollowState.Resting || followState == FollowState.Transitioning) && energy >= maxEnergy/2)
                 {
-                    // Stop the current coroutine if one is running
                     followState = FollowState.Following;
                     ActivateAction(previousActionState);
                 }
@@ -85,16 +101,11 @@ public class FollowerController : MonoBehaviour
                 {
                     if (actionState == ActionState.Mounted)
                     {
-                        previousMountState = actionState;
-                        actionState = ActionState.Tired;
+                        ActivateMount(ActionState.Tired);
                     }
                     else if (actionState == ActionState.Tired)
                     {
-                        if (energy >= energyForAction)
-                        {
-                            previousMountState = actionState;
-                            actionState = ActionState.Mounted;
-                        }
+                        ActivateMount(ActionState.Mounted);
                     }
                 }
             }
@@ -105,6 +116,49 @@ public class FollowerController : MonoBehaviour
     private void FixedUpdate() {
         if (!isActing)
             FollowPlayer();
+    }
+
+    private void ActivateAction(ActionState actionState)
+    {
+        followerAssist.Deactivate();
+
+        switch (actionState)
+        {
+            case ActionState.Attack:
+            followerDefense.Deactivate();
+            followerAttack.Activate();
+            break;
+            case ActionState.Defend:
+            followerAttack.Deactivate();
+            followerDefense.Activate();
+            break;
+        }
+
+        this.actionState = actionState;
+        previousActionState = actionState;
+        
+    }
+
+    private void ActivateMount(ActionState actionState)
+    {
+        followerAttack.Deactivate();
+        followerDefense.Deactivate();
+
+        switch (actionState)
+        {
+            case ActionState.Mounted:
+            if (energy > energyForAction)
+                followerAssist.Activate();
+            else 
+                actionState = ActionState.Tired;
+            break;
+            case ActionState.Tired:
+            followerAssist.Deactivate();
+            break;
+        }
+
+        this.actionState = actionState;
+        previousMountState = actionState;
     }
 
     private void FollowPlayer()
@@ -170,9 +224,8 @@ public class FollowerController : MonoBehaviour
                     restingPosition = player.transform.position + new Vector3(0, restingOffset, 0);
                 } else {
                     followState = FollowState.Resting;
-                    if (energy >= energyForAction)
-                        actionState = previousMountState;
-                    }
+                    ActivateMount(previousMountState);
+                }
                 break;
             case FollowState.Resting:
                 transform.position = player.transform.position + new Vector3(0, restingOffset, 0);
@@ -193,7 +246,7 @@ public class FollowerController : MonoBehaviour
         followState = FollowState.Transitioning;
         actionState = ActionState.Tired;
         followerAttack.Deactivate();
-        followerAttack.Deactivate();
+        followerDefense.Deactivate();
         transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
@@ -266,24 +319,7 @@ public class FollowerController : MonoBehaviour
         }
     }
 
-    private void ActivateAction(ActionState actionState)
-    {
-        switch (actionState)
-        {
-            case ActionState.Attack:
-            followerDefense.Deactivate();
-            followerAttack.Activate();
-            break;
-            case ActionState.Defend:
-            followerAttack.Deactivate();
-            followerDefense.Activate();
-            break;
-        }
-
-        this.actionState = actionState;
-        previousActionState = actionState;
-        
-    }
+    
 
     public void SetIsActing()
     {

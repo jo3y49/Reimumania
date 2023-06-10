@@ -132,6 +132,7 @@ MonoBehaviour:
   energy: 100
   energyTick: 2
   energyRegain: 20
+  energyForAction: 25
   rotationSpeed: 10
   dodgeSpeed: 10
   dodgeTime: 0.1
@@ -140,8 +141,7 @@ MonoBehaviour:
   restingOffset: 1
   restingKey: 122
   modeKey: 114
-  followState: 2
-  actionState: 1
+  actionState: 3
 --- !u!114 &7023881440019708732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,10 +169,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followerController: {fileID: 564163425370700621}
-  searchTime: 3
-  attackSpeed: 2
-  attackRange: 5
-  attackCooldown: 5
+  searchTime: 2
+  attackSpeed: 6
+  attackRange: 20
+  attackCooldown: 2
   distanceToRestart: 2
   energyDrain: 20
 --- !u!114 &6946621085006573258
@@ -187,3 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9250525389665164db007cb6a05187bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 8506286823978325421, guid: db1c95a40365d5949906823a2ae8d7b6, type: 3}
+  followerController: {fileID: 564163425370700621}
+  bulletOffset: 0.5
+  energyDrain: 2

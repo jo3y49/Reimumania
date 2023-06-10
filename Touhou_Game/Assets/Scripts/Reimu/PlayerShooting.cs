@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerShooting : MonoBehaviour
@@ -10,6 +11,8 @@ public class PlayerShooting : MonoBehaviour
     public KeyCode fireButton = KeyCode.Space;
 
     public PlayerData.Direction direction = PlayerData.Direction.Up;
+
+    public static Action<GameObject> shootAssist;
 
     private Vector2 aimDirection = Vector2.down;
     private float nextFireTime = 0f;
@@ -161,6 +164,7 @@ public class PlayerShooting : MonoBehaviour
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position + (Vector3)direction/2, Quaternion.identity);
         bullet.GetComponent<BulletController>().Initialize(transform.GetChild(0).GetComponent<Collider2D>());
         bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
+        shootAssist?.Invoke(bullet);
     }
 
     public void SetDirection(PlayerData.Direction newDirection)

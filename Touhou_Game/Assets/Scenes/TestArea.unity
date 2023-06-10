@@ -451,8 +451,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Reimu
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 287074383427147599, guid: f466f2b673389544387abe9f9c3207c0, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f466f2b673389544387abe9f9c3207c0, type: 3}
 --- !u!1 &407395531
 GameObject:
@@ -1524,36 +1523,12 @@ PrefabInstance:
       propertyPath: state
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 564163425370700621, guid: ef4a90597d04cdd4ea956c72e2ca67e0, type: 3}
-      propertyPath: actionState
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 564163425370700621, guid: ef4a90597d04cdd4ea956c72e2ca67e0, type: 3}
-      propertyPath: followState
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 564163425370700625, guid: ef4a90597d04cdd4ea956c72e2ca67e0, type: 3}
       propertyPath: m_Name
       value: Flandre
       objectReference: {fileID: 0}
     - target: {fileID: 564163425370700625, guid: ef4a90597d04cdd4ea956c72e2ca67e0, type: 3}
       propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1276204303518129119, guid: ef4a90597d04cdd4ea956c72e2ca67e0, type: 3}
-      propertyPath: searchTime
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1276204303518129119, guid: ef4a90597d04cdd4ea956c72e2ca67e0, type: 3}
-      propertyPath: attackRange
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1276204303518129119, guid: ef4a90597d04cdd4ea956c72e2ca67e0, type: 3}
-      propertyPath: attackCooldown
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7023881440019708732, guid: ef4a90597d04cdd4ea956c72e2ca67e0, type: 3}
-      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
