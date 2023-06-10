@@ -9,6 +9,7 @@ public class FollowerAttack : MonoBehaviour, FollowerAction {
     public float attackRange = 5f;
     public float attackCooldown = 5f;
     public float distanceToRestart = 2f;
+    public int energyDrain = 20;
     private List<GameObject> enemies;
     private Coroutine currentCoroutine;
 
@@ -81,6 +82,8 @@ public class FollowerAttack : MonoBehaviour, FollowerAction {
 
         StopCoroutine(currentCoroutine);
         currentCoroutine = StartCoroutine(WaitForActivation());
+
+        followerController.energy -= energyDrain;
     }
 
     public IEnumerator WaitForActivation()

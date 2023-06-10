@@ -7,6 +7,7 @@ public class FollowerController : MonoBehaviour
     public float speed = 2f; // The speed at which the follower should follow the player
     public int energy = 100; 
     public int energyTick = 2;
+    public int energyRegain = 20;
     public float rotationSpeed = 10f; // Speed at which the object rotates
     public float dodgeSpeed = 5f; // Speed for dodge
     public float dodgeTime = .1f;
@@ -296,5 +297,18 @@ public class FollowerController : MonoBehaviour
     public float DistanceFromFollower()
     {
         return Vector3.Distance(transform.position, player.transform.position);
+    }
+
+    private void OnEnable() {
+        PlayerData.energyRecover += EnergyRecover;
+    }
+
+    private void OnDisable() {
+        PlayerData.energyRecover -= EnergyRecover;
+    }
+
+    private void EnergyRecover()
+    {
+        energy += energyRegain;
     }
 }

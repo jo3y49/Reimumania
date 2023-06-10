@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class FollowerDefense : MonoBehaviour, FollowerAction {
     public FollowerController followerController;
+    public int energyDrain = 50;
     private Collider2D playerCollider;
     
     private void Awake() {
@@ -22,11 +23,11 @@ public class FollowerDefense : MonoBehaviour, FollowerAction {
         enabled = false;
     }
     private void OnEnable() {
-        BulletController.ProtectPlayer += DeflectBullet;
+        BulletController.protectPlayer += DeflectBullet;
     }
 
     private void OnDisable() {
-        BulletController.ProtectPlayer -= DeflectBullet;
+        BulletController.protectPlayer -= DeflectBullet;
     }
 
     private void DeflectBullet(GameObject bullet)
@@ -37,7 +38,7 @@ public class FollowerDefense : MonoBehaviour, FollowerAction {
 
         bullet.GetComponent<BulletController>().Reflect(playerCollider);
         
-        followerController.energy -= 50;
+        followerController.energy -= energyDrain;
 
         followerController.SetNotActing();
     }

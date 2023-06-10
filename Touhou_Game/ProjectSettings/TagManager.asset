@@ -13,6 +13,7 @@ TagManager:
   - Coin
   - Bomb
   - Portal
+  - Stamina
   layers:
   - Default
   - TransparentFX

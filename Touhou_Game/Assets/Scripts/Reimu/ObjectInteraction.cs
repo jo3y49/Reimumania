@@ -17,5 +17,9 @@ public class ObjectInteraction : MonoBehaviour {
         {
             playerData.CollectBomb(other.gameObject);
         }
+        if (other.gameObject.CompareTag("Stamina"))
+        {
+            playerData.CollectEnergy(other.gameObject);
+        }
     }
 }

@@ -7,7 +7,7 @@ public class BulletController : MonoBehaviour
     private Collider2D myCollider; // The bullet's own collider
     private bool isReflecting = false;
     public float bulletDamage = 5f;
-    public static Action<GameObject> ProtectPlayer;
+    public static Action<GameObject> protectPlayer;
 
     // Call this method right after instantiating the bullet to pass the reference to the parent
     public void Initialize(Collider2D parentCollider)
@@ -33,7 +33,7 @@ public class BulletController : MonoBehaviour
             } 
             else if (other.gameObject.CompareTag("Collector")  && !parentCollider.gameObject.CompareTag("Hit Box"))
             {
-                ProtectPlayer?.Invoke(gameObject);
+                protectPlayer?.Invoke(gameObject);
             }
         }
     }

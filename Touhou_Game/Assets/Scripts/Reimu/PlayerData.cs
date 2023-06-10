@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -53,6 +54,7 @@ public class PlayerData : MonoBehaviour, Shootable
     }
 
     public State state = State.Default;
+    public static Action energyRecover;
     private Renderer hitboxRenderer;
     private GameDataManager gameData;
 
@@ -154,6 +156,11 @@ public class PlayerData : MonoBehaviour, Shootable
         Destroy(bomb);
         bombs++;
         gameData.SetBombs(bombs);
+    }
+    public void CollectEnergy(GameObject energy)
+    {
+        Destroy(energy);
+        energyRecover?.Invoke();
     }
 
     private void Bomb()
