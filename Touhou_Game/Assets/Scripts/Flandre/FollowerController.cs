@@ -181,7 +181,7 @@ public class FollowerController : MonoBehaviour
 
     public void Dodge(Transform bullet)
     {
-        if (dodgingCoroutine == null && followState == FollowState.Following)
+        if (dodgingCoroutine == null && followState == FollowState.Following && !isActing)
         {
             dodgingCoroutine = StartCoroutine(DodgeBullet(bullet));
         }

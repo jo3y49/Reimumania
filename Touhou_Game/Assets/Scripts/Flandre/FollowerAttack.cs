@@ -73,10 +73,18 @@ public class FollowerAttack : MonoBehaviour, FollowerAction {
         {
             direction = (enemy.transform.position - transform.position).normalized;
             transform.position += direction * attackSpeed * Time.deltaTime;
+
+            if (enemy == null)
+            {
+                break;
+            }
             yield return null;
         }
 
-        enemy?.GetComponent<EnemyData>().Shot(100f);
+        if (enemy != null)
+        {
+            enemy.GetComponent<EnemyData>().Shot(100f);
+        }
 
         followerController.SetNotActing();
 
