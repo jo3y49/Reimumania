@@ -16,7 +16,8 @@ public class ShopManager : MonoBehaviour {
     // buyables: life, bomb, spellcard1, spellcard2
 
     private void Start() {
-        gameDataManager = GameObject.FindObjectOfType<GameDataManager>();
+        GameObject gameManager = GameObject.FindGameObjectWithTag("GameController");
+        gameDataManager = gameManager.GetComponent<GameDataManager>();
 
         coins.text = "Coins: " + gameDataManager.GetCoins().ToString();
 

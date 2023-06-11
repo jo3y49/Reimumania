@@ -9,7 +9,8 @@ public class ShrineManager : MonoBehaviour
     private GameDataManager gameDataManager;
 
     private void Start() {
-        gameDataManager = GameObject.FindObjectOfType<GameDataManager>();
+        GameObject gameManager = GameObject.FindGameObjectWithTag("GameController");
+        gameDataManager = gameManager.GetComponent<GameDataManager>();
 
         enterTestArea.onClick.AddListener(EnterTestArea);
         enterTutorial.onClick.AddListener(EnterTutorial);
