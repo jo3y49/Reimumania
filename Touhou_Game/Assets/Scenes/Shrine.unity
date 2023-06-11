@@ -189,7 +189,7 @@ MonoBehaviour:
   - {fileID: 1095443514}
   - {fileID: 555620399}
   - {fileID: 631553822}
-  prices: 320000000a0000000f00000096000000
+  prices: 320000000f0000000f00000096000000
   back: {fileID: 614132609}
   popConfirm: {fileID: 1233158314}
   popBack: {fileID: 109566384}

@@ -5,7 +5,7 @@ public class EnemyData : MonoBehaviour, Shootable
 {
     public GameObject coinPrefab, bombPrefab, lifePrefab, energyPrefab;
     public float health = 10f;
-    public int dropDivisor = 100;
+    public int dropDivisor = 50;
     public int minCoins = 5;
     public int maxCoins = 10;
     public float scatterDistance = 1.0f;

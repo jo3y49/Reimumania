@@ -3,7 +3,7 @@ public class GameData
 {
     public string lastScene = "MainArea";
     public float[] lastLocation = {0,0};
-    public int currentCoins = 1110;
+    public int currentCoins = 0;
     public int lives = 3;
     public int bombs = 0;
     public PlayerData.Upgrade spellCardUpgrade = PlayerData.Upgrade.L1;

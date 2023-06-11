@@ -83,6 +83,14 @@ public class ShopManager : MonoBehaviour {
 
         gameDataManager.RemoveCoins(prices[index]);
         coins.text = "Coins: " + gameDataManager.GetCoins().ToString();
+
+        for (int i = 0; i < buyables.Length; i++)
+        {
+            if (prices[i] > gameDataManager.GetCoins())
+            {
+                buyables[i].interactable = false;
+            }
+        }
     }
 
     private void BuyLives()
@@ -97,12 +105,12 @@ public class ShopManager : MonoBehaviour {
 
     private void BuyUpgrade1()
     {
-        gameDataManager.SetUpgrade(PlayerData.Upgrade.L2);
+        gameDataManager.SetUpgrade(PlayerData.Upgrade.L1);
     }
 
     private void BuyUpgrade2()
     {
-
+        gameDataManager.SetUpgrade(PlayerData.Upgrade.L2);
     }
 
     private void Confirmed()
