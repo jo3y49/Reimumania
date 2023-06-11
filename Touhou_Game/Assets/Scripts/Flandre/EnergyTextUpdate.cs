@@ -22,7 +22,7 @@ public class EnergyTextUpdate : MonoBehaviour {
             stateText.text += "assisting";
             break;
             case FollowerController.ActionState.Tired:
-            stateText.text += "tired";
+            stateText.text += "resting";
             break;
         }
     }

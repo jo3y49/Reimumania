@@ -564,7 +564,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -362.95, y: -432}
+  m_AnchoredPosition: {x: -362.95, y: -368}
   m_SizeDelta: {x: 725.9069, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &780561317
@@ -589,7 +589,12 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Press 1-6 to spawn enemies
 
-    Press B to spawn a bomb pickup'
+    Press B to spawn a bomb pickup
+
+    Press
+    N to spawn a life pickup
+
+    Press M to spawn a Flandre energy pickup'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
