@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyData : MonoBehaviour, Shootable
 {
-    public GameObject coinPrefab, bombPrefab, energyPrefab;
+    public GameObject coinPrefab, bombPrefab, lifePrefab, energyPrefab;
     public float health = 10f;
     public int dropDivisor = 10;
     public int minCoins = 5;
@@ -54,13 +54,16 @@ public class EnemyData : MonoBehaviour, Shootable
 
         if (rareDrops)
         {
-            int seed = Random.Range(0, dropDivisor + 1);
+            int seed = Random.Range(0, dropDivisor*2 + 1);
             if (seed == 0)
             {
-                Instantiate(bombPrefab, transform.position, Quaternion.identity);
-            } else if (seed == dropDivisor)
+                Instantiate(lifePrefab, transform.position, Quaternion.identity);
+            } else if (seed == 1 || seed == 2)
             {
                 Instantiate(energyPrefab, transform.position, Quaternion.identity);
+            } else if (seed == 3 || seed == 4)
+            {
+                Instantiate(bombPrefab, transform.position, Quaternion.identity);
             }
         }
 

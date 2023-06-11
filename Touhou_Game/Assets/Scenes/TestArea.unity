@@ -495,6 +495,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 7519766305790422760, guid: 87b8331b435a56d489eda4511f71c7fc, type: 3}
   bombPrefab: {fileID: 5404418154501847782, guid: d41fe8235d5ebc147ba60edb7d1f6242, type: 3}
+  lifePrefab: {fileID: 2767421020989563083, guid: 7b45407fa3d2f3e4ea93e77621df8114, type: 3}
   energyPrefab: {fileID: 8234550984901866305, guid: 8dd3f6383edc1664eaad3e1dc0bad7ea, type: 3}
   spawnLocation:
   - {x: -2.5, y: 20}

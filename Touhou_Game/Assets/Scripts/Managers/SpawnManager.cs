@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour {
-    public GameObject enemyPrefab, bombPrefab, energyPrefab;
+    public GameObject enemyPrefab, bombPrefab, lifePrefab, energyPrefab;
     public Vector2[] spawnLocation;
     private GameObject player;
 
@@ -64,6 +64,10 @@ public class SpawnManager : MonoBehaviour {
             Instantiate(bombPrefab, spawnLocation[3] + (Vector2)player.transform.position, Quaternion.identity);
         }
         if (Input.GetKeyDown(KeyCode.N))
+        {
+            Instantiate(lifePrefab, spawnLocation[3] + (Vector2)player.transform.position, Quaternion.identity);
+        }
+        if (Input.GetKeyDown(KeyCode.M))
         {
             Instantiate(energyPrefab, spawnLocation[3] + (Vector2)player.transform.position, Quaternion.identity);
         }

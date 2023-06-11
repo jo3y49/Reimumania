@@ -151,6 +151,12 @@ public class PlayerData : MonoBehaviour, Shootable
         coins++;
         gameData.AddCoins();
     }
+    public void CollectLife(GameObject life)
+    {
+        Destroy(life);
+        lives++;
+        gameData.AddLives();
+    }
     public void CollectBomb(GameObject bomb)
     {
         Destroy(bomb);

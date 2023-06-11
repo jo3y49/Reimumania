@@ -13,6 +13,10 @@ public class ObjectInteraction : MonoBehaviour {
         {
             playerData.CollectCoin(other.gameObject);
         }
+        if (other.gameObject.CompareTag("Life"))
+        {
+            playerData.CollectLife(other.gameObject);
+        }
         if (other.gameObject.CompareTag("Bomb"))
         {
             playerData.CollectBomb(other.gameObject);
