@@ -152,7 +152,7 @@ MonoBehaviour:
   lifePrefab: {fileID: 2767421020989563083, guid: 7b45407fa3d2f3e4ea93e77621df8114, type: 3}
   energyPrefab: {fileID: 8234550984901866305, guid: 8dd3f6383edc1664eaad3e1dc0bad7ea, type: 3}
   health: 10
-  dropDivisor: 10
+  dropDivisor: 100
   minCoins: 1
   maxCoins: 3
   scatterDistance: 1

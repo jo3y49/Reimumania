@@ -5,7 +5,7 @@ public class EnemyData : MonoBehaviour, Shootable
 {
     public GameObject coinPrefab, bombPrefab, lifePrefab, energyPrefab;
     public float health = 10f;
-    public int dropDivisor = 10;
+    public int dropDivisor = 100;
     public int minCoins = 5;
     public int maxCoins = 10;
     public float scatterDistance = 1.0f;
@@ -54,7 +54,7 @@ public class EnemyData : MonoBehaviour, Shootable
 
         if (rareDrops)
         {
-            int seed = Random.Range(0, dropDivisor*2 + 1);
+            int seed = Random.Range(0, dropDivisor);
             if (seed == 0)
             {
                 Instantiate(lifePrefab, transform.position, Quaternion.identity);
