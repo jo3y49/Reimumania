@@ -43,7 +43,7 @@ public class FollowerAssist : MonoBehaviour, FollowerAction {
         CreateUpgrade(bullet, new Vector3(0,bulletOffset,0));
         CreateUpgrade(bullet, new Vector3(0,-bulletOffset,0));
 
-        followerController.energy -= energyDrain;
+        followerController.EnergyDecrease(energyDrain);
     }
 
     private void CreateUpgrade(GameObject bullet, Vector3 offset)

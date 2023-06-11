@@ -291,7 +291,7 @@ public class FollowerController : MonoBehaviour
         }
     }
 
-    private void EnergyDecrease(int energyChange = 1)
+    public void EnergyDecrease(int energyChange = 1)
     {
         if (!isActing)
         {
@@ -301,6 +301,7 @@ public class FollowerController : MonoBehaviour
                 actionState = ActionState.Tired;
                 followerAttack.Deactivate();
                 followerDefense.Deactivate();
+                followerAssist.Deactivate();
             }
 
             if (energy <= 0)
