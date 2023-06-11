@@ -82,36 +82,36 @@ public class PlayerData : MonoBehaviour, Shootable
 
     private void Update() {
 
-        if (isAlive)
-        {
-            if (state == State.Combat)
-            {
-                direction = shootScript.direction;
+        // if (isAlive)
+        // {
+        //     if (state == State.Combat)
+        //     {
+        //         direction = shootScript.direction;
                 if (Input.GetKeyDown(bombButton) && bombs > 0 && invulnerableCoroutine == null)
                 {
                     Bomb();
                 }
                 
-            } else
-            {
-                direction = moveScript.direction;
-            }
+        //     } else
+        //     {
+        //         direction = moveScript.direction;
+        //     }
 
-            if (Input.GetKeyDown(combatToggle))
-            {
-                ToggleCombatState(state);
-            }
-        }
+        //     if (Input.GetKeyDown(combatToggle))
+        //     {
+        //         ToggleCombatState(state);
+        //     }
+        // }
 
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            if (upgrade == Upgrade.L1)
-                upgrade = Upgrade.L2;
-            else
-                upgrade = Upgrade.L1;
+        // if (Input.GetKeyDown(KeyCode.L))
+        // {
+        //     if (upgrade == Upgrade.L1)
+        //         upgrade = Upgrade.L2;
+        //     else
+        //         upgrade = Upgrade.L1;
 
-            gameData.SetUpgrade(upgrade);
-        }
+        //     gameData.SetUpgrade(upgrade);
+        // }
     }
 
     public void Shot(float bulletDamage)
