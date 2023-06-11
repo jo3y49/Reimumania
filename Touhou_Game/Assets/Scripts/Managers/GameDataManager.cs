@@ -8,6 +8,7 @@ public class GameDataManager : MonoBehaviour
 {
     public TextMeshProUGUI livesText, bombText, coinText, killText, playtimeText;
     public bool isPaused = true;
+    private bool updateUI = false;
 
     private GameData gameData;
     private PlayerData player;
@@ -92,14 +93,16 @@ public class GameDataManager : MonoBehaviour
     {
         player = FindAnyObjectByType<PlayerData>();
 
+        updateUI = true;
+
         livesText = displayVariables[0];
         bombText = displayVariables[1];
         coinText = displayVariables[2];
         killText = displayVariables[3];
         playtimeText = displayVariables[4];
 
-        livesText.text = "Lives: " + player.lives.ToString();
-        bombText.text = "Bombs: " + player.bombs.ToString();
+        livesText.text = "Lives: " + gameData.lives.ToString();
+        bombText.text = "Bombs: " + gameData.bombs.ToString();
         coinText.text = "Coins: " + gameData.currentCoins.ToString();
         killText.text = "Kills: " + gameData.kills.ToString();
         playtimeText.text = "Play Time: " + FormatTimeToString(gameData.playTime);
@@ -112,23 +115,26 @@ public class GameDataManager : MonoBehaviour
         gameData.lastScene = lastScene;
         gameData.lastLocation[0] = lastLocation.x;
         gameData.lastLocation[1] = lastLocation.y;
-        ReturnToMenu();
+        ReturnToMenu("Shrine");
     }
 
     public void GameOver()
     {
-        ReturnToMenu();
+        ReturnToMenu("Shrine");
     }
 
-    private void ReturnToMenu()
+    public void ReturnToMenu(string menu)
     {
+        updateUI = false;
         GetComponent<PersistenceManager>().Reset();
-        SceneManager.LoadScene("Shrine");
+        SceneManager.LoadScene(menu);
     }
 
     public void GetSavedPlayerData(PlayerData player)
     {
         player.coins = gameData.currentCoins;
+        player.lives = gameData.lives;
+        player.bombs = gameData.bombs;
         player.upgrade = gameData.spellCardUpgrade;
     }
 
@@ -138,15 +144,55 @@ public class GameDataManager : MonoBehaviour
         gameData.currentCoins += coins;
         if (gameData.accumulatedCoins < gameData.currentCoins)
             gameData.accumulatedCoins = gameData.currentCoins;
-        
-        coinText.text = "Coins: " + gameData.currentCoins.ToString();
+
+        if (updateUI)
+            coinText.text = "Coins: " + gameData.currentCoins.ToString();
     }
 
     public void RemoveCoins(int coins = 1)
     {
         gameData.currentCoins -= coins;
+        gameData.spentCoins += coins;
 
-        coinText.text = "Coins: " + gameData.currentCoins.ToString();
+        if (updateUI)
+            coinText.text = "Coins: " + gameData.currentCoins.ToString();
+    }
+
+    public int GetCoins()
+    {
+        return gameData.currentCoins;
+    }
+
+    public void AddLives(int lives = 1)
+    {
+        gameData.lives += lives;
+
+        if (updateUI)
+            livesText.text = "Lives: " + gameData.lives.ToString();
+    }
+
+    public void LoseLives(int lives = 1)
+    {
+        gameData.lives -= lives;
+
+        if (updateUI)
+            livesText.text = "Lives: " + gameData.lives.ToString();
+    }
+
+    public void AddBombs(int bombs = 1)
+    {
+        gameData.bombs += bombs;
+
+        if (updateUI)
+            bombText.text = "Bombs: " + gameData.bombs.ToString();
+    }
+
+    public void LoseBombs(int bombs = 1)
+    {
+        gameData.bombs -= bombs;
+
+        if (updateUI)
+            bombText.text = "Bombs: " + gameData.bombs.ToString();
     }
 
     public void SetUpgrade(PlayerData.Upgrade upgrade)
@@ -159,16 +205,6 @@ public class GameDataManager : MonoBehaviour
         gameData.kills += kills;
 
         killText.text = "Kills: " + gameData.kills.ToString();
-    }
-
-    public void SetLives(int lives)
-    {
-        livesText.text = "Lives: " + player.lives.ToString();
-    }
-
-    public void SetBombs(int bombs)
-    {
-        bombText.text = "Bombs: " + player.bombs.ToString();
     }
 
     public IEnumerator CountPlayTime()
@@ -184,6 +220,7 @@ public class GameDataManager : MonoBehaviour
             }
 
             previousTime = Time.time;
+            
             playtimeText.text = "Play Time: " + FormatTimeToString(gameData.playTime);
 
             yield return null;

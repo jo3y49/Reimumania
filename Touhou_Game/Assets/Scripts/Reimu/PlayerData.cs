@@ -155,7 +155,7 @@ public class PlayerData : MonoBehaviour, Shootable
     {
         Destroy(bomb);
         bombs++;
-        gameData.SetBombs(bombs);
+        gameData.AddBombs();
     }
     public void CollectEnergy(GameObject energy)
     {
@@ -166,7 +166,7 @@ public class PlayerData : MonoBehaviour, Shootable
     private void Bomb()
     {
         bombs--;
-        gameData.SetBombs(bombs);
+        gameData.LoseBombs();
         isHittable = false;
 
         invulnerableCoroutine = StartCoroutine(Invulnerable());
@@ -180,7 +180,7 @@ public class PlayerData : MonoBehaviour, Shootable
         isAlive = isHittable = moveScript.enabled = shootScript.enabled = playerRenderer.enabled = objectCollector.enabled = false;
         
         lives -= 1;
-        gameData.SetLives(lives);
+        gameData.LoseLives();
 
         yield return new WaitForSeconds(respawnTime);
 
