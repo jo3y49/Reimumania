@@ -23,7 +23,7 @@ public class FollowerController : MonoBehaviour
     private Vector3 currentPosition;
 
     private enum FollowState { Following, Transitioning, Resting }
-    private enum ActionState { Attack, Defend, Mounted, Tired }
+    public enum ActionState { Attack, Defend, Mounted, Tired }
     private FollowState followState;
     [SerializeField] private ActionState actionState = ActionState.Defend;
     private ActionState previousActionState;
@@ -352,5 +352,10 @@ public class FollowerController : MonoBehaviour
         {
             ActivateAction(previousActionState);
         }
+    }
+
+    public ActionState GetActionState()
+    {
+        return actionState;
     }
 }
