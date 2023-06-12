@@ -47,15 +47,11 @@ public class BulletController : MonoBehaviour
             other.gameObject.CompareTag("Environment"));
     }
 
-    public void Reflect(Collider2D newParentCollider, Vector2 playerDirection)
+    public void Reflect(Collider2D newParentCollider)
     {
         isReflecting = true;
         parentCollider = newParentCollider;
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        if (playerDirection != Vector2.zero)
-            rb.velocity = playerDirection * rb.velocity.magnitude;
-        else 
-            rb.velocity *= -1;
+        GetComponent<Rigidbody2D>().velocity *= -1;
         isReflecting = false;
     }
 
