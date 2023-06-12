@@ -18,7 +18,7 @@ public class NeutralPattern : BossPattern
 
     private void MakePattern()
     {
-        int n = 10;
+        int n = 1;
         float distanceBetweenBullets = arenaWidth/n;
         float x = leftLocation;
         float y = topLocation;

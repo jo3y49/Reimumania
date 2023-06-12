@@ -8,6 +8,9 @@ public class BossData : MonoBehaviour, Shootable
     public float shield2 = 100f;
     public bool isShooting = true;
     private float maxHealth, maxShield1, maxShield2;
+    public GameObject bulletPrefab;
+    public GameObject portalPrefab;
+    public Transform playerLocation;
     [SerializeField] private BossPattern[] bossPatterns;
     private BossPattern activePattern;
     public enum State
@@ -24,14 +27,13 @@ public class BossData : MonoBehaviour, Shootable
         maxShield1 = shield1;
         maxShield2 = shield2;
 
-        foreach (BossPattern b in bossPatterns)
-        {
-            b.Disable();
-        }
+        // foreach (BossPattern b in bossPatterns)
+        // {
+        //     b.Disable();
+        // }
 
-        EnablePattern(bossPatterns[0]);
+        // EnablePattern(bossPatterns[0]);
     }
-
 
     private void NextLife()
     { 

@@ -3,7 +3,6 @@ using UnityEngine;
 public class EntityPortalConnector : MonoBehaviour {
     public GameObject portal1, portal2;
     public float portalCooldown = .5f;
-    public int durability = 5;
     private GameObject lastPortal;
     private Collider2D portal1Collider, portal2Collider, lastCollider;
     private EntityPortalController portal1Controller, portal2Controller, lastController;
@@ -36,10 +35,5 @@ public class EntityPortalConnector : MonoBehaviour {
         StartCoroutine(lastController.Cooldown(portalCooldown));
 
         bullet.Warp(lastPortal.transform.position, lastCollider);
-
-        durability -= 1;
-
-        if (durability <= 0)
-            Destroy(gameObject);
     }
 }

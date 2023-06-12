@@ -4,6 +4,7 @@ public abstract class BossPattern : MonoBehaviour {
 
     public float shootSpeed, fireRate, nextFireTime;
     public float arenaWidth, arenaHeight, leftLocation, rightLocation, topLocation, bottomLocation;
+    public Transform playerLocation;
     public GameObject bulletPrefab;
     public GameObject portalPrefab;
     public Collider2D bossCollider;
@@ -13,6 +14,9 @@ public abstract class BossPattern : MonoBehaviour {
         GameObject boss = GameObject.FindGameObjectWithTag("Boss");
         bossCollider = boss.GetComponent<Collider2D>();
         bossData = boss.GetComponent<BossData>();
+        bulletPrefab = bossData.bulletPrefab;
+        portalPrefab = bossData.portalPrefab;
+        playerLocation = bossData.playerLocation;
         nextFireTime = 0;
         leftLocation = -arenaWidth/2;
         rightLocation = arenaWidth/2;
@@ -29,6 +33,7 @@ public abstract class BossPattern : MonoBehaviour {
     {
         enabled = false;
     }
+    
     public GameObject FireBullet(Vector2 firePosition, Vector2 fireDirection, float shootSpeed)
     {
         GameObject bullet = Instantiate(bulletPrefab, firePosition, Quaternion.identity);
