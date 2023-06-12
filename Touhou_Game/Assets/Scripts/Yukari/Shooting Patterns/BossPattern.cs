@@ -3,6 +3,7 @@ using UnityEngine;
 public abstract class BossPattern : MonoBehaviour {
 
     public float shootSpeed, fireRate, nextFireTime;
+    public float arenaWidth, arenaHeight, leftLocation, rightLocation, topLocation, bottomLocation;
     public GameObject bulletPrefab;
     public GameObject portalPrefab;
     public Collider2D bossCollider;
@@ -13,6 +14,10 @@ public abstract class BossPattern : MonoBehaviour {
         bossCollider = boss.GetComponent<Collider2D>();
         bossData = boss.GetComponent<BossData>();
         nextFireTime = 0;
+        leftLocation = -arenaWidth/2;
+        rightLocation = arenaWidth/2;
+        topLocation = arenaHeight/2;
+        bottomLocation = -arenaHeight/2;
     }
 
     public void Enable()
