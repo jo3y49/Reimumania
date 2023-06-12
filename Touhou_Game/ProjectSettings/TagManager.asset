@@ -15,6 +15,7 @@ TagManager:
   - Portal
   - Stamina
   - Life
+  - Boss
   layers:
   - Default
   - TransparentFX

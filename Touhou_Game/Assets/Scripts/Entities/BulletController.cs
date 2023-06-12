@@ -44,7 +44,7 @@ public class BulletController : MonoBehaviour
             !(other.gameObject.CompareTag("Follower") && parentCollider.gameObject.CompareTag("Hit Box")) &&
             !(other.gameObject.CompareTag("Enemy") && parentCollider.gameObject.CompareTag("Enemy")) &&
             (other.gameObject.CompareTag("Hit Box") || other.gameObject.CompareTag("Enemy") ||
-            other.gameObject.CompareTag("Environment"));
+            other.gameObject.CompareTag("Environment") || other.gameObject.CompareTag("Boss"));
     }
 
     public void Reflect(Collider2D newParentCollider)
