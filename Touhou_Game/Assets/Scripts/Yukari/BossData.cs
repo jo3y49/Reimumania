@@ -6,7 +6,10 @@ public class BossData : MonoBehaviour, Shootable
     public float health = 50f;
     public float shield1 = 100f;
     public float shield2 = 100f;
+    public bool isShooting = true;
     private float maxHealth, maxShield1, maxShield2;
+    [SerializeField] private BossPattern[] bossPatterns;
+    private BossPattern activePattern;
     public enum State
     {
         Healthy,
@@ -20,6 +23,13 @@ public class BossData : MonoBehaviour, Shootable
         maxHealth = health;
         maxShield1 = shield1;
         maxShield2 = shield2;
+
+        foreach (BossPattern b in bossPatterns)
+        {
+            b.Disable();
+        }
+
+        EnablePattern(bossPatterns[0]);
     }
 
 
@@ -69,5 +79,16 @@ public class BossData : MonoBehaviour, Shootable
             break;
         }
         Debug.Log(shield1 + " " + shield2 + " " + health);
+    }
+
+    private void EnablePattern(BossPattern pattern)
+    {
+        pattern.Enable();
+        activePattern = pattern;
+    }
+    private void DisablePattern(BossPattern pattern)
+    {
+        pattern.Disable();
+        activePattern = null;
     }
 }
