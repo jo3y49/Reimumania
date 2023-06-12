@@ -4,7 +4,7 @@ public class PlayerMovement : MonoBehaviour {
     public float speed = 5f; // Speed of character movement
     public float sprint = 1.8f; // Speed multipler for sprint
     public KeyCode sprintButton = KeyCode.LeftShift;
-    private Vector2 moveDirection;
+    public Vector2 moveDirection;
     public PlayerData.Direction direction = PlayerData.Direction.Up;
 
     private BoxCollider2D boxCollider; // Cache the box collider reference
