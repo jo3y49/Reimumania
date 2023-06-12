@@ -55,7 +55,7 @@ public class PlayerData : MonoBehaviour, Shootable
 
     public State state = State.Default;
     public static Action energyRecover;
-    private Renderer hitboxRenderer;
+    private Collider2D hitboxCollider;
     private GameDataManager gameData;
 
     private void Awake() {
@@ -63,7 +63,7 @@ public class PlayerData : MonoBehaviour, Shootable
         moveScript = GetComponent<PlayerMovement>();
         objectCollector = transform.GetChild(1).gameObject.GetComponent<Collider2D>();
         playerRenderer = GetComponent<Renderer>();
-        hitboxRenderer = transform.GetChild(0).gameObject.GetComponent<Renderer>();
+        hitboxCollider = transform.GetChild(0).gameObject.GetComponent<Collider2D>();
     }
 
     private void Start() {
@@ -133,14 +133,14 @@ public class PlayerData : MonoBehaviour, Shootable
             {
                 state = State.Default;
                 moveScript.direction = direction;
-                hitboxRenderer.enabled = false;
+                hitboxCollider.enabled = false;
                 shootScript.enabled = false;
 
             } else 
             {
                 state = State.Combat;
                 shootScript.SetDirection(direction);
-                hitboxRenderer.enabled = true;
+                hitboxCollider.enabled = true;
                 shootScript.enabled = true;
             }
     }
@@ -182,7 +182,7 @@ public class PlayerData : MonoBehaviour, Shootable
 
     private IEnumerator Respawn()
     {
-        hitboxRenderer.gameObject.SetActive(false);
+        hitboxCollider.gameObject.SetActive(false);
         isAlive = isHittable = moveScript.enabled = shootScript.enabled = playerRenderer.enabled = objectCollector.enabled = false;
         
         lives -= 1;
@@ -190,7 +190,7 @@ public class PlayerData : MonoBehaviour, Shootable
 
         yield return new WaitForSeconds(respawnTime);
 
-        hitboxRenderer.gameObject.SetActive(true);
+        hitboxCollider.gameObject.SetActive(true);
         isAlive = moveScript.enabled = playerRenderer.enabled = objectCollector.enabled = true;
         if (state == State.Combat)
             shootScript.enabled = true;

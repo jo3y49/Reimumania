@@ -395,25 +395,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 287074382375608207, guid: f466f2b673389544387abe9f9c3207c0, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 287074383259990848, guid: f466f2b673389544387abe9f9c3207c0, type: 3}
-      propertyPath: m_Size.x
-      value: 1.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 287074383259990848, guid: f466f2b673389544387abe9f9c3207c0, type: 3}
-      propertyPath: m_Size.y
-      value: 1.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 287074383259990851, guid: f466f2b673389544387abe9f9c3207c0, type: 3}
-      propertyPath: bombs
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 287074383259990851, guid: f466f2b673389544387abe9f9c3207c0, type: 3}
-      propertyPath: lives
-      value: 100
+    - target: {fileID: 287074383259990856, guid: f466f2b673389544387abe9f9c3207c0, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 287074383259990857, guid: f466f2b673389544387abe9f9c3207c0, type: 3}
       propertyPath: m_RootOrder
@@ -462,10 +446,6 @@ PrefabInstance:
     - target: {fileID: 287074383259990859, guid: f466f2b673389544387abe9f9c3207c0, type: 3}
       propertyPath: m_Name
       value: Reimu
-      objectReference: {fileID: 0}
-    - target: {fileID: 2978157116474213526, guid: f466f2b673389544387abe9f9c3207c0, type: 3}
-      propertyPath: m_Radius
-      value: 0.8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f466f2b673389544387abe9f9c3207c0, type: 3}
