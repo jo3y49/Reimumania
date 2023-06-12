@@ -175,7 +175,7 @@ public class PlayerMovement : MonoBehaviour {
                     angle = 180;
                 }
             }
-            transform.eulerAngles = new Vector3(0, 0, angle);
+            // transform.eulerAngles = new Vector3(0, 0, angle);
         }
     }
 }
