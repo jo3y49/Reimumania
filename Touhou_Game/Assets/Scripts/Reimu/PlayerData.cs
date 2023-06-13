@@ -19,6 +19,7 @@ public class PlayerData : MonoBehaviour, Shootable
 
     private bool isAlive = true;
     public bool isHittable = true;
+    public bool bossFight = false;
     
     private PlayerShooting shootScript;
     private PlayerMovement moveScript;
@@ -241,7 +242,14 @@ public class PlayerData : MonoBehaviour, Shootable
             yield return null;
         }
 
-        BombTargeting(bomb1, bomb2, bombController1, bombController2);
+        if (!bossFight)
+            BombTargeting(bomb1, bomb2, bombController1, bombController2);
+        else
+        {
+            Transform bossPosition = GameObject.FindGameObjectWithTag("Boss").transform;
+            bombController1.Target(bossPosition);
+            bombController2.Target(bossPosition);
+        }
     }
 
     private void BombTargeting(GameObject bomb1, GameObject bomb2, BombController bombController1, BombController bombController2)

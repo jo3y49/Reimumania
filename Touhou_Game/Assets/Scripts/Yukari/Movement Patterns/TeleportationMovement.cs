@@ -1,7 +1,6 @@
 using UnityEngine;
 
 public class TeleportationMovement : BossMovement {
-    public float timePerTeleport = 1f;
     private float nextTeleportTime = 0f;
     private int nextTeleport = 0;
     private Vector2[] teleportLocations = new Vector2[4];
@@ -18,10 +17,8 @@ public class TeleportationMovement : BossMovement {
         if (Time.time > nextTeleportTime)
         {
             Teleport();
-            nextTeleportTime = Time.time + timePerTeleport;
+            nextTeleportTime = Time.time + 5/moveSpeed;
         }
-
-        
     }
 
     private void Teleport()
@@ -34,6 +31,10 @@ public class TeleportationMovement : BossMovement {
         } else {
             nextTeleport = 0;
         }
+    }
+
+    private void OnDisable() {
+        nextTeleport = 0;
     }
 
 }

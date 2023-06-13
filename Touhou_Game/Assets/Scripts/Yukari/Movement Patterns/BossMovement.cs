@@ -2,6 +2,7 @@ using UnityEngine;
 
 public abstract class BossMovement : MonoBehaviour{
     public float arenaWidth, arenaHeight, leftLocation, rightLocation, topLocation, bottomLocation;
+    public float moveSpeed = 0;
     public BossData bossData;
 
     protected void Start() {
@@ -13,5 +14,15 @@ public abstract class BossMovement : MonoBehaviour{
         rightLocation = bossData.rightLocation;
         topLocation = bossData.topLocation;
         bottomLocation = bossData.bottomLocation;
+    }
+
+    public void Enable()
+    {
+        enabled = true;
+    }
+
+    public void Disable()
+    {
+        enabled = false;
     }
 }

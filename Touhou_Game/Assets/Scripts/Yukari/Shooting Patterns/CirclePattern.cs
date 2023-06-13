@@ -19,6 +19,7 @@ public class CirclePattern : BossPattern {
 
     private void MakePattern()
     {
+
         for (int i = 0; i < numberOfBullets; i++)
         {
             float angle = i * 360f / numberOfBullets;

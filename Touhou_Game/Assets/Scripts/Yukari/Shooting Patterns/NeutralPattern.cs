@@ -1,7 +1,8 @@
 using UnityEngine;
 
 public class NeutralPattern : BossPattern
-{
+{   
+    public int numberOfBullets = 8;
     public float fluctuationAmount = .5f;
 
     private void Update() {
@@ -20,14 +21,13 @@ public class NeutralPattern : BossPattern
 
     private void MakePattern()
     {
-        int n = 9;
-        float distanceBetweenBullets = arenaWidth/n;
+        float distanceBetweenBullets = arenaWidth/numberOfBullets;
         float x = leftLocation;
         float y = topLocation;
         Vector2 currentDirection = Vector2.down;
         float fluctuatedX = x + UnityEngine.Random.Range(-fluctuationAmount, fluctuationAmount);
 
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < numberOfBullets; i++)
         {
             FireBullet(new Vector2(fluctuatedX,y), currentDirection, shootSpeed);
             fluctuatedX += distanceBetweenBullets;

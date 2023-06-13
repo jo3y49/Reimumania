@@ -14,6 +14,7 @@ public class BulletController : MonoBehaviour
     {
         this.parentCollider = parentCollider;
         myCollider = GetComponent<Collider2D>();
+        Destroy(gameObject, 30f);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
