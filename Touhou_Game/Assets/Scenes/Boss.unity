@@ -785,6 +785,7 @@ GameObject:
   - component: {fileID: 1490704799}
   - component: {fileID: 1490704800}
   - component: {fileID: 1490704801}
+  - component: {fileID: 1490704802}
   m_Layer: 0
   m_Name: Yukari
   m_TagString: Boss
@@ -920,8 +921,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f538bba984da26d439a5982b2f7bc3cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootSpeed: 10
-  fireRate: 10
+  shootSpeed: 8
+  fireRate: 3
   nextFireTime: 0
   arenaWidth: 33
   arenaHeight: 23
@@ -934,6 +935,7 @@ MonoBehaviour:
   portalPrefab: {fileID: 706598691723801810, guid: 66d879b928c32544eabeaf087ebecfb2, type: 3}
   bossCollider: {fileID: 0}
   bossData: {fileID: 0}
+  fluctuationAmount: 1.5
 --- !u!114 &1490704801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -941,7 +943,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1490704795}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9d65568bdaff084287a46dd266af8f1, type: 3}
   m_Name: 
@@ -961,7 +963,27 @@ MonoBehaviour:
   bossCollider: {fileID: 0}
   bossData: {fileID: 0}
   portalDistance: 5
-  orientation: 1
+  rotationSpeed: 60
+--- !u!114 &1490704802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490704795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 341b8cb68978a114d9fd8433e9b774e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arenaWidth: 33
+  arenaHeight: 23
+  leftLocation: 0
+  rightLocation: 0
+  topLocation: 0
+  bottomLocation: 0
+  bossData: {fileID: 0}
+  timePerTeleport: 2
 --- !u!4 &1513761280 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 287074382375608207, guid: f466f2b673389544387abe9f9c3207c0, type: 3}

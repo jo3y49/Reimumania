@@ -10,7 +10,7 @@ public abstract class BossPattern : MonoBehaviour {
     public Collider2D bossCollider;
     public BossData bossData;
 
-    public void Awake() {
+    protected void Start() {
         GameObject boss = GameObject.FindGameObjectWithTag("Boss");
         bossCollider = boss.GetComponent<Collider2D>();
         bossData = boss.GetComponent<BossData>();
@@ -18,10 +18,12 @@ public abstract class BossPattern : MonoBehaviour {
         portalPrefab = bossData.portalPrefab;
         playerLocation = bossData.playerLocation;
         nextFireTime = 0;
-        leftLocation = -arenaWidth/2;
-        rightLocation = arenaWidth/2;
-        topLocation = arenaHeight/2;
-        bottomLocation = -arenaHeight/2;
+        arenaHeight = bossData.arenaHeight;
+        arenaWidth = bossData.arenaWidth;
+        leftLocation = bossData.leftLocation;
+        rightLocation = bossData.rightLocation;
+        topLocation = bossData.topLocation;
+        bottomLocation = bossData.bottomLocation;
     }
 
     public void Enable()

@@ -7,12 +7,15 @@ public class BossData : MonoBehaviour, Shootable
     public float shield1 = 100f;
     public float shield2 = 100f;
     public bool isShooting = true;
+    public float arenaWidth, arenaHeight, leftLocation, rightLocation, topLocation, bottomLocation;
     private float maxHealth, maxShield1, maxShield2;
     public GameObject bulletPrefab;
     public GameObject portalPrefab;
     public Transform playerLocation;
     [SerializeField] private BossPattern[] bossPatterns;
+    [SerializeField] private BossMovement[] bossMovements;
     private BossPattern activePattern;
+    private BossMovement activeMovement;
     public enum State
     {
         Healthy,
@@ -26,6 +29,10 @@ public class BossData : MonoBehaviour, Shootable
         maxHealth = health;
         maxShield1 = shield1;
         maxShield2 = shield2;
+        leftLocation = -arenaWidth/2;
+        rightLocation = arenaWidth/2;
+        topLocation = arenaHeight/2;
+        bottomLocation = -arenaHeight/2;
 
         // foreach (BossPattern b in bossPatterns)
         // {
