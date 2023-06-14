@@ -2,10 +2,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class ShopManager : MonoBehaviour {
-    public GameObject shrineUI, popup;
-    public Button[] buyables;
+    public GameObject popup;
+    public GameObject[] buyables;
     public int[] prices;
     public Button back, popConfirm, popBack;
     public TextMeshProUGUI coins;
@@ -19,24 +20,23 @@ public class ShopManager : MonoBehaviour {
         GameObject gameManager = GameObject.FindGameObjectWithTag("GameController");
         gameDataManager = gameManager.GetComponent<GameDataManager>();
 
-        coins.text = "Coins: " + gameDataManager.GetCoins().ToString();
+        coins.text = gameDataManager.GetCoins().ToString();
 
-        for (int i = 0; i < buyables.Length; i++)
-        {
-            buyables[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text += ": (" + prices[i] + " coins)";
-            int index = i;
-            buyables[i].onClick.AddListener(() => Buy(index));
-            if (prices[i] > gameDataManager.GetCoins())
-            {
-                buyables[i].interactable = false;
-            }
-        }
+        // for (int i = 0; i < buyables.Length; i++)
+        // {
+        //     buyables[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text += ": (" + prices[i] + " coins)";
+        //     int index = i;
+        //     buyables[i].onClick.AddListener(() => Buy(index));
+        //     if (prices[i] > gameDataManager.GetCoins())
+        //     {
+        //         buyables[i].interactable = false;
+        //     }
+        // }
         popConfirm.onClick.AddListener(Confirmed);
         popBack.onClick.AddListener(Unconfirmed);
-        back.onClick.AddListener(EnterShrine);
+        back.onClick.AddListener(EnterMainArea);
 
         popup.SetActive(false);
-        gameObject.SetActive(false);
     }
 
     private void Buy(int index)
@@ -88,7 +88,7 @@ public class ShopManager : MonoBehaviour {
         {
             if (prices[i] > gameDataManager.GetCoins())
             {
-                buyables[i].interactable = false;
+                // buyables[i].interactable = false;
             }
         }
     }
@@ -132,10 +132,8 @@ public class ShopManager : MonoBehaviour {
         confirm = false;
     }
 
-    private void EnterShrine()
+    private void EnterMainArea()
     {
-        shrineUI.gameObject.SetActive(true);
-        Unconfirmed();
-        gameObject.SetActive(false);
+        SceneManager.LoadScene("MainArea");
     }
 }

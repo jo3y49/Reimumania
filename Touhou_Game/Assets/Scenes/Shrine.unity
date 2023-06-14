@@ -142,7 +142,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &60196974
 RectTransform:
   m_ObjectHideFlags: 0
@@ -182,7 +182,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2c64135c97c8be46a83ce0afbba55b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shrineUI: {fileID: 1263342430}
   popup: {fileID: 698120449}
   buyables:
   - {fileID: 1157460001}
