@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameDataManager : MonoBehaviour
 {
     public TextMeshProUGUI livesText, bombText, coinText, killText, playtimeText;
+    public HealthDisplay healthBar;
     public bool isPaused = true;
     private bool updateUI = false;
 
@@ -89,23 +90,24 @@ public class GameDataManager : MonoBehaviour
         #endif
     }
 
-    public void SetUI(TextMeshProUGUI[] displayVariables)
+    public void SetUI(TextMeshProUGUI[] displayVariables, HealthDisplay healthBar)
     {
         player = FindAnyObjectByType<PlayerData>();
 
         updateUI = true;
 
-        livesText = displayVariables[0];
-        bombText = displayVariables[1];
-        coinText = displayVariables[2];
-        killText = displayVariables[3];
-        playtimeText = displayVariables[4];
+        bombText = displayVariables[0];
+        coinText = displayVariables[1];
+        killText = displayVariables[2];
+        playtimeText = displayVariables[3];
 
-        livesText.text = "Lives: " + gameData.lives.ToString();
         bombText.text = "Bombs: " + gameData.bombs.ToString();
         coinText.text = "Coins: " + gameData.currentCoins.ToString();
         killText.text = "Kills: " + gameData.kills.ToString();
         playtimeText.text = "Play Time: " + FormatTimeToString(gameData.playTime);
+
+        this.healthBar = healthBar;
+        this.healthBar.ChangeHearts(gameData.lives);
         
         isPaused = false;
     }
@@ -168,7 +170,7 @@ public class GameDataManager : MonoBehaviour
         gameData.lives += lives;
 
         if (updateUI)
-            livesText.text = "Lives: " + gameData.lives.ToString();
+            healthBar.ChangeHearts(gameData.lives);
     }
 
     public void LoseLives(int lives = 1)
@@ -176,7 +178,7 @@ public class GameDataManager : MonoBehaviour
         gameData.lives -= lives;
 
         if (updateUI)
-            livesText.text = "Lives: " + gameData.lives.ToString();
+            healthBar.ChangeHearts(gameData.lives);
     }
 
     public void AddBombs(int bombs = 1)

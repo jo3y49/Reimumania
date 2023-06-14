@@ -25,6 +25,7 @@ public class PlayerData : MonoBehaviour, Shootable
     private PlayerMovement moveScript;
     private Collider2D objectCollector;
     private Renderer playerRenderer;
+    private Rigidbody2D rb;
     private Coroutine invulnerableCoroutine;
     public enum Direction
     {
@@ -62,6 +63,7 @@ public class PlayerData : MonoBehaviour, Shootable
     private void Awake() {
         shootScript = GetComponent<PlayerShooting>();
         moveScript = GetComponent<PlayerMovement>();
+        rb = GetComponent<Rigidbody2D>();
         objectCollector = transform.GetChild(1).gameObject.GetComponent<Collider2D>();
         playerRenderer = GetComponent<Renderer>();
         hitboxCollider = transform.GetChild(0).gameObject.GetComponent<Collider2D>();
@@ -183,6 +185,7 @@ public class PlayerData : MonoBehaviour, Shootable
 
     private IEnumerator Respawn()
     {
+        rb.velocity = Vector2.zero;
         hitboxCollider.gameObject.SetActive(false);
         isAlive = isHittable = moveScript.enabled = shootScript.enabled = playerRenderer.enabled = objectCollector.enabled = false;
         
