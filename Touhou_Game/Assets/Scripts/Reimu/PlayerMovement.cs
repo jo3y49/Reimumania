@@ -4,11 +4,7 @@ public class PlayerMovement : MonoBehaviour {
     public float speed = 5f; // Speed of character movement
     public float sprint = 1.8f; // Speed multipler for sprint
     public KeyCode sprintButton = KeyCode.LeftShift;
-    private Vector2 moveDirection;
-    private Vector3 nextPosition;
     public PlayerData.Direction direction = PlayerData.Direction.Up;
-
-    private bool hasCollided = false;
 
 
 
@@ -41,31 +37,26 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void DetermineDirection(float moveX, float moveY) {
-        if (!Mathf.Approximately(moveX, 0) || !Mathf.Approximately(moveY, 0)) // If there is movement
+        if (!Mathf.Approximately(moveX, 0) || !Mathf.Approximately(moveY, 0)) 
         {
-            float angle = 0;
-            if (Mathf.Abs(moveX) > Mathf.Abs(moveY)) // If horizontal movement is greater than vertical
+            if (Mathf.Abs(moveX) > Mathf.Abs(moveY))
             {
                 if (moveX > 0){
                     direction = PlayerData.Direction.Right;
-                    angle = 270;
                 }
                 else {
                     direction = PlayerData.Direction.Left;
-                    angle = 90;
                 }
             }
-            else // Vertical movement is greater
+            else
             {
                 if (moveY > 0){
                     direction = PlayerData.Direction.Up;
                 }
                 else {
                     direction = PlayerData.Direction.Down;
-                    angle = 180;
                 }
             }
-            // transform.eulerAngles = new Vector3(0, 0, angle);
         }
     }
 }
