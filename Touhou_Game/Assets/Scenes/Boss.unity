@@ -791,7 +791,6 @@ GameObject:
   - component: {fileID: 1490704801}
   - component: {fileID: 1490704802}
   - component: {fileID: 1490704803}
-  - component: {fileID: 1490704804}
   - component: {fileID: 1490704805}
   m_Layer: 0
   m_Name: Yukari
@@ -1026,27 +1025,6 @@ MonoBehaviour:
   bossData: {fileID: 0}
   amplitude: 5
   topBuffer: 1
---- !u!114 &1490704804
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1490704795}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 518a5493d0e654b47820fd45a4871e91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  arenaWidth: 0
-  arenaHeight: 0
-  leftLocation: 0
-  rightLocation: 0
-  topLocation: 0
-  bottomLocation: 0
-  moveSpeed: 0
-  bossData: {fileID: 0}
-  bossRenderer: {fileID: 0}
 --- !u!114 &1490704805
 MonoBehaviour:
   m_ObjectHideFlags: 0

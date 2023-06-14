@@ -73,7 +73,7 @@ public class PlayerData : MonoBehaviour, Shootable
         
         GameObject gameManager = GameObject.FindGameObjectWithTag("GameController");
         gameData = gameManager.GetComponent<GameDataManager>();
-        gameManager.GetComponent<PersistenceManager>().AddPersistentObject(gameObject);
+        // gameManager.GetComponent<PersistenceManager>().AddPersistentObject(gameObject);
 
         gameData.GetSavedPlayerData(this);
 

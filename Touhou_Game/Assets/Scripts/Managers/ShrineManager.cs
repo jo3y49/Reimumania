@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class ShrineManager : MonoBehaviour
 {
-    public Button enterTestArea, enterTutorial, saveGame, quitGame, enterShop, enterBoss;
+    public Button enterTestArea, enterTutorial, saveGame, quitGame, enterShop, enterBoss, enterMainArea;
     public GameObject shopUI;
     private GameDataManager gameDataManager;
 
@@ -18,6 +18,7 @@ public class ShrineManager : MonoBehaviour
         quitGame.onClick.AddListener(Quit);
         enterShop.onClick.AddListener(EnterShop);
         enterBoss.onClick.AddListener(EnterBoss);
+        enterMainArea.onClick.AddListener(EnterMainArea);
     }
     private void SwitchScene(string scene)
     {
@@ -38,6 +39,11 @@ public class ShrineManager : MonoBehaviour
     private void EnterBoss()
     {
         SwitchScene("Boss");
+    }
+
+    private void EnterMainArea()
+    {
+        SwitchScene("MainArea");
     }
 
     private void EnterShop()
