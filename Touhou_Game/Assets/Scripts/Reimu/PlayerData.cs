@@ -12,6 +12,7 @@ public class PlayerData : MonoBehaviour, Shootable
     public float invulnerableTime = 2;
     public float flashSpeed = 5f;   
     public GameObject bombPrefab;
+    public Animator aMouth;
     public Vector2 bombDistance = new Vector2(2,0);
     public float bombRange = 10f;
     public KeyCode bombButton = KeyCode.Q;
@@ -49,13 +50,6 @@ public class PlayerData : MonoBehaviour, Shootable
 
     public Upgrade upgrade = Upgrade.L1;
 
-    public enum State 
-    {
-        Default,
-        Combat,
-    }
-
-    public State state = State.Default;
     public static Action energyRecover;
     private Collider2D hitboxCollider;
     private GameDataManager gameData;
@@ -73,13 +67,9 @@ public class PlayerData : MonoBehaviour, Shootable
         
         GameObject gameManager = GameObject.FindGameObjectWithTag("GameController");
         gameData = gameManager.GetComponent<GameDataManager>();
-        // gameManager.GetComponent<PersistenceManager>().AddPersistentObject(gameObject);
 
         gameData.GetSavedPlayerData(this);
-
-        if (state == State.Combat){
-            ToggleCombatState(State.Default);
-        }
+        aMouth.SetInteger("Lives", lives);
             
     }
 
@@ -87,65 +77,27 @@ public class PlayerData : MonoBehaviour, Shootable
 
         if (isAlive)
         {
-            if (state == State.Combat)
+            direction = shootScript.direction;
+            if (Input.GetKeyDown(bombButton) && bombs > 0 && invulnerableCoroutine == null)
             {
-                direction = shootScript.direction;
-                if (Input.GetKeyDown(bombButton) && bombs > 0 && invulnerableCoroutine == null)
-                {
-                    Bomb();
-                }
+                Bomb();
+            }
                 
-            } else
-            {
-                direction = moveScript.direction;
-            }
-
-            if (Input.GetKeyDown(combatToggle))
-            {
-                ToggleCombatState(state);
-            }
         }
 
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            if (upgrade == Upgrade.L1)
-                upgrade = Upgrade.L2;
-            else
-                upgrade = Upgrade.L1;
-
-            gameData.SetUpgrade(upgrade);
-        }
     }
 
     public void Shot(float bulletDamage)
     {
         if (isHittable)
         {
-            if (lives > 0)
+            if (lives > 1)
             {
                 StartCoroutine(Respawn());
             } else {
                 gameData.GameOver();
             }
         }
-    }
-
-    private void ToggleCombatState(State oldState)
-    {
-        if (oldState == State.Combat)
-            {
-                state = State.Default;
-                moveScript.direction = direction;
-                hitboxCollider.enabled = false;
-                shootScript.enabled = false;
-
-            } else 
-            {
-                state = State.Combat;
-                shootScript.SetDirection(direction);
-                hitboxCollider.enabled = true;
-                shootScript.enabled = true;
-            }
     }
 
     public void CollectCoin(GameObject coin)
@@ -156,9 +108,13 @@ public class PlayerData : MonoBehaviour, Shootable
     }
     public void CollectLife(GameObject life)
     {
-        Destroy(life);
-        lives++;
-        gameData.AddLives();
+        if (lives < 3)
+        {
+            Destroy(life);
+            lives++;
+            gameData.AddLives();
+            aMouth.SetInteger("Lives", lives);
+        }
     }
     public void CollectBomb(GameObject bomb)
     {
@@ -186,20 +142,20 @@ public class PlayerData : MonoBehaviour, Shootable
     private IEnumerator Respawn()
     {
         rb.velocity = Vector2.zero;
+        lives -= 1;
+        gameData.LoseLives();
+        
         hitboxCollider.gameObject.SetActive(false);
         playerBody.SetActive(false);
         isAlive = isHittable = moveScript.enabled = shootScript.enabled = objectCollector.enabled = false;
         
-        lives -= 1;
-        gameData.LoseLives();
-
         yield return new WaitForSeconds(respawnTime);
 
         hitboxCollider.gameObject.SetActive(true);
         playerBody.SetActive(true);
-        isAlive = moveScript.enabled = objectCollector.enabled = true;
-        if (state == State.Combat)
-            shootScript.enabled = true;
+        isAlive = moveScript.enabled = objectCollector.enabled = shootScript.enabled = true;
+
+        aMouth.SetInteger("Lives", lives);
 
         StartCoroutine(Invulnerable());
     }

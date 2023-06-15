@@ -9,7 +9,7 @@ public abstract class BossPattern : MonoBehaviour {
     public GameObject portalPrefab;
     public Collider2D bossCollider;
     public BossData bossData;
-    private Color bulletColor = new Color(207,146,255,255);
+    private Color bulletColor = new Color(244f/255f,148f/255f,251f/255f,255f/255f);
 
     protected void Start() {
         GameObject boss = GameObject.FindGameObjectWithTag("Boss");
@@ -42,7 +42,7 @@ public abstract class BossPattern : MonoBehaviour {
         GameObject bullet = Instantiate(bulletPrefab, firePosition, Quaternion.identity);
         BulletController bulletController = bullet.GetComponent<BulletController>();
         bulletController.Initialize(bossCollider);
-        bullet.GetComponent<Renderer>().material.color = new Color(244f/255f,148f/255f,251f/255f,255f/255f);
+        bullet.GetComponent<Renderer>().material.color = bulletColor;
         bullet.GetComponent<Rigidbody2D>().velocity = fireDirection * shootSpeed;
         
         return bullet;

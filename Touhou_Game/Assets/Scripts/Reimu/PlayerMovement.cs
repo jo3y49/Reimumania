@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour {
     public PlayerData.Direction direction = PlayerData.Direction.Up;
 
 
-    public Animator aLegs, aMouth;
+    public Animator aLegs;
     private Rigidbody2D rb2d;
 
     private void Awake()
