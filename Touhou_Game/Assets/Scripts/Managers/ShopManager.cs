@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class ShopManager : MonoBehaviour {
     public GameObject popup;
-    public GameObject[] buyables;
+    public Button[] buyables;
+    public TextMeshProUGUI[] quantity;
     public int[] prices;
     public Button back, popConfirm, popBack;
     public TextMeshProUGUI coins;
@@ -14,7 +15,7 @@ public class ShopManager : MonoBehaviour {
     private Coroutine popupCoroutine;
     private bool confirm = false;
 
-    // buyables: life, bomb, spellcard1, spellcard2
+    // buyables: life, bomb, spellcard
 
     private void Start() {
         GameObject gameManager = GameObject.FindGameObjectWithTag("GameController");
@@ -22,21 +23,37 @@ public class ShopManager : MonoBehaviour {
 
         coins.text = gameDataManager.GetCoins().ToString();
 
-        // for (int i = 0; i < buyables.Length; i++)
-        // {
-        //     buyables[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text += ": (" + prices[i] + " coins)";
-        //     int index = i;
-        //     buyables[i].onClick.AddListener(() => Buy(index));
-        //     if (prices[i] > gameDataManager.GetCoins())
-        //     {
-        //         buyables[i].interactable = false;
-        //     }
-        // }
+        for (int i = 0; i < buyables.Length; i++)
+        {
+            buyables[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Price: (" + prices[i] + " coins)";
+            int index = i;
+            buyables[i].onClick.AddListener(() => Buy(index));
+        }
+        SetShop();
+
         popConfirm.onClick.AddListener(Confirmed);
         popBack.onClick.AddListener(Unconfirmed);
         back.onClick.AddListener(EnterMainArea);
 
         popup.SetActive(false);
+    }
+
+    private void SetShop()
+    {
+        coins.text = gameDataManager.GetCoins().ToString();
+
+        quantity[0].text = "Lives: Max 3         Currently Have " + gameDataManager.GetLives();
+        quantity[1].text = "Bombs: Max 3 Currently Have " + gameDataManager.GetBombs();
+
+        for (int i = 0; i < buyables.Length; i++)
+        {
+
+            if (prices[i] > gameDataManager.GetCoins() || i == 0 && gameDataManager.GetLives() >= 3 ||
+            i == 1 && gameDataManager.GetBombs() >= 3 || i == 2 && gameDataManager.GetUpgrade() == PlayerData.Upgrade.L2)
+            {
+                buyables[i].interactable = false;
+            }
+        }
     }
 
     private void Buy(int index)
@@ -73,24 +90,13 @@ public class ShopManager : MonoBehaviour {
             BuyBombs();
             break;
             case 2:
-            BuyUpgrade1();
-            break;
-            case 3:
-            BuyUpgrade2();
+            BuyUpgrade();
             break;
         }
 
 
         gameDataManager.RemoveCoins(prices[index]);
-        coins.text = gameDataManager.GetCoins().ToString();
-
-        for (int i = 0; i < buyables.Length; i++)
-        {
-            if (prices[i] > gameDataManager.GetCoins())
-            {
-                // buyables[i].interactable = false;
-            }
-        }
+        SetShop();
     }
 
     private void BuyLives()
@@ -103,12 +109,7 @@ public class ShopManager : MonoBehaviour {
         gameDataManager.AddBombs();
     }
 
-    private void BuyUpgrade1()
-    {
-        gameDataManager.SetUpgrade(PlayerData.Upgrade.L1);
-    }
-
-    private void BuyUpgrade2()
+    private void BuyUpgrade()
     {
         gameDataManager.SetUpgrade(PlayerData.Upgrade.L2);
     }

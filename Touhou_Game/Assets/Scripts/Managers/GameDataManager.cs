@@ -192,6 +192,11 @@ public class GameDataManager : MonoBehaviour
             healthBar.ChangeHearts(gameData.lives);
     }
 
+    public int GetLives()
+    {
+        return gameData.lives;
+    }
+
     public void AddBombs(int bombs = 1)
     {
         gameData.bombs += bombs;
@@ -208,9 +213,19 @@ public class GameDataManager : MonoBehaviour
             bombText.text = "Bombs: " + gameData.bombs.ToString();
     }
 
+    public int GetBombs()
+    {
+        return gameData.bombs;
+    }
+
     public void SetUpgrade(PlayerData.Upgrade upgrade)
     {
         gameData.spellCardUpgrade = upgrade;
+    }
+
+    public PlayerData.Upgrade GetUpgrade()
+    {
+        return gameData.spellCardUpgrade;
     }
 
     public void AddKill(int kills = 1)
