@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class PauseManager : MonoBehaviour {
     public KeyCode pauseKey = KeyCode.P;
-    public Button saveButton, homeButton, quitButton;
+    public Button saveButton, quitButton;
     private GameDataManager gameDataManager;
     public UIManager ui;
     public GameObject pauseUI;
@@ -15,7 +15,6 @@ public class PauseManager : MonoBehaviour {
         gameDataManager = gameManager.GetComponent<GameDataManager>();
 
         saveButton.onClick.AddListener(gameDataManager.SaveGame);
-        homeButton.onClick.AddListener(Home);
         quitButton.onClick.AddListener(Quit);
 
         pauseUI.SetActive(false);
@@ -41,14 +40,9 @@ public class PauseManager : MonoBehaviour {
         TogglePause(true);
     }
 
-    private void Home() {
-        Time.timeScale = 1f; 
-        gameDataManager.ReturnToMenu("Shrine");
-    }
-
     private void Quit() {
         Time.timeScale = 1f; // You need to make sure that the game isn't still paused when you load another scene
-        gameDataManager.ReturnToMenu("TitleScreen");
+        gameDataManager.ReturnToTitle();
     }
 
     private void TogglePause(bool pause)

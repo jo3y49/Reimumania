@@ -115,14 +115,13 @@ public class GameDataManager : MonoBehaviour
     public void GameOver()
     {
         AddLives(3);
-        ReturnToMenu("MainArea");
+        SceneManager.LoadScene("MainArea");
     }
 
-    public void ReturnToMenu(string menu)
+    public void ReturnToTitle()
     {
         updateUI = false;
-        GetComponent<PersistenceManager>().Reset();
-        SceneManager.LoadScene(menu);
+        SceneManager.LoadScene("TitleScreen");
     }
 
     public void GetSavedPlayerData(PlayerData player)
@@ -131,6 +130,25 @@ public class GameDataManager : MonoBehaviour
         player.lives = gameData.lives;
         player.bombs = gameData.bombs;
         player.upgrade = gameData.spellCardUpgrade;
+    }
+
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "MainArea") 
+        {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            player.transform.position = new Vector2(gameData.lastLocation[0], gameData.lastLocation[1]);
+        }
     }
 
     public void AddCoins(int coins = 1)

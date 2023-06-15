@@ -42,7 +42,7 @@ public class TitleManager : MonoBehaviour
     private void LoadGame()
     {
 
-        SceneManager.LoadScene("Shrine");
+        SceneManager.LoadScene("MainArea");
     }
 
     private void StartNewGame()
