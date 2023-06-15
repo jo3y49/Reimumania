@@ -112,17 +112,10 @@ public class GameDataManager : MonoBehaviour
         isPaused = false;
     }
 
-    public void PortalToShrine(string lastScene, Vector2 lastLocation)
-    {
-        gameData.lastScene = lastScene;
-        gameData.lastLocation[0] = lastLocation.x;
-        gameData.lastLocation[1] = lastLocation.y;
-        ReturnToMenu("Shrine");
-    }
-
     public void GameOver()
     {
-        ReturnToMenu("Shrine");
+        AddLives(3);
+        ReturnToMenu("MainArea");
     }
 
     public void ReturnToMenu(string menu)
