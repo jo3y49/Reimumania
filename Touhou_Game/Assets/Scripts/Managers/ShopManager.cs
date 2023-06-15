@@ -25,7 +25,7 @@ public class ShopManager : MonoBehaviour {
 
         for (int i = 0; i < buyables.Length; i++)
         {
-            buyables[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Price: (" + prices[i] + " coins)";
+            buyables[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Price: " + prices[i] + " Coins";
             int index = i;
             buyables[i].onClick.AddListener(() => Buy(index));
         }
