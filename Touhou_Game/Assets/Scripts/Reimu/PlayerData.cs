@@ -118,9 +118,12 @@ public class PlayerData : MonoBehaviour, Shootable
     }
     public void CollectBomb(GameObject bomb)
     {
-        Destroy(bomb);
-        bombs++;
-        gameData.AddBombs();
+        if (bombs < 3)
+        {
+            Destroy(bomb);
+            bombs++;
+            gameData.AddBombs();
+        }
     }
     public void CollectEnergy(GameObject energy)
     {

@@ -13,6 +13,7 @@ public class RoomManager : MonoBehaviour {
         if (other.gameObject.CompareTag("Player"))
         {
             gameDataManager.SetLastLocation(other.transform.position);
+            gameDataManager.SaveGame();
             SceneManager.LoadScene(nextScene);
         }
     }

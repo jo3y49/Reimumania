@@ -203,7 +203,7 @@ public class FollowerController : MonoBehaviour
                 Vector3 desiredPosition = player.transform.position + currentPosition;
 
                 // Interpolate the follower's rotation towards the desired rotation
-                transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, Time.deltaTime * rotationSpeed);
+                // transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, Time.deltaTime * rotationSpeed);
                 float distanceToDesiredPosition = Vector3.Distance(transform.position, desiredPosition);
 
                 if (distanceToDesiredPosition > .12f)

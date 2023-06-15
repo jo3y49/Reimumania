@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 6816293752918227094}
   - component: {fileID: 6816293752918227092}
   - component: {fileID: 6816293752918227048}
-  - component: {fileID: 6816293752918227051}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -100,19 +99,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smoothSpeed: 1
   offset: {x: 0, y: 0, z: 0}
---- !u!114 &6816293752918227051
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6816293752918227093}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf00ef2364f533645b35971be2518462, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minOrtho: 5
-  midOrtho: 10
-  maxOrtho: 20
-  cameraToggle: 9

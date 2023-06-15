@@ -2,12 +2,10 @@ using UnityEngine;
 using TMPro;
 
 public class EnergyTextUpdate : MonoBehaviour {
-    [SerializeField] private TextMeshProUGUI energyText, stateText;
+    [SerializeField] private TextMeshProUGUI stateText;
     [SerializeField] private FollowerController followerController;
 
     private void Update() {
-        energyText.text = "Flandre's Energy: " + followerController.energy.ToString();
-
         stateText.text = "Flandre is ";
 
         switch (followerController.GetActionState())

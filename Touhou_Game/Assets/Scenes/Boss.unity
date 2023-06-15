@@ -123,17 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &285490526 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1184698472788338103, guid: 087fa541f9a83004a9545dcfec4f283a, type: 3}
-  m_PrefabInstance: {fileID: 2005394445}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &374812179
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -413,7 +402,7 @@ PrefabInstance:
     - target: {fileID: 8479682002511990295, guid: ef4a90597d04cdd4ea956c72e2ca67e0, type: 3}
       propertyPath: text
       value: 
-      objectReference: {fileID: 285490526}
+      objectReference: {fileID: 0}
     - target: {fileID: 8479682002511990295, guid: ef4a90597d04cdd4ea956c72e2ca67e0, type: 3}
       propertyPath: stateText
       value: 
@@ -421,7 +410,7 @@ PrefabInstance:
     - target: {fileID: 8479682002511990295, guid: ef4a90597d04cdd4ea956c72e2ca67e0, type: 3}
       propertyPath: energyText
       value: 
-      objectReference: {fileID: 285490526}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef4a90597d04cdd4ea956c72e2ca67e0, type: 3}
 --- !u!1001 &1066247273
@@ -1943,12 +1932,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: 35b0ce5952d82db41bd1e5726598ec8c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4deac4befa241724685fc8c322c92ee0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.56, y: 2.56}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1987,7 +1976,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 2.56, y: 2.56}
-    newSize: {x: 1, y: 1}
+    newSize: {x: 2.56, y: 2.56}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0

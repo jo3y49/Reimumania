@@ -8,6 +8,7 @@ public class GameDataManager : MonoBehaviour
 {
     public TextMeshProUGUI livesText, bombText, coinText, killText, playtimeText;
     public HealthDisplay healthBar;
+    public BombDisplay bombBar;
     public bool isPaused = true;
     private bool updateUI = false;
 
@@ -90,31 +91,31 @@ public class GameDataManager : MonoBehaviour
         #endif
     }
 
-    public void SetUI(TextMeshProUGUI[] displayVariables, HealthDisplay healthBar)
+    public void SetUI(TextMeshProUGUI[] displayVariables, HealthDisplay healthBar, BombDisplay bombBar)
     {
         player = FindAnyObjectByType<PlayerData>();
 
         updateUI = true;
 
-        bombText = displayVariables[0];
-        coinText = displayVariables[1];
-        killText = displayVariables[2];
-        playtimeText = displayVariables[3];
+        coinText = displayVariables[0];
+        killText = displayVariables[1];
+        playtimeText = displayVariables[2];
 
-        bombText.text = "Bombs: " + gameData.bombs.ToString();
         coinText.text = gameData.currentCoins.ToString();
         killText.text = "Kills: " + gameData.kills.ToString();
         playtimeText.text = "Play Time: " + FormatTimeToString(gameData.playTime);
 
         this.healthBar = healthBar;
-        this.healthBar.ChangeHearts(gameData.lives);
+        this.bombBar = bombBar;
+        // bombBar.ChangeBombs(gameData.bombs);
+        // this.healthBar.ChangeHearts(gameData.lives);
         
         isPaused = false;
     }
 
     public void GameOver()
     {
-        AddLives(3);
+        AddLives(2);
         SceneManager.LoadScene("MainArea");
     }
 
@@ -132,24 +133,24 @@ public class GameDataManager : MonoBehaviour
         player.upgrade = gameData.spellCardUpgrade;
     }
 
-    void OnEnable()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
+    // void OnEnable()
+    // {
+    //     SceneManager.sceneLoaded += OnSceneLoaded;
+    // }
 
-    void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
+    // void OnDisable()
+    // {
+    //     SceneManager.sceneLoaded -= OnSceneLoaded;
+    // }
 
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.name == "MainArea") 
-        {
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            player.transform.position = new Vector2(gameData.lastLocation[0], gameData.lastLocation[1]);
-        }
-    }
+    // void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    // {
+    //     if (scene.name == "MainArea") 
+    //     {
+    //         GameObject player = GameObject.FindGameObjectWithTag("Player");
+    //         player.transform.position = new Vector2(gameData.lastLocation[0], gameData.lastLocation[1]);
+    //     }
+    // }
 
     public void AddCoins(int coins = 1)
     {
@@ -202,7 +203,7 @@ public class GameDataManager : MonoBehaviour
         gameData.bombs += bombs;
 
         if (updateUI)
-            bombText.text = "Bombs: " + gameData.bombs.ToString();
+            bombBar.ChangeBombs(gameData.bombs);
     }
 
     public void LoseBombs(int bombs = 1)
@@ -210,7 +211,7 @@ public class GameDataManager : MonoBehaviour
         gameData.bombs -= bombs;
 
         if (updateUI)
-            bombText.text = "Bombs: " + gameData.bombs.ToString();
+            bombBar.ChangeBombs(gameData.bombs);
     }
 
     public int GetBombs()

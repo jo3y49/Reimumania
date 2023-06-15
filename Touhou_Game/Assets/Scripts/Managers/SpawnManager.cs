@@ -61,18 +61,6 @@ public class SpawnManager : MonoBehaviour {
             enemy.AddComponent<ShootAtPlayer>();
             
         }
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            Instantiate(bombPrefab, spawnLocation[3] + (Vector2)player.transform.position, Quaternion.identity);
-        }
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            Instantiate(lifePrefab, spawnLocation[3] + (Vector2)player.transform.position, Quaternion.identity);
-        }
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            Instantiate(energyPrefab, spawnLocation[3] + (Vector2)player.transform.position, Quaternion.identity);
-        }
     }
 
     private GameObject getBaseEnemy(Vector2 spawnLocation)

@@ -28,10 +28,10 @@ public class BulletController : MonoBehaviour
                     shootable.Shot(bulletDamage);
                 Destroy(gameObject);
             } 
-            else if (other.gameObject.CompareTag("Follower"))
-            {
-                other.gameObject.GetComponent<FollowerController>().Dodge(transform);
-            } 
+            // else if (other.gameObject.CompareTag("Follower"))
+            // {
+            //     other.gameObject.GetComponent<FollowerController>().Dodge(transform);
+            // } 
             else if (other.gameObject.CompareTag("Collector")  && !parentCollider.gameObject.CompareTag("Hit Box"))
             {
                 protectPlayer?.Invoke(gameObject);
