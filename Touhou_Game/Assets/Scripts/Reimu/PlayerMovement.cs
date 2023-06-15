@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour {
     public PlayerData.Direction direction = PlayerData.Direction.Up;
 
 
-
+    public Animator aLegs, aEyes, aMouth;
     private Rigidbody2D rb2d;
 
     private void Awake()
@@ -25,15 +25,21 @@ public class PlayerMovement : MonoBehaviour {
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
         Vector2 moveDirection = new Vector2(moveX, moveY).normalized;
+        aLegs.SetFloat("Speed", Mathf.Abs(moveX) + Mathf.Abs(moveY));
+        
 
         float speedToUse = speed;
         if (Input.GetKey(sprintButton))
         {
             speedToUse *= sprint;
+            aLegs.SetBool("Sprint", true);
+        } else {
+            aLegs.SetBool("Sprint", false);
         }
 
         DetermineDirection(moveX, moveY);
         rb2d.velocity = moveDirection * speedToUse;
+        
     }
 
     private void DetermineDirection(float moveX, float moveY) {
