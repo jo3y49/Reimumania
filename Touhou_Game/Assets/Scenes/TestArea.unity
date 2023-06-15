@@ -395,6 +395,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 287074383259990851, guid: f466f2b673389544387abe9f9c3207c0, type: 3}
+      propertyPath: bombDistance.x
+      value: 2.4
+      objectReference: {fileID: 0}
     - target: {fileID: 287074383259990857, guid: f466f2b673389544387abe9f9c3207c0, type: 3}
       propertyPath: m_RootOrder
       value: 4

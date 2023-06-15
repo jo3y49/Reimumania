@@ -15,29 +15,31 @@ public class SpawnManager : MonoBehaviour {
             GameObject enemy = getBaseEnemy(spawnLocation[0]);
             enemy.AddComponent<BackAndForthPatrol>();
             enemy.AddComponent<ShootForward>();
-            enemy.GetComponent<Renderer>().material.color = Color.blue;
+            
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            GameObject enemy = getBaseEnemy(spawnLocation[0]);
+            enemy.AddComponent<BackAndForthPatrol>();
+            enemy.AddComponent<ShootAtPlayer>();
+           
+            
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             GameObject enemy = getBaseEnemy(spawnLocation[1]);
             enemy.AddComponent<CirclePatrol>();
             enemy.AddComponent<ShootAtPlayer>();
-            enemy.GetComponent<Renderer>().material.color = Color.cyan;
+            
+            
         }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             GameObject enemy = getBaseEnemy(spawnLocation[2]);
             enemy.AddComponent<CirclePatrol>();
             enemy.AddComponent<ShootAtPlayer>();
             enemy.GetComponent<CirclePatrol>().clockwise = false;
-            enemy.GetComponent<Renderer>().material.color = Color.red;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            GameObject enemy = getBaseEnemy(spawnLocation[0]);
-            enemy.AddComponent<BackAndForthPatrol>();
-            enemy.AddComponent<ShootAtPlayer>();
-            enemy.GetComponent<Renderer>().material.color = Color.black;
+            
         }
         if (Input.GetKeyDown(KeyCode.Alpha5))
         {
@@ -47,17 +49,17 @@ public class SpawnManager : MonoBehaviour {
             patrol.patrolDistance = 15;
             patrol.patrolSpeed = 10f;
             enemy.AddComponent<ShootAtPlayer>();
-            enemy.GetComponent<Renderer>().material.color = Color.magenta;
+            
         }
         if (Input.GetKeyDown(KeyCode.Alpha6))
         {
             GameObject enemy = getBaseEnemy(spawnLocation[5]);
             enemy.AddComponent<BackAndForthPatrol>();
-            BackAndForthPatrol patrol = enemy.GetComponent<BackAndForthPatrol>();
+            BackAndForthPatrol patrol = enemy.GetComponent<BackAndForthPatrol>();            
             patrol.patrolDistance = 15;
             patrol.patrolSpeed = 10f;
             enemy.AddComponent<ShootAtPlayer>();
-            enemy.GetComponent<Renderer>().material.color = Color.magenta;
+            
         }
         if (Input.GetKeyDown(KeyCode.B))
         {

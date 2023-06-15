@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class BackAndForthPatrol : MonoBehaviour {
     public float patrolSpeed = 5f; // How fast the enemy moves along the path
+    public float rotationSpeed = 1f;
     public float patrolDistance = 5f; // How far the enemy moves before going back
 
     public enum Direction
@@ -37,6 +38,7 @@ public class BackAndForthPatrol : MonoBehaviour {
         }
 
         transform.position += moveVector * Time.deltaTime;
+        transform.RotateAround(transform.position, new Vector3(0,0,1), rotationSpeed * Time.deltaTime * 100f); 
         currentPatrolDistance += patrolSpeed * Time.deltaTime;
 
         if (currentPatrolDistance >= patrolDistance)
