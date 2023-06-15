@@ -14,6 +14,7 @@ public class BossData : MonoBehaviour, Shootable
     public GameObject bulletPrefab;
     public GameObject portalPrefab;
     public Transform playerLocation;
+    public GameObject[] barriers;
     [SerializeField] private BossPattern[] bossPatterns;
     [SerializeField] private BossMovement[] bossMovements;
     [SerializeField] private PortalFollowPlayer portalFollowPlayer;
@@ -99,6 +100,8 @@ public class BossData : MonoBehaviour, Shootable
                 {
                     NextLife();
                 } else {
+                    Destroy(barriers[0]);
+                    Destroy(barriers[1]);
                     Destroy(gameObject);
                 }
             }
