@@ -24,7 +24,7 @@ public class PlayerData : MonoBehaviour, Shootable
     private PlayerShooting shootScript;
     private PlayerMovement moveScript;
     private Collider2D objectCollector;
-    private Renderer playerRenderer;
+    private GameObject playerBody;
     private Rigidbody2D rb;
     private Coroutine invulnerableCoroutine;
     public enum Direction
@@ -65,7 +65,7 @@ public class PlayerData : MonoBehaviour, Shootable
         moveScript = GetComponent<PlayerMovement>();
         rb = GetComponent<Rigidbody2D>();
         objectCollector = transform.GetChild(1).gameObject.GetComponent<Collider2D>();
-        playerRenderer = GetComponent<Renderer>();
+        playerBody = transform.GetChild(2).gameObject;
         hitboxCollider = transform.GetChild(0).gameObject.GetComponent<Collider2D>();
     }
 
@@ -187,7 +187,8 @@ public class PlayerData : MonoBehaviour, Shootable
     {
         rb.velocity = Vector2.zero;
         hitboxCollider.gameObject.SetActive(false);
-        isAlive = isHittable = moveScript.enabled = shootScript.enabled = playerRenderer.enabled = objectCollector.enabled = false;
+        playerBody.SetActive(false);
+        isAlive = isHittable = moveScript.enabled = shootScript.enabled = objectCollector.enabled = false;
         
         lives -= 1;
         gameData.LoseLives();
@@ -195,7 +196,8 @@ public class PlayerData : MonoBehaviour, Shootable
         yield return new WaitForSeconds(respawnTime);
 
         hitboxCollider.gameObject.SetActive(true);
-        isAlive = moveScript.enabled = playerRenderer.enabled = objectCollector.enabled = true;
+        playerBody.SetActive(true);
+        isAlive = moveScript.enabled = objectCollector.enabled = true;
         if (state == State.Combat)
             shootScript.enabled = true;
 
@@ -204,19 +206,33 @@ public class PlayerData : MonoBehaviour, Shootable
     private IEnumerator Invulnerable()
     {
         float startTime = Time.time;
-        Material material = playerRenderer.material;
-        Color originalColor = material.color;
+        Material[] material = new Material[4];
+
+        Color[] originalColor = new Color[4];
+
+        for (int i = 0; i < 4; i++)
+        {
+            material[i] = playerBody.transform.GetChild(i).gameObject.GetComponent<Renderer>().material;
+            originalColor[i] = material[i].color;
+        }
 
         while (Time.time < startTime + invulnerableTime)
         {
             // interpolate between the original color and the flash color based on a sine wave
             float t = Mathf.Sin(Time.time * flashSpeed) * 0.5f + 0.5f;
-            material.color = new Color(originalColor.r, originalColor.g, originalColor.b, Mathf.Lerp(0, 1, t));
+            for (int i = 0; i < 4; i++)
+            {
+                material[i].color = new Color(originalColor[i].r, originalColor[i].g, originalColor[i].b, Mathf.Lerp(0, 1, t));
+            }
+            
 
             yield return null;
         }
 
-        material.color = originalColor;
+        for (int i = 0; i < 4; i++)
+        {
+            material[i].color = originalColor[i];
+        }
         isHittable = true;
         invulnerableCoroutine = null;
     }
