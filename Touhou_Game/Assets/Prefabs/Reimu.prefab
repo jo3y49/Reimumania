@@ -192,7 +192,6 @@ MonoBehaviour:
   sprintButton: 304
   direction: 0
   aLegs: {fileID: 4654751538988765635}
-  aEyes: {fileID: 0}
   aMouth: {fileID: 0}
 --- !u!114 &287074383259990861
 MonoBehaviour:
@@ -213,6 +212,7 @@ MonoBehaviour:
   fireRate: 5
   fireButton: 32
   direction: 0
+  aEyes: {fileID: 1663198443995637678}
 --- !u!1 &287074383427147592
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,6 +368,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2999248189000799075}
   - component: {fileID: 5442197538186998582}
+  - component: {fileID: 1663198443995637678}
   m_Layer: 0
   m_Name: eyes
   m_TagString: Untagged
@@ -442,6 +443,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1663198443995637678
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2470065051275880290}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fdab1c2d28ebb6a4dbe126375d4792e3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3470305413263187771
 GameObject:
   m_ObjectHideFlags: 0

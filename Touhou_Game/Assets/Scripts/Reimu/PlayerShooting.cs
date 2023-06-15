@@ -15,6 +15,8 @@ public class PlayerShooting : MonoBehaviour
     public static Action<GameObject> shootAssist;
 
     private Vector2 aimDirection = Vector2.down;
+    public Animator aEyes;
+    private PlayerData playerData;
     private float nextFireTime = 0f;
 
     private bool[] currentKeyStates = new bool[4]; // 0 - Up, 1 - Down, 2 - Left, 3 - Right
@@ -23,6 +25,10 @@ public class PlayerShooting : MonoBehaviour
     private float lastKeyReleaseTime;
 
     private float lastChangeTime;
+
+    private void Start() {
+        playerData = GetComponent<PlayerData>();
+    }
 
     void Update()
     {
@@ -96,16 +102,19 @@ public class PlayerShooting : MonoBehaviour
                 {
                     direction = PlayerData.Direction.UpRight;
                     aimDirection = new Vector2(1, 1).normalized;
+                    aEyes.SetInteger("Direction", 2);
                 }
                 else if (currentKeyStates[2])
                 {
                     direction = PlayerData.Direction.UpLeft;
                     aimDirection = new Vector2(-1, 1).normalized;
+                    aEyes.SetInteger("Direction", 8);
                 }
                 else
                 {
                     direction = PlayerData.Direction.Up;
                     aimDirection = new Vector2(0, 1);
+                    aEyes.SetInteger("Direction", 1);
                 }
             }
             else if (currentKeyStates[1])
@@ -114,31 +123,35 @@ public class PlayerShooting : MonoBehaviour
                 {
                     direction = PlayerData.Direction.DownRight;
                     aimDirection = new Vector2(1, -1).normalized;
+                    aEyes.SetInteger("Direction", 4);
                 }
                 else if (currentKeyStates[2])
                 {
                     direction = PlayerData.Direction.DownLeft;
                     aimDirection = new Vector2(-1, -1).normalized;
+                    aEyes.SetInteger("Direction", 6);
                 }
                 else
                 {
                     direction = PlayerData.Direction.Down;
                     aimDirection = new Vector2(0, -1);
+                    aEyes.SetInteger("Direction", 5);
                 }
             }
             else if (currentKeyStates[2] && !currentKeyStates[3])
             {
                 direction = PlayerData.Direction.Left;
                 aimDirection = new Vector2(-1, 0);
+                aEyes.SetInteger("Direction", 7);
             }
             else if (currentKeyStates[3] && !currentKeyStates[2])
             {
                 direction = PlayerData.Direction.Right;
                 aimDirection = new Vector2(1, 0);
+                aEyes.SetInteger("Direction", 3);
             }
 
             float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg - 90;
-            // transform.eulerAngles = new Vector3(0, 0, angle);
             lastChangeTime = Time.time;
     }
 
@@ -146,7 +159,7 @@ public class PlayerShooting : MonoBehaviour
     {
         FireBullet(direction);
 
-        switch (GetComponent<PlayerData>().upgrade)
+        switch (playerData.upgrade)
         {
             case PlayerData.Upgrade.L2:
                 // Fire bullets at slight left and right diagonals

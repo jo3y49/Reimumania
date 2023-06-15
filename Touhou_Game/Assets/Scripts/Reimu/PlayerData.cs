@@ -36,7 +36,7 @@ public class PlayerData : MonoBehaviour, Shootable
         UpRight,
         UpLeft,
         DownRight,
-        DownLeft,
+        DownLeft
     }
     public Direction direction = Direction.Up;
 
