@@ -102,7 +102,7 @@ public class GameDataManager : MonoBehaviour
         playtimeText = displayVariables[3];
 
         bombText.text = "Bombs: " + gameData.bombs.ToString();
-        coinText.text = "Coins: " + gameData.currentCoins.ToString();
+        coinText.text = gameData.currentCoins.ToString();
         killText.text = "Kills: " + gameData.kills.ToString();
         playtimeText.text = "Play Time: " + FormatTimeToString(gameData.playTime);
 
@@ -148,7 +148,7 @@ public class GameDataManager : MonoBehaviour
             gameData.accumulatedCoins = gameData.currentCoins;
 
         if (updateUI)
-            coinText.text = "Coins: " + gameData.currentCoins.ToString();
+            coinText.text = gameData.currentCoins.ToString();
     }
 
     public void RemoveCoins(int coins = 1)
@@ -157,7 +157,7 @@ public class GameDataManager : MonoBehaviour
         gameData.spentCoins += coins;
 
         if (updateUI)
-            coinText.text = "Coins: " + gameData.currentCoins.ToString();
+            coinText.text = gameData.currentCoins.ToString();
     }
 
     public int GetCoins()
@@ -207,6 +207,12 @@ public class GameDataManager : MonoBehaviour
         gameData.kills += kills;
 
         killText.text = "Kills: " + gameData.kills.ToString();
+    }
+
+    public void SetLastLocation(Vector2 location)
+    {
+        gameData.lastLocation[0] = lastLocation.x;
+        gameData.lastLocation[1] = lastLocation.y;
     }
 
     public IEnumerator CountPlayTime()

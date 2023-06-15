@@ -82,7 +82,7 @@ public class ShopManager : MonoBehaviour {
 
 
         gameDataManager.RemoveCoins(prices[index]);
-        coins.text = "Coins: " + gameDataManager.GetCoins().ToString();
+        coins.text = gameDataManager.GetCoins().ToString();
 
         for (int i = 0; i < buyables.Length; i++)
         {
