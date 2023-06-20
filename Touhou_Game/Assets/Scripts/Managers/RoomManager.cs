@@ -14,6 +14,7 @@ public class RoomManager : MonoBehaviour {
         {
             gameDataManager.SetLastLocation(other.transform.position);
             gameDataManager.SaveGame();
+            gameDataManager.updateUI = false;
             SceneManager.LoadScene(nextScene);
         }
     }

@@ -47,7 +47,8 @@ public class PauseManager : MonoBehaviour {
 
     private void TogglePause(bool pause)
     {
-        isPaused = gameDataManager.isPaused = pause;
+        isPaused = pause;
+        gameDataManager.Pause(pause);
         pauseUI.SetActive(isPaused);
     }
 }

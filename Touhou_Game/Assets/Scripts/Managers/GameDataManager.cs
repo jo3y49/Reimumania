@@ -10,10 +10,11 @@ public class GameDataManager : MonoBehaviour
     public HealthDisplay healthBar;
     public BombDisplay bombBar;
     public bool isPaused = true;
-    private bool updateUI = false;
+    public bool updateUI = false;
 
     private GameData gameData;
     private PlayerData player;
+    private AudioController audioController;
     public string lastScene = "";
     
     public Vector3 lastLocation = Vector3.zero;
@@ -37,7 +38,7 @@ public class GameDataManager : MonoBehaviour
     private void Awake()
     {
         gameData = new GameData();
-
+        audioController = GetComponent<AudioController>();
     }
 
     public void SaveGame()
@@ -107,8 +108,8 @@ public class GameDataManager : MonoBehaviour
 
         this.healthBar = healthBar;
         this.bombBar = bombBar;
-        // bombBar.ChangeBombs(gameData.bombs);
-        // this.healthBar.ChangeHearts(gameData.lives);
+        this.bombBar.ChangeBombs(gameData.bombs);
+        this.healthBar.ChangeHearts(gameData.lives);
         
         isPaused = false;
     }
@@ -240,6 +241,16 @@ public class GameDataManager : MonoBehaviour
     {
         gameData.lastLocation[0] = lastLocation.x;
         gameData.lastLocation[1] = lastLocation.y;
+    }
+
+    public void Pause(bool pause)
+    {
+        isPaused = pause;
+
+        if (pause)
+            audioController.PauseAudio();
+        else
+            audioController.UnpauseAudio();
     }
 
     public IEnumerator CountPlayTime()
