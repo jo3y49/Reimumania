@@ -15110,8 +15110,6 @@ Tilemap:
     m_Data: {fileID: 21300000, guid: 87ad4bf5be0eb3d4e83e0753c0f1df5c, type: 2}
   - m_RefCount: 30
     m_Data: {fileID: 21300000, guid: 369036424bda72c4cb7f8d2ae085167c, type: 2}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
   m_TileMatrixArray:
   - m_RefCount: 998
     m_Data:
@@ -15832,7 +15830,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2063537267}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -16727,10 +16725,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 287074383259990851, guid: f466f2b673389544387abe9f9c3207c0, type: 3}
-      propertyPath: bombs
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 287074383259990857, guid: f466f2b673389544387abe9f9c3207c0, type: 3}
       propertyPath: m_RootOrder
       value: 5

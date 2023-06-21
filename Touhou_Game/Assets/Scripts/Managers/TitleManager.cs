@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class TitleManager : MonoBehaviour
 {
-    public Button startGameButton, loadGameButton, wipeDataButton;
+    public Button startGameButton, loadGameButton, quitButton, wipeDataButton;
 
     private GameDataManager gameDataManager;
 
@@ -15,6 +15,7 @@ public class TitleManager : MonoBehaviour
         // Add click listeners to the buttons
         startGameButton.onClick.AddListener(StartNewGame);
         loadGameButton.onClick.AddListener(LoadGame);
+        quitButton.onClick.AddListener(CloseGame);
         wipeDataButton.onClick.AddListener(WipeData);
 
         // Disable the Load Game button by default
@@ -43,6 +44,10 @@ public class TitleManager : MonoBehaviour
     {
 
         SceneManager.LoadScene("MainArea");
+    }
+
+    private void CloseGame(){
+        Application.Quit();
     }
 
     private void StartNewGame()

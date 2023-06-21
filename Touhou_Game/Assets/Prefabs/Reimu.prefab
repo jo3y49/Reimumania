@@ -167,7 +167,7 @@ MonoBehaviour:
   flashSpeed: 5
   bombPrefab: {fileID: 7691319330123292403, guid: f8d6f28c101f14041a5db4ec52de53cf, type: 3}
   aMouth: {fileID: 5380667825662381276}
-  bombDistance: {x: 2, y: 0}
+  bombDistance: {x: 2.4, y: 0}
   bombRange: 22
   bombButton: 113
   combatToggle: 101
@@ -187,7 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c12b6c237a291b40b90cb065b2c2435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 9
+  speed: 8
   sprint: 1.8
   sprintButton: 304
   direction: 0
@@ -207,7 +207,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 8506286823978325421, guid: db1c95a40365d5949906823a2ae8d7b6, type: 3}
   firePoint: {fileID: 287074382375608207}
   directionPersistTime: 0.1
-  bulletSpeed: 11
+  bulletSpeed: 18
   fireRate: 5
   fireButton: 32
   direction: 0
