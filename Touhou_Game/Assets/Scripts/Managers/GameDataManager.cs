@@ -123,6 +123,7 @@ public class GameDataManager : MonoBehaviour
     public void ReturnToTitle()
     {
         updateUI = false;
+        audioController.UnpauseAudio();
         SceneManager.LoadScene("TitleScreen");
     }
 
